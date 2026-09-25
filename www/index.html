@@ -73,7 +73,8 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .field label { font-size: 12px; color: var(--muted); font-weight: 600; font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .03em; }
 .pair { display: flex; gap: 8px; }
 .pair input { flex: 1; min-width: 0; }
-.pair select { width: 76px; flex: none; padding: 0 6px; }
+.pair select { width: 88px; flex: none; padding: 0 4px; font-size: 14px; }
+.pair input { min-width: 48px; }
 input[type=text], input[type=number], select { width: 100%; height: 46px; padding: 0 12px; font: inherit; color: var(--ink); background: var(--field); border: 1px solid var(--line); border-radius: 4px; }
 input[type=number] { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -507,7 +508,7 @@ dialog img, dialog textarea { border-radius: 12px; }
   function fieldsHTML(p) {
     return '' +
       '<div class="field"><label for="' + p + 'name">Item</label><input id="' + p + 'name" type="text" placeholder="e.g. Oud Al Layl 12ml" autocomplete="off" maxlength="80"></div>' +
-      '<div class="grid2"><div class="field"><label for="' + p + 'company">Company</label><input id="' + p + 'company" type="text" list="companies" placeholder="Same as order" autocomplete="off" maxlength="60"></div>' +
+      '<div class="grid2"><div class="field"><label for="' + p + 'company">Company</label><input id="' + p + 'company" type="text" list="companies" placeholder="Optional" autocomplete="off" maxlength="60"></div>' +
       '<div class="field"><label for="' + p + 'cat">Category</label><input id="' + p + 'cat" type="text" list="cats" placeholder="e.g. Attar" autocomplete="off" maxlength="40"></div></div>' +
       (p === 'a' ? '<div class="chips" id="chips" aria-label="Existing categories"></div>' : '') +
       '<div class="grid2"><div class="field"><label for="' + p + 'wt">Weight</label><div class="pair"><input id="' + p + 'wt" type="number" inputmode="decimal" min="0" step="any" placeholder="0"><select id="' + p + 'wu" aria-label="Weight unit">' + opts(WU) + '</select></div></div>' +
