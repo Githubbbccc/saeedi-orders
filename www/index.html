@@ -273,7 +273,7 @@ dialog img, dialog textarea { border-radius: 12px; }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 12px); } }
 .foot { text-align:center; color: var(--muted); font: 500 11.5px/1.6 "IBM Plex Mono", monospace; margin: 22px 0 0; }
 @media (max-width: 360px) { .hero-fields, .grid2 { grid-template-columns: 1fr; } .stat b { font-size: 20px; } }
-@media print { .search, .foot, .newbtn, .stats, .notes-card label, .orderbar #savedPill { display:none !important; } .hero { border-radius: 0; box-shadow: none; } .hero::after { display:none; } .pill { color:#000 !important; border-color:#999 !important; background:none !important; } .notes-card { box-shadow:none; border:0; padding:0; } textarea.notes { border:0; background:none; resize:none; } }
+@media print { .hero-fields .orderfor:first-child, .cat-head, .meta > span:not(.wchip), .filterRow { display:none !important; } .search, .foot, .newbtn, .stats, .notes-card label, .orderbar #savedPill { display:none !important; } .hero { border-radius: 0; box-shadow: none; } .hero::after { display:none; } .pill { color:#000 !important; border-color:#999 !important; background:none !important; } .notes-card { box-shadow:none; border:0; padding:0; } textarea.notes { border:0; background:none; resize:none; } }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 </style>
@@ -327,7 +327,7 @@ dialog img, dialog textarea { border-radius: 12px; }
   </div>
   <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search items, companies…" aria-label="Search the list" autocomplete="off"></div>
   <div id="list"></div>
-  <p class="foot">Saeedi Essence Order Book · v1.2 · Your data stays on this device</p>
+  <p class="foot">Saeedi Essence Order Book · v1.3 · Your data stays on this device</p>
 </div>
 
 <datalist id="cats"></datalist>
@@ -464,7 +464,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     $('orderDate').textContent = dateStr();
   }
   var EMPTY_SVG = '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="#C89A2C" fill-opacity=".14"/><path d="M60 22s-24 30-24 48a24 24 0 0 0 48 0c0-18-24-48-24-48z" fill="#16302A"/><path d="M66 52c-12 2-12 12-5 15s7 13-5 15" fill="none" stroke="#F3D27A" stroke-width="4" stroke-linecap="round"/><circle cx="92" cy="30" r="4" fill="#C89A2C"/><circle cx="24" cy="86" r="3" fill="#C89A2C"/></svg>';
-  function slug() { return ((state.shop || '') + ' ' + orderNo() + ' ' + (state.orderCo || '')).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order'; }
+  function slug() { return ((state.shop || '') + ' ' + orderNo()).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order'; }
 
   function uniq(field) {
     var seen = [];
@@ -692,21 +692,17 @@ dialog img, dialog textarea { border-radius: 12px; }
 
   function buildText() {
     var lines = [state.shop || 'Order'];
-    lines.push('Order ' + orderNo() + (state.phone ? '  ·  Tel: ' + state.phone : ''));
-    if (state.orderCo) lines.push('Order for: ' + state.orderCo);
-    if (state.exportFilter) lines.push('Only: ' + state.exportFilter);
-    lines.push(dateStr(), '');
-    filteredGroups().forEach(function (g) {
-      lines.push(g.name.toUpperCase());
+    if (state.phone) lines.push('Tel: ' + state.phone);
+    lines.push('Order ' + orderNo() + '  ·  ' + dateStr(), '');
+    // Customer-facing: no company, category or filter names
+    [{ items: exportItems() }].forEach(function (g) {
       g.items.forEach(function (i, k) {
-        var second = state.groupBy === 'company' ? i.cat : ((i.company && i.company !== state.orderCo) ? i.company : '');
-        var s = (k + 1) + '. ' + i.name + (second ? ' (' + second + ')' : '');
+        var s = (k + 1) + '. ' + i.name;
         var w = fmtWeight(i);
         if (w) s += ' - ' + w;
         s += ' - Qty: ' + fmtQty(i);
         lines.push(s);
       });
-      lines.push('Total: ' + totalsStr(g.items));
       lines.push('');
     });
     lines.push('TOTAL: ' + totalsStr(exportItems()));
@@ -783,21 +779,21 @@ dialog img, dialog textarea { border-radius: 12px; }
     });
     return out.slice(0, 12);
   }
+  function bandHeight() { return state.phone ? 206 : 176; }
   function planPages(pageH) {
-    var top1 = (state.orderCo ? 220 : 176) + (state.exportFilter ? 40 : 0) + 30, topN = M;
+    var top1 = bandHeight() + 30, topN = M;
     var bottom = pageH ? pageH - M - FOOT : Infinity;
     var pages = [{ ops: [], y: top1 }];
     function cur() { return pages[pages.length - 1]; }
-    filteredGroups().forEach(function (g) {
+    [{ name: 'Items', items: exportItems() }].forEach(function (g) {
       var idx = 0;
       while (idx < g.items.length) {
-        var need = GH + CH + IH;
+        var need = CH + IH;
         var pageTop = pages.length === 1 ? top1 : topN;
         if (pageH && cur().y + need > bottom && cur().y > pageTop) {
           pages.push({ ops: [], y: topN });
         }
         var p = cur();
-        p.ops.push({ t: 'g', y: p.y, g: g, cont: idx > 0 }); p.y += GH;
         p.ops.push({ t: 'c', y: p.y }); p.y += CH;
         var placed = 0;
         while (idx < g.items.length && (p.y + IH <= bottom || placed === 0)) {
@@ -831,7 +827,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     x.textBaseline = 'alphabetic';
 
     if (pi === 0) {
-      var bandH = (state.orderCo ? 220 : 176) + (state.exportFilter ? 40 : 0);
+      var bandH = bandHeight();
       x.fillStyle = HERO; x.fillRect(0, 0, W, bandH);
       // torn/perforated bottom edge of the band
       x.fillStyle = PAPER;
@@ -845,21 +841,12 @@ dialog img, dialog textarea { border-radius: 12px; }
       x.font = 'italic 700 54px ' + HEAD;
       x.fillText(fit(x, state.shop || 'Order', IW - 150), M, 92);
       var ty = 142;
-      if (state.orderCo) {
-        x.font = '500 30px ' + BODY;
-        x.fillStyle = GOLD;
-        x.fillText(fit(x, 'Order for: ' + state.orderCo, IW - 150), M, ty);
+      if (state.phone) {
+        x.font = '600 30px ' + BODY; x.fillStyle = GOLD;
+        x.fillText(fit(x, 'Tel: ' + state.phone, IW - 150), M, ty);
         ty += 42;
       }
-      if (state.exportFilter) {
-        x.font = '600 24px ' + MONO;
-        x.fillStyle = '#E7DEC6';
-        x.fillText(fit(x, 'ONLY: ' + state.exportFilter, IW - 150), M, ty);
-        ty += 34;
-      }
-      var gs = filteredGroups();
-      var ei = exportItems();
-      var d = orderNo() + '   ·   ' + dateStr() + (state.phone ? '   ·   ' + state.phone : '');
+      var d = 'Order ' + orderNo() + '   ·   ' + dateStr();
       x.font = '500 22px ' + MONO;
       x.fillStyle = '#B7AC8D';
       x.fillText(fit(x, d, IW - 150), M, ty);
@@ -899,8 +886,7 @@ dialog img, dialog textarea { border-radius: 12px; }
         x.textAlign = 'left';
         x.fillText('#', M + 16, op.y + 25);
         x.fillText('Item', M + 62, op.y + 25);
-        x.fillText(second, M + 390, op.y + 25);
-        x.fillText('Weight', M + 650, op.y + 25);
+        x.fillText('Weight', M + 600, op.y + 25);
         x.textAlign = 'right';
         x.fillText('Qty', W - M - 16, op.y + 25);
       } else {
@@ -911,12 +897,10 @@ dialog img, dialog textarea { border-radius: 12px; }
         x.fillText(String(op.n).padStart(2, '0'), M + 16, op.y + 33);
         x.font = '500 25px ' + BODY;
         x.fillStyle = INK;
-        x.fillText(fit(x, it.name, 316), M + 62, op.y + 33);
+        x.fillText(fit(x, it.name, 520), M + 62, op.y + 33);
         x.fillStyle = '#5C4E38';
         x.font = '400 21px ' + MONO;
-        var sec = state.groupBy === 'company' ? it.cat : coOf(it);
-        x.fillText(fit(x, sec || '', 250), M + 390, op.y + 33);
-        x.fillText(fit(x, fmtWeight(it), 165), M + 650, op.y + 33);
+        x.fillText(fit(x, fmtWeight(it), 180), M + 600, op.y + 33);
         x.fillStyle = INK;
         x.font = '600 24px ' + MONO; x.textAlign = 'right';
         x.fillText(fit(x, fmtQty(it), 140), W - M - 16, op.y + 33);
@@ -1206,7 +1190,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     save(); applyTheme();
   });
 
-  var APP_VERSION = '1.2.0';
+  var APP_VERSION = '1.3.0';
   load();
   $('shop').value = state.shop || 'Saeedi Essence';
   $('orderCo').value = state.orderCo || '';
