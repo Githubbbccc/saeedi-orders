@@ -1,0 +1,7 @@
+{
+  "appId": "com.saeedi.essence.orders",
+  "appName": "Saeedi Orders",
+  "webDir": "www",
+  "backgroundColor": "#16302A",
+  "plugins": { "SplashScreen": { "launchShowDuration": 800, "backgroundColor": "#16302A" } }
+}
