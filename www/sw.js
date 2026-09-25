@@ -1,6 +1,6 @@
 // Saeedi Orders service worker
 // FIX: network-first for the page so new versions reach users; cache fallback keeps it working offline.
-var VERSION = '1.1.0';
+var VERSION = '1.2.0';
 var C = 'saeedi-orders-' + VERSION;
 var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', function (e) { e.waitUntil(caches.open(C).then(function (c) { return c.addAll(FILES); })); self.skipWaiting(); });

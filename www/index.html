@@ -73,7 +73,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 .field label { font-size: 12px; color: var(--muted); font-weight: 600; font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .03em; }
 .pair { display: flex; gap: 8px; }
 .pair input { flex: 1; min-width: 0; }
-.pair select { width: 112px; flex: none; }
+.pair select { width: 76px; flex: none; padding: 0 6px; }
 input[type=text], input[type=number], select { width: 100%; height: 46px; padding: 0 12px; font: inherit; color: var(--ink); background: var(--field); border: 1px solid var(--line); border-radius: 4px; }
 input[type=number] { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -160,24 +160,153 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
   .orderfor label { color: #555 !important; }
   .cat, .totalbox { box-shadow: none; break-inside: avoid; }
 }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* ===== v1.2 PREMIUM THEME ===== */
+.seg button, .linkbtn, .bar button { white-space: nowrap; }
+.seg button { padding: 8px 12px !important; font-size: 13px; }
+.linkbtn { padding: 8px 8px !important; font-size: 13px; }
+.tools { flex-wrap: wrap; row-gap: 6px; }
+:root[data-theme="dark"] .seg button[aria-pressed="true"] { background: var(--accent); color: #171310; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .seg button[aria-pressed="true"] { background: var(--accent); color: #171310; } }
+:root { --r: 16px; --r-sm: 11px; --gold-grad: linear-gradient(135deg,#F3D27A 0%,#C89A2C 45%,#9A7219 100%);
+  --shadow: 0 1px 2px rgba(22,48,42,.06), 0 8px 24px -6px rgba(22,48,42,.16); --shadow-lg: 0 18px 40px -12px rgba(22,48,42,.35); }
+body { background: radial-gradient(1200px 500px at 50% -120px, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%), var(--bg); background-attachment: fixed; -webkit-tap-highlight-color: transparent; }
+.wrap { background-image: none !important; padding-top: 6px; }
+h1,h2,h3 { letter-spacing: -.01em; }
+.hero { clip-path: none !important; border-radius: 0 0 28px 28px; padding: calc(env(safe-area-inset-top,0px) + 16px) 18px 22px;
+  background: radial-gradient(600px 260px at 100% 0%, rgba(200,154,44,.28), transparent 60%), radial-gradient(500px 300px at 0% 120%, rgba(47,107,94,.45), transparent 60%), linear-gradient(160deg,#1B3B33 0%,#10261F 60%,#0B1C17 100%);
+  box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
+.hero::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 4c0 0-10 12-10 20a10 10 0 0 0 20 0C32 16 22 4 22 4z' fill='none' stroke='%23F3D27A' stroke-width='1'/%3E%3C/svg%3E"); }
+.hero-in { position: relative; z-index: 1; }
+.logo { transform: none; } .logo-ring { filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); }
+.logo svg { animation: float 6s ease-in-out infinite; }
+@keyframes float { 50% { transform: translateY(-3px) rotate(-4deg); } }
+.brand { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.brand .tag { font: 600 10.5px/1 "IBM Plex Mono", monospace; letter-spacing: .2em; text-transform: uppercase; color: #F3D27A; margin-top: 2px; }
+.hero .title-input { font-size: clamp(22px, 6.6vw, 34px); font-style: normal; font-weight: 700; color: #FFF3D2; padding: 2px 0; text-shadow: 0 2px 12px rgba(243,210,122,.25); }
+.hero .theme-btn { width: 40px; height: 40px; background: rgba(255,255,255,.08); }
+.orderbar { display:flex; flex-wrap:wrap; gap:6px; margin: 2px 0 12px; }
+.pill { display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 11px; border-radius:999px; font:600 12px/1 "IBM Plex Mono",monospace; color:#F8F2E2; background: rgba(255,255,255,.08); border:1px solid rgba(243,210,122,.28); }
+.pill.gold { background: var(--gold-grad); color:#1B150B; border-color: transparent; }
+.pill svg { width:13px; height:13px; }
+.hero-fields { display:grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+.hero .orderfor input { font-size: 16px; height: 42px; background: rgba(255,255,255,.06); border: 1px solid rgba(243,210,122,.3); border-radius: var(--r-sm); padding: 0 12px; }
+.hero .orderfor input:focus-visible { border-color: #F3D27A; border-width: 1px; box-shadow: 0 0 0 3px rgba(243,210,122,.2); }
+.hero .orderfor label { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: rgba(241,232,214,.8); }
+.stats { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin: 16px 0 6px; }
+.stat { background: var(--panel); border:1px solid var(--line); border-radius: var(--r); padding: 12px 12px 10px 15px; box-shadow: var(--shadow); position: relative; overflow:hidden; }
+.stat::before { content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background: var(--gold-grad); }
+.stat b { display:block; font: 700 24px/1.1 "Fraunces", Georgia, serif; color: var(--ink); font-variant-numeric: tabular-nums; }
+.stat span { font: 600 10.5px/1.2 "IBM Plex Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.stat.pop b { animation: pop .35s ease; }
+@keyframes pop { 40% { transform: scale(1.18); } }
+.sub { margin: 10px 2px 12px; font-size: 13.5px; }
+.add { border-radius: var(--r); padding: 18px 16px 16px; }
+.add::before { display:none; }
+.add-title { display:flex; align-items:center; gap:10px; margin: 0 0 12px; font: 700 17px/1.2 "Fraunces", Georgia, serif; }
+.add-title i { width:30px; height:30px; border-radius:9px; display:grid; place-items:center; background: var(--gold-grad); color:#1B150B; font-style: normal; font-size: 20px; box-shadow: 0 4px 10px -3px rgba(200,154,44,.6); }
+.grid2 { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+input[type=text], input[type=number], input[type=search], input[type=tel], select, textarea.notes { border-radius: var(--r-sm); transition: border-color .15s, box-shadow .15s, background .15s; }
+.wrap input:focus, .wrap select:focus, dialog input:focus, dialog select:focus, textarea.notes:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); outline: none; background: var(--panel); }
+.chip { border-radius: 999px; transition: transform .12s; } .chip:active { transform: scale(.95); }
+.primary { border-radius: var(--r-sm); border: 0; background: var(--gold-grad); color: #1B150B; box-shadow: 0 10px 22px -8px rgba(154,114,25,.75), inset 0 1px 0 rgba(255,255,255,.4); display:flex; align-items:center; justify-content:center; gap:8px; font-size: 17px; }
+.primary:active { transform: translateY(1px) scale(.99); box-shadow: 0 4px 10px -4px rgba(154,114,25,.7); }
+.notes-card { background: var(--panel); border:1px solid var(--line); border-radius: var(--r); padding: 14px 16px; margin-top: 14px; box-shadow: var(--shadow); }
+textarea.notes { width:100%; min-height: 64px; resize: vertical; font: inherit; font-size: 15px; color: var(--ink); background: var(--field); border:1px solid var(--line); padding: 10px 12px; }
+input[type=search], input[type=tel] { width: 100%; height: 46px; padding: 0 12px; font: inherit; color: var(--ink); background: var(--field); border: 1px solid var(--line); }
+.summary h2 { font-style: normal; font-weight: 700; }
+.search { position: relative; margin: 0 0 12px; }
+.search input { padding-left: 40px !important; height: 44px !important; }
+.search svg { position:absolute; left:13px; top:50%; transform: translateY(-50%); width:17px; height:17px; color: var(--muted); pointer-events:none; }
+.seg { border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { border: 0 !important; border-radius: 999px; padding: 8px 14px; transition: background .2s, color .2s; }
+.tools-r { display:flex; align-items:center; gap: 2px; }
+.linkbtn { text-decoration: none; border-radius: 999px; padding: 8px 10px; font-weight: 600; }
+.linkbtn.alt { color: var(--c5); }
+.cat { border-radius: var(--r); border-color: color-mix(in srgb, var(--cc) 25%, var(--line)); }
+.cat-head { border-left: 0; padding: 14px 16px 12px; background: linear-gradient(90deg, color-mix(in srgb, var(--cc) 14%, transparent), transparent 70%); border-bottom: 1px solid var(--line); align-items: center; }
+.cat-head::before { content:""; width: 10px; height: 10px; border-radius: 50%; background: var(--cc); box-shadow: 0 0 0 4px color-mix(in srgb, var(--cc) 20%, transparent); flex: none; }
+.cat-head h3 { font-style: normal; font-weight: 700; font-size: 18px; }
+.cat-head small { background: var(--panel); color: var(--ink); opacity: .85; border:1px solid var(--line); border-radius: 999px; padding: 3px 9px; }
+.meta, .meta span:not(.wchip), .stepper .val small { color: color-mix(in srgb, var(--muted) 55%, var(--ink)) !important; }
+.item { border-left: 0; border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent); padding: 12px 14px; animation: rowIn .28s ease both; }
+.item:nth-child(2n) { background: transparent; }
+@keyframes rowIn { from { opacity: 0; transform: translateY(6px); } }
+.item.leaving { animation: rowOut .2s ease forwards; }
+@keyframes rowOut { to { opacity: 0; transform: translateX(40px); } }
+.no { border: 0; background: color-mix(in srgb, var(--cc) 16%, transparent); color: var(--ink); font-weight: 700; width: 28px; height: 28px; }
+.iname { font-weight: 600; }
+.wchip { border-radius: 999px; }
+.stepper { background: var(--field); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 0; }
+.stepper button { border: 0; border-radius: 50%; background: var(--panel); width: 34px; height: 34px; box-shadow: 0 1px 2px rgba(0,0,0,.1); transition: transform .1s; }
+.stepper button:active { transform: scale(.88); }
+.stepper .val { min-width: 46px; }
+.stepper .val.bump { animation: pop .3s ease; }
+.del { border-radius: 50%; transition: background .15s, color .15s; }
+.del:active { background: color-mix(in srgb, var(--stamp) 12%, transparent); color: var(--stamp); }
+.item.hidden-s { display: none; }
+.nomatch { text-align:center; color: var(--muted); padding: 18px; font-size: 14px; }
+.totalbox { border-radius: var(--r); background: linear-gradient(135deg,#1B3B33,#0B1C17) !important; padding: 18px 20px; box-shadow: var(--shadow-lg); overflow: hidden; }
+.totalbox::before { display:none; }
+.totalbox::after { content:""; position:absolute; right:-40px; top:-40px; width:140px; height:140px; border-radius:50%; background: radial-gradient(circle, rgba(243,210,122,.3), transparent 70%); pointer-events: none; }
+.tl { text-transform: uppercase; letter-spacing: .18em; font-size: 11px; padding: 0; }
+.tv { font-style: normal; font-weight: 700; font-size: 21px; color: #F3D27A; padding: 0; position: relative; z-index: 1; }
+.empty { border-radius: var(--r); padding: 30px 20px; }
+.empty svg { width: 86px; height: 86px; margin: 0 auto 10px; display:block; }
+.empty b { font-style: normal; font-weight: 700; }
+.bar { background: color-mix(in srgb, var(--panel) 85%, transparent); backdrop-filter: saturate(1.6) blur(16px); -webkit-backdrop-filter: saturate(1.6) blur(16px); box-shadow: 0 -10px 30px -12px rgba(0,0,0,.18); }
+.bar button { height: 56px; border-radius: 14px; display:flex; flex-direction: column; align-items:center; justify-content:center; gap: 3px; font-size: 12px; border-color: transparent; transition: transform .1s; }
+.bar button:active { transform: scale(.95); }
+.bar button svg { width: 20px; height: 20px; }
+.bar button.main { background: var(--gold-grad) !important; color: #1B150B !important; border: 0; font-family: "IBM Plex Sans", sans-serif; font-style: normal; box-shadow: 0 8px 18px -8px rgba(154,114,25,.8); }
+dialog { border-radius: 20px; box-shadow: var(--shadow-lg); padding: 22px; }
+dialog[open] { animation: dlgIn .22s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes dlgIn { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+dialog::backdrop { background: rgba(8,16,13,.55); backdrop-filter: blur(3px); }
+dialog h2 { font-style: normal; font-weight: 700; }
+.dlg-actions button { border-radius: 12px; }
+.dlg-actions .main { background: var(--gold-grad); color: #1B150B; border: 0; }
+dialog img, dialog textarea { border-radius: 12px; }
+.toast { border-radius: 999px; padding: 11px 18px; box-shadow: var(--shadow-lg); animation: toastIn .25s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes toastIn { from { opacity: 0; transform: translate(-50%, 12px); } }
+.foot { text-align:center; color: var(--muted); font: 500 11.5px/1.6 "IBM Plex Mono", monospace; margin: 22px 0 0; }
+@media (max-width: 360px) { .hero-fields, .grid2 { grid-template-columns: 1fr; } .stat b { font-size: 20px; } }
+@media print { .search, .foot, .newbtn, .stats, .notes-card label, .orderbar #savedPill { display:none !important; } .hero { border-radius: 0; box-shadow: none; } .hero::after { display:none; } .pill { color:#000 !important; border-color:#999 !important; background:none !important; } .notes-card { box-shadow:none; border:0; padding:0; } textarea.notes { border:0; background:none; resize:none; } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
 <header class="hero"><div class="hero-in">
   <div class="head">
     <span class="logo" aria-hidden="true"><span class="logo-ring"><svg viewBox="0 0 512 512" width="50" height="50"><circle cx="256" cy="256" r="248" fill="#F4ECDA" stroke="#C89A2C" stroke-width="10"/><circle cx="256" cy="256" r="222" fill="none" stroke="#C89A2C" stroke-width="3" stroke-dasharray="4 7"/><path d="M256 122C256 122 168 232 168 306a88 88 0 0 0 176 0C344 232 256 122 256 122Z" fill="#16302A"/><path d="M280 236C222 246 222 292 256 306C290 320 290 366 232 376" fill="none" stroke="#F4ECDA" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-    <input id="shop" class="title-input" type="text" value="Saeedi Essence" aria-label="Shop name" maxlength="60">
-    <button class="icon-btn theme-btn" id="themeBtn" aria-label="Switch light or dark theme" type="button">◐</button>
+    <div class="brand"><input id="shop" class="title-input" type="text" value="Saeedi Essence" aria-label="Shop name" maxlength="60"><span class="tag">Order Book · Fragrances</span></div>
+    <button class="icon-btn theme-btn" id="themeBtn" aria-label="Switch light or dark theme" type="button"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
   </div>
-  <div class="field orderfor"><label for="orderCo">Order for company</label><input id="orderCo" type="text" list="companies" placeholder="Type the company name once" autocomplete="off" maxlength="60"></div>
+  <div class="orderbar">
+    <span class="pill gold" id="orderNo" title="Order number">#SE-0001</span>
+    <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="orderDate"></span></span>
+    <span class="pill" id="savedPill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Saved on device</span>
+  </div>
+  <div class="hero-fields"><div class="field orderfor"><label for="orderCo">Order for company</label><input id="orderCo" type="text" list="companies" placeholder="Supplier / company" autocomplete="off" maxlength="60"></div><div class="field orderfor"><label for="phone">Shop phone</label><input id="phone" type="tel" inputmode="tel" placeholder="03xx-xxxxxxx" autocomplete="tel" maxlength="20"></div></div>
   </div></header>
 <div class="wrap">
-  <p class="sub">Add items with company, weight and quantity. Then print, save a PDF, or make a picture to send.</p>
+  <div class="stats" aria-live="polite">
+    <div class="stat" id="stItems"><b>0</b><span>Items</span></div>
+    <div class="stat" id="stGroups"><b>0</b><span>Groups</span></div>
+    <div class="stat" id="stUnits"><b>0</b><span>Total qty</span></div>
+  </div>
+  <p class="sub">Add items with company, weight and quantity. Then send the order as a picture, PDF or text.</p>
 
   <div class="add">
+    <div class="add-title"><i aria-hidden="true">+</i>New item</div>
     <div class="stack" id="addFields"></div>
-    <button class="primary" id="addBtn" type="button">Add to order</button>
+    <button class="primary" id="addBtn" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add to order</button>
+  </div>
+  <div class="notes-card field">
+    <label for="notes">Delivery notes / remarks (added to the order)</label>
+    <textarea id="notes" class="notes" maxlength="300" placeholder="e.g. Deliver by Friday · Cash on delivery"></textarea>
   </div>
 
   <div class="summary">
@@ -189,13 +318,15 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
       <button type="button" id="gCat" aria-pressed="true">By category</button>
       <button type="button" id="gCo" aria-pressed="false">By company</button>
     </div>
-    <button class="linkbtn" id="clearBtn" type="button">Clear all</button>
+    <div class="tools-r"><button class="linkbtn alt newbtn" id="newBtn" type="button">New order</button><button class="linkbtn" id="clearBtn" type="button">Clear all</button></div>
   </div>
   <div class="field filterRow">
     <label for="exportFilter">Export</label>
     <select id="exportFilter"><option value="">All groups</option></select>
   </div>
+  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search items, companies…" aria-label="Search the list" autocomplete="off"></div>
   <div id="list"></div>
+  <p class="foot">Saeedi Essence Order Book · v1.2 · Your data stays on this device</p>
 </div>
 
 <datalist id="cats"></datalist>
@@ -203,10 +334,10 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
 
 <div class="bar">
   <div class="bar-in">
-    <button id="textBtn" type="button">Text</button>
-    <button id="printBtn" type="button">Print</button>
-    <button id="pdfBtn" type="button">PDF</button>
-    <button id="picBtn" class="main" type="button">Picture</button>
+    <button id="textBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Text</button>
+    <button id="printBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>Print</button>
+    <button id="pdfBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg>PDF</button>
+    <button id="picBtn" class="main" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></svg>Share</button>
   </div>
 </div>
 
@@ -248,7 +379,7 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
   var PAL = ['#C89A2C', '#A6382C', '#4B6B3A', '#6B4226', '#8A7B3E', '#2F6B5E', '#7A2E3A', '#4A3B2A'];
   var WU = ['', 'g', 'kg', 'lb', 'oz', 'ml', 'L'];
   var QU = ['pcs', 'box', 'pack', 'dozen', 'bag', 'bottle', 'carton', ''];
-  var state = { shop: 'Saeedi Essence', orderCo: '', recentCos: [], items: [], theme: '', groupBy: 'cat', catOrder: [], exportFilter: '' };
+  var state = { shop: 'Saeedi Essence', orderCo: '', phone: '', notes: '', orderSeq: 1, orderDate: '', recentCos: [], items: [], theme: '', groupBy: 'cat', catOrder: [], exportFilter: '' };
   var dl = null;
   var editing = null;
   var picCanvas = null;
@@ -267,6 +398,10 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     if (!state.recentCos) state.recentCos = [];
     if (state.exportFilter == null) state.exportFilter = '';
     if (!state.groupBy) state.groupBy = 'cat';
+    if (state.phone == null) state.phone = '';
+    if (state.notes == null) state.notes = '';
+    if (!(state.orderSeq >= 1)) state.orderSeq = 1;
+    if (!state.orderDate) state.orderDate = new Date().toISOString();
     state.items.forEach(function (it) {
       if (it.company == null) it.company = '';
       if (it.wt == null) it.wt = '';
@@ -314,7 +449,21 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     });
     return order.map(function (u) { return fmt(map[u]) + ' ' + plural(u, map[u]); }).join(', ');
   }
-  function slug() { return ((state.shop || '') + ' ' + (state.orderCo || '')).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order'; }
+  function orderNo() { return 'SE-' + String(state.orderSeq).padStart(4, '0'); }
+  function dateStr() { return new Date(state.orderDate || Date.now()).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }); }
+  function haptic() { try { if (navigator.vibrate) navigator.vibrate(8); } catch (e) {} }
+  function totalQty(items) { return items.reduce(function (a, i) { return a + (Number(i.qty) || 0); }, 0); }
+  function popEl(e) { if (e.animate) e.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(1)' }], { duration: 300, easing: 'ease-out' }); }
+  function setStat(id, v) { var b = $(id).firstChild, t = String(v); if (b.textContent !== t) { b.textContent = t; popEl(b); } }
+  function renderStats() {
+    setStat('stItems', state.items.length);
+    setStat('stGroups', groups().length);
+    setStat('stUnits', fmt(totalQty(state.items)));
+    $('orderNo').textContent = '#' + orderNo();
+    $('orderDate').textContent = dateStr();
+  }
+  var EMPTY_SVG = '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="#C89A2C" fill-opacity=".14"/><path d="M60 22s-24 30-24 48a24 24 0 0 0 48 0c0-18-24-48-24-48z" fill="#16302A"/><path d="M66 52c-12 2-12 12-5 15s7 13-5 15" fill="none" stroke="#F3D27A" stroke-width="4" stroke-linecap="round"/><circle cx="92" cy="30" r="4" fill="#C89A2C"/><circle cx="24" cy="86" r="3" fill="#C89A2C"/></svg>';
+  function slug() { return ((state.shop || '') + ' ' + orderNo() + ' ' + (state.orderCo || '')).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order'; }
 
   function uniq(field) {
     var seen = [];
@@ -357,12 +506,12 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
   }
   function fieldsHTML(p) {
     return '' +
-      '<div class="field"><label for="' + p + 'name">Item</label><input id="' + p + 'name" type="text" placeholder="e.g. Basmati rice" autocomplete="off" maxlength="80"></div>' +
-      '<div class="field"><label for="' + p + 'company">Company name (optional)</label><input id="' + p + 'company" type="text" list="companies" placeholder="Same as order company" autocomplete="off" maxlength="60"></div>' +
-      '<div class="field"><label for="' + p + 'cat">Category</label><input id="' + p + 'cat" type="text" list="cats" placeholder="e.g. Grocery" autocomplete="off" maxlength="40"></div>' +
+      '<div class="field"><label for="' + p + 'name">Item</label><input id="' + p + 'name" type="text" placeholder="e.g. Oud Al Layl 12ml" autocomplete="off" maxlength="80"></div>' +
+      '<div class="grid2"><div class="field"><label for="' + p + 'company">Company</label><input id="' + p + 'company" type="text" list="companies" placeholder="Same as order" autocomplete="off" maxlength="60"></div>' +
+      '<div class="field"><label for="' + p + 'cat">Category</label><input id="' + p + 'cat" type="text" list="cats" placeholder="e.g. Attar" autocomplete="off" maxlength="40"></div></div>' +
       (p === 'a' ? '<div class="chips" id="chips" aria-label="Existing categories"></div>' : '') +
-      '<div class="field"><label for="' + p + 'wt">Weight</label><div class="pair"><input id="' + p + 'wt" type="number" inputmode="decimal" min="0" step="any" placeholder="0"><select id="' + p + 'wu" aria-label="Weight unit">' + opts(WU) + '</select></div></div>' +
-      '<div class="field"><label for="' + p + 'qty">Quantity</label><div class="pair"><input id="' + p + 'qty" type="number" inputmode="decimal" min="0" max="1000000" step="any" value="1"><select id="' + p + 'qu" aria-label="Quantity unit">' + opts(QU) + '</select></div></div>';
+      '<div class="grid2"><div class="field"><label for="' + p + 'wt">Weight</label><div class="pair"><input id="' + p + 'wt" type="number" inputmode="decimal" min="0" step="any" placeholder="0"><select id="' + p + 'wu" aria-label="Weight unit">' + opts(WU) + '</select></div></div>' +
+      '<div class="field"><label for="' + p + 'qty">Quantity</label><div class="pair"><input id="' + p + 'qty" type="number" inputmode="decimal" min="0" max="1000000" step="any" value="1"><select id="' + p + 'qu" aria-label="Quantity unit">' + opts(QU) + '</select></div></div></div>';
   }
   function readFields(p) {
     var wt = parseFloat($(p + 'wt').value);
@@ -435,9 +584,11 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     var total = state.items.length;
     var gs = groups();
     $('count').textContent = total ? total + (total === 1 ? ' item' : ' items') : '';
+    renderStats();
 
     if (!total) {
       var em = el('div', 'empty');
+      em.innerHTML = EMPTY_SVG;
       em.appendChild(el('b', '', 'No items yet'));
       em.appendChild(document.createTextNode('Type an item above, add its company, weight and quantity, then choose a category.'));
       list.appendChild(em);
@@ -476,7 +627,8 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
         // PERF FIX: only refresh this row, its group header and the grand total (was a full re-render)
         function bump(d) {
           it.qty = Math.min(MAX_QTY, Math.max(0, Math.round((Number(it.qty) + d) * 100) / 100)); save();
-          val.firstChild.nodeValue = fmt(it.qty);
+          val.firstChild.nodeValue = fmt(it.qty); haptic();
+          popEl(val); setStat('stUnits', fmt(totalQty(state.items)));
           row.classList.toggle('zero', !(it.qty > 0));
           head.lastChild.textContent = g.items.length + (g.items.length === 1 ? ' item' : ' items') + ', ' + totalsStr(g.items);
           var tv = list.querySelector('.tv'); if (tv) tv.textContent = totalsStr(state.items);
@@ -486,19 +638,33 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
         st.appendChild(minus); st.appendChild(val); st.appendChild(plus);
 
         var del = el('button', 'del', '×'); del.type = 'button'; del.setAttribute('aria-label', 'Remove ' + it.name);
-        del.addEventListener('click', function () { removeItem(it); });
+        del.addEventListener('click', function () { haptic(); row.classList.add('leaving'); setTimeout(function () { removeItem(it); }, 180); });
 
         row.appendChild(no); row.appendChild(info); row.appendChild(st); row.appendChild(del);
         card.appendChild(row);
       });
       list.appendChild(card);
     });
+    var nm = el('div', 'nomatch', 'No items match your search'); nm.hidden = true; list.appendChild(nm);
+    applySearch();
     var tb = el('div', 'totalbox');
     tb.appendChild(el('span', 'tl', 'Total'));
     tb.appendChild(el('strong', 'tv', totalsStr(state.items)));
     list.appendChild(tb);
   }
 
+  function applySearch() {
+    var q = ($('q').value || '').trim().toLowerCase(), any = false;
+    document.querySelectorAll('#list .cat').forEach(function (c) {
+      var vis = 0;
+      c.querySelectorAll('.item').forEach(function (r) {
+        var hit = !q || r.textContent.toLowerCase().indexOf(q) !== -1;
+        r.classList.toggle('hidden-s', !hit); if (hit) vis++;
+      });
+      c.hidden = !vis; if (vis) any = true;
+    });
+    var nm = document.querySelector('#list .nomatch'); if (nm) nm.hidden = any || !q;
+  }
   function removeItem(it) {
     var pos = state.items.indexOf(it);
     state.items = state.items.filter(function (x) { return x.id !== it.id; });
@@ -515,7 +681,7 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     if (f.company) f.company = matchCase(f.company, uniq('company').concat(state.recentCos || []));
     f.id = uid(); f.done = false;
     state.items.push(f);
-    save();
+    save(); haptic();
     $('aname').value = ''; $('awt').value = ''; $('aqty').value = '1';
     render();
     $('aname').focus();
@@ -525,9 +691,10 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
 
   function buildText() {
     var lines = [state.shop || 'Order'];
+    lines.push('Order ' + orderNo() + (state.phone ? '  ·  Tel: ' + state.phone : ''));
     if (state.orderCo) lines.push('Order for: ' + state.orderCo);
     if (state.exportFilter) lines.push('Only: ' + state.exportFilter);
-    lines.push(new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }), '');
+    lines.push(dateStr(), '');
     filteredGroups().forEach(function (g) {
       lines.push(g.name.toUpperCase());
       g.items.forEach(function (i, k) {
@@ -542,6 +709,7 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
       lines.push('');
     });
     lines.push('TOTAL: ' + totalsStr(exportItems()));
+    if (state.notes.trim()) lines.push('', 'Notes: ' + state.notes.trim());
     return lines.join('\n').trim();
   }
 
@@ -601,6 +769,19 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     x.restore();
   }
 
+  function wrapNotes(t) {
+    var c = document.createElement('canvas').getContext('2d'); c.font = '400 24px ' + BODY;
+    var out = [];
+    t.split(/\n/).forEach(function (para) {
+      var line = '';
+      para.split(/\s+/).forEach(function (w) {
+        var tryL = line ? line + ' ' + w : w;
+        if (c.measureText(tryL).width > IW - 48 && line) { out.push(line); line = w; } else line = tryL;
+      });
+      out.push(line);
+    });
+    return out.slice(0, 12);
+  }
   function planPages(pageH) {
     var top1 = (state.orderCo ? 220 : 176) + (state.exportFilter ? 40 : 0) + 30, topN = M;
     var bottom = pageH ? pageH - M - FOOT : Infinity;
@@ -629,6 +810,12 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
       if (pageH && cur().y + 56 > bottom + FOOT && cur().y > topN) pages.push({ ops: [], y: topN });
       var tp = cur();
       tp.ops.push({ t: 't', y: tp.y }); tp.y += 56 + GAP;
+      var nt = (state.notes || '').trim();
+      if (nt) {
+        var ln = wrapNotes(nt), nh = 44 + ln.length * 32;
+        if (pageH && cur().y + nh > bottom + FOOT && cur().y > topN) pages.push({ ops: [], y: topN });
+        var np = cur(); np.ops.push({ t: 'n', y: np.y, lines: ln, h: nh }); np.y += nh + GAP;
+      }
     }
     return pages;
   }
@@ -671,10 +858,10 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
       }
       var gs = filteredGroups();
       var ei = exportItems();
-      var d = new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+      var d = orderNo() + '   ·   ' + dateStr() + (state.phone ? '   ·   ' + state.phone : '');
       x.font = '500 22px ' + MONO;
       x.fillStyle = '#B7AC8D';
-      x.fillText(d + '   ·   ' + ei.length + (ei.length === 1 ? ' item' : ' items') + ' in ' + gs.length + (gs.length === 1 ? ' group' : ' groups'), M, ty);
+      x.fillText(fit(x, d, IW - 150), M, ty);
     }
 
     var second = state.groupBy === 'company' ? 'Category' : 'Company';
@@ -698,6 +885,13 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
         x.fillText('TOTAL', M + 20, op.y + 40);
         x.textAlign = 'right'; x.font = 'italic 700 27px ' + HEAD; x.fillStyle = GOLD;
         x.fillText(fit(x, totalsStr(exportItems()), IW - 170), W - M - 20, op.y + 41);
+      } else if (op.t === 'n') {
+        rr(x, M, op.y, IW, op.h, 10); x.fillStyle = PAPER_BAND; x.fill();
+        x.fillStyle = GOLD; x.fillRect(M, op.y + 12, 5, op.h - 24);
+        x.textAlign = 'left'; x.fillStyle = MUTED; x.font = '600 18px ' + MONO;
+        x.fillText('NOTES', M + 24, op.y + 30);
+        x.fillStyle = INK; x.font = '400 24px ' + BODY;
+        op.lines.forEach(function (l, k) { x.fillText(l, M + 24, op.y + 62 + k * 32); });
       } else if (op.t === 'c') {
         x.fillStyle = PAPER_BAND; x.fillRect(M, op.y, IW, CH);
         x.fillStyle = MUTED; x.font = '600 18px ' + MONO;
@@ -885,6 +1079,23 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
   });
   $('acat').addEventListener('input', renderChips);
   $('shop').addEventListener('input', function () { state.shop = $('shop').value; save(); });
+  $('phone').addEventListener('input', function () { state.phone = $('phone').value.trim(); save(); });
+  $('notes').addEventListener('input', function () { state.notes = $('notes').value; save(); });
+  $('q').addEventListener('input', applySearch);
+  $('newBtn').addEventListener('click', function () {
+    var b = $('newBtn');
+    if (b.dataset.armed !== '1') {
+      b.dataset.armed = '1'; b.textContent = 'Tap to confirm';
+      clearTimeout(b._t); b._t = setTimeout(function () { b.dataset.armed = '0'; b.textContent = 'New order'; }, 2500);
+      return;
+    }
+    clearTimeout(b._t); b.dataset.armed = '0'; b.textContent = 'New order';
+    var snap = JSON.stringify(state);
+    state.items = []; state.notes = ''; state.orderSeq += 1; state.orderDate = new Date().toISOString(); state.exportFilter = '';
+    $('notes').value = ''; $('q').value = '';
+    save(); render(); haptic();
+    toast('Started order ' + orderNo(), 'Undo', function () { state = JSON.parse(snap); $('notes').value = state.notes; save(); render(); });
+  });
   $('orderCo').addEventListener('input', function () { state.orderCo = $('orderCo').value; save(); render(); });
   $('orderCo').addEventListener('change', function () {
     var v = $('orderCo').value.trim();
@@ -994,10 +1205,12 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     save(); applyTheme();
   });
 
-  var APP_VERSION = '1.1.0';
+  var APP_VERSION = '1.2.0';
   load();
   $('shop').value = state.shop || 'Saeedi Essence';
   $('orderCo').value = state.orderCo || '';
+  $('phone').value = state.phone || '';
+  $('notes').value = state.notes || '';
   applyTheme();
   render();
 
