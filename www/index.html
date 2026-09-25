@@ -10,9 +10,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Saeedi Essence">
 <title>Saeedi Essence Orders</title>
+<meta name="description" content="Saeedi Essence order list: add items with company, weight and quantity, then share as text, picture or PDF. Works offline.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=optional" media="print" onload="this.media='all'">
 <style>
 :root {
   --bg: #EEE6D3; --panel: #FAF4E6; --field: #F1E9D8; --ink: #241E15; --muted: #7A6C52; --line: #D9CA9F;
@@ -104,7 +107,7 @@ input[type=number] { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 .info { flex: 1; min-width: 0; text-align: left; background: none; border: 0; padding: 2px 0; display: flex; flex-direction: column; gap: 3px; }
 .iname { font-size: 16px; font-weight: 500; overflow-wrap: anywhere; }
 .meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); font-family: "IBM Plex Mono", ui-monospace, monospace; }
-.wchip { border: 1px solid var(--line); background: var(--field); border-radius: 4px; padding: 0 8px; }
+.wchip { border: 1px solid var(--line); background: var(--field); color: var(--ink); border-radius: 4px; padding: 0 8px; }
 .stepper { flex: none; display: flex; align-items: center; gap: 2px; }
 .stepper button { width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--line); background: var(--field); font-size: 17px; line-height: 1; padding: 0; }
 .stepper .val { min-width: 50px; text-align: center; font-weight: 700; font-size: 15px; font-family: "IBM Plex Mono", ui-monospace, monospace; }
@@ -139,6 +142,8 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
 .dlg-actions .main { background: var(--stamp); border-color: var(--stamp); color: #F8F2E2; font-weight: 700; }
 .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(86px + env(safe-area-inset-bottom, 0px)); background: var(--hero); color: #F1E8D6; padding: 10px 16px; border-radius: 4px; font-size: 14px; z-index: 20; max-width: 90vw; text-align: center; border: 1px solid rgba(241,232,214,.2); }
 .toast[hidden] { display: none; }
+:root[data-theme="dark"] .bar button.main { color: #171310; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bar button.main { color: #171310; } }
 .toast button { margin-left: 12px; background: none; border: 0; color: var(--accent); font-weight: 700; text-decoration: underline; padding: 0; }
 .item.zero .iname { opacity: .5; text-decoration: line-through; }
 .pic-pages { font-size: 13px; color: var(--muted); margin: 8px 0 0; text-align: center; }
@@ -297,6 +302,7 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
   function fmt(n) { return (Math.round(Number(n) * 100) / 100).toString(); }
   function fmtWeight(it) { return (it.wt !== '' && it.wt != null) ? fmt(it.wt) + (it.wu ? ' ' + it.wu : '') : ''; }
   function fmtQty(it) { return fmt(it.qty) + (it.qu ? ' ' + it.qu : ''); }
+  var MAX_QTY = 1000000;
   var PL = { box: 'boxes', pack: 'packs', bag: 'bags', bottle: 'bottles', carton: 'cartons' };
   function plural(u, n) { return Number(n) === 1 ? (u || 'unit') : (u ? (PL[u] || u) : 'units'); }
   function totalsStr(items) {
@@ -356,7 +362,7 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
       '<div class="field"><label for="' + p + 'cat">Category</label><input id="' + p + 'cat" type="text" list="cats" placeholder="e.g. Grocery" autocomplete="off" maxlength="40"></div>' +
       (p === 'a' ? '<div class="chips" id="chips" aria-label="Existing categories"></div>' : '') +
       '<div class="field"><label for="' + p + 'wt">Weight</label><div class="pair"><input id="' + p + 'wt" type="number" inputmode="decimal" min="0" step="any" placeholder="0"><select id="' + p + 'wu" aria-label="Weight unit">' + opts(WU) + '</select></div></div>' +
-      '<div class="field"><label for="' + p + 'qty">Quantity</label><div class="pair"><input id="' + p + 'qty" type="number" inputmode="decimal" min="0" step="any" value="1"><select id="' + p + 'qu" aria-label="Quantity unit">' + opts(QU) + '</select></div></div>';
+      '<div class="field"><label for="' + p + 'qty">Quantity</label><div class="pair"><input id="' + p + 'qty" type="number" inputmode="decimal" min="0" max="1000000" step="any" value="1"><select id="' + p + 'qu" aria-label="Quantity unit">' + opts(QU) + '</select></div></div>';
   }
   function readFields(p) {
     var wt = parseFloat($(p + 'wt').value);
@@ -365,9 +371,9 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
       name: $(p + 'name').value.trim(),
       company: $(p + 'company').value.trim(),
       cat: $(p + 'cat').value.trim() || 'General',
-      wt: (isFinite(wt) && wt >= 0) ? wt : '',
+      wt: (isFinite(wt) && wt >= 0) ? Math.min(wt, MAX_QTY) : '',
       wu: $(p + 'wu').value,
-      qty: (isFinite(qty) && qty >= 0) ? qty : 1,
+      qty: (isFinite(qty) && qty >= 0) ? Math.min(qty, MAX_QTY) : 1,
       qu: $(p + 'qu').value
     };
   }
@@ -467,8 +473,16 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
         var plus = el('button', '', '+'); plus.type = 'button'; plus.setAttribute('aria-label', 'Increase ' + it.name);
         var val = el('div', 'val', fmt(it.qty));
         if (it.qu) val.appendChild(el('small', '', it.qu));
-        minus.addEventListener('click', function () { it.qty = Math.max(0, Number(it.qty) - 1); save(); render(); });
-        plus.addEventListener('click', function () { it.qty = Number(it.qty) + 1; save(); render(); });
+        // PERF FIX: only refresh this row, its group header and the grand total (was a full re-render)
+        function bump(d) {
+          it.qty = Math.min(MAX_QTY, Math.max(0, Math.round((Number(it.qty) + d) * 100) / 100)); save();
+          val.firstChild.nodeValue = fmt(it.qty);
+          row.classList.toggle('zero', !(it.qty > 0));
+          head.lastChild.textContent = g.items.length + (g.items.length === 1 ? ' item' : ' items') + ', ' + totalsStr(g.items);
+          var tv = list.querySelector('.tv'); if (tv) tv.textContent = totalsStr(state.items);
+        }
+        minus.addEventListener('click', function () { bump(-1); });
+        plus.addEventListener('click', function () { bump(1); });
         st.appendChild(minus); st.appendChild(val); st.appendChild(plus);
 
         var del = el('button', 'del', '×'); del.type = 'button'; del.setAttribute('aria-label', 'Remove ' + it.name);
@@ -853,8 +867,8 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     ensureFonts().then(function () {
       var pages = planPages(PAGE_H);
       var imgs = pages.map(function (p, i) {
-        var c = drawPage(p, i, pages.length, PAGE_H, 2);
-        return { data: b64bytes(c.toDataURL('image/jpeg', 0.92)), w: c.width, h: c.height };
+        var c = drawPage(p, i, pages.length, PAGE_H, 1.5);
+        return { data: b64bytes(c.toDataURL('image/jpeg', 0.85)), w: c.width, h: c.height };
       });
       return saveFile(slug() + '.pdf', buildPdf(imgs, '595.28', '841.89'));
     }).catch(function () { toast('Could not make the PDF'); });
@@ -980,6 +994,7 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
     save(); applyTheme();
   });
 
+  var APP_VERSION = '1.1.0';
   load();
   $('shop').value = state.shop || 'Saeedi Essence';
   $('orderCo').value = state.orderCo || '';

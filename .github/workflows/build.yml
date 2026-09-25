@@ -7,6 +7,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+concurrency: { group: build, cancel-in-progress: true }
 jobs:
   website:
     runs-on: ubuntu-latest
@@ -19,8 +20,12 @@ jobs:
         with: { path: www }
       - id: d
         uses: actions/deploy-pages@v4
+
   android:
     runs-on: ubuntu-latest
+    env:
+      VCODE: ${{ github.run_number }}
+      VNAME: 1.1.${{ github.run_number }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,15 +36,33 @@ jobs:
       - run: npx cap add android
       - run: npx capacitor-assets generate --android
       - run: npx cap sync android
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
-      - run: cp android/app/build/outputs/apk/debug/app-debug.apk Saeedi-Orders.apk
+      - name: Set version (so updates install over the old app)
+        run: |
+          sed -i "s/versionCode [0-9]*/versionCode $VCODE/; s/versionName \"[^\"]*\"/versionName \"$VNAME\"/" android/app/build.gradle
+          grep -E "versionCode|versionName" android/app/build.gradle
+      - name: Build release APK
+        run: cd android && chmod +x gradlew && ./gradlew assembleRelease
+      - name: Sign with the permanent Saeedi key
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > release.jks
+          BT=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -1)
+          $BT/zipalign -f -p 4 android/app/build/outputs/apk/release/app-release-unsigned.apk aligned.apk
+          $BT/apksigner sign --ks release.jks --ks-key-alias "$KEY_ALIAS" --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEYSTORE_PASSWORD --out Saeedi-Orders.apk aligned.apk
+          $BT/apksigner verify --print-certs Saeedi-Orders.apk | head -3
+          rm release.jks
       - uses: actions/upload-artifact@v4
         with: { name: Saeedi-Orders-APK, path: Saeedi-Orders.apk }
       - name: Publish download link (Releases)
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: Saeedi Orders – latest Android app
-          body: Download Saeedi-Orders.apk below and install it on your Android phone.
+          name: Saeedi Orders v${{ env.VNAME }}
+          body: |
+            Download **Saeedi-Orders.apk** below and install it on your Android phone.
+            Version ${{ env.VNAME }}. Future versions install over this one and keep your data.
           files: Saeedi-Orders.apk
           make_latest: true
