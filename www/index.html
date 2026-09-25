@@ -191,7 +191,7 @@ h1,h2,h3 { letter-spacing: -.01em; }
 .pill { display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 11px; border-radius:999px; font:600 12px/1 "IBM Plex Mono",monospace; color:#F8F2E2; background: rgba(255,255,255,.08); border:1px solid rgba(243,210,122,.28); }
 .pill.gold { background: var(--gold-grad); color:#1B150B; border-color: transparent; }
 .pill svg { width:13px; height:13px; }
-.hero-fields { display:grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+.hero-fields { display:grid; grid-template-columns: 1fr; gap: 10px; }
 .hero .orderfor input { font-size: 16px; height: 42px; background: rgba(255,255,255,.06); border: 1px solid rgba(243,210,122,.3); border-radius: var(--r-sm); padding: 0 12px; }
 .hero .orderfor input:focus-visible { border-color: #F3D27A; border-width: 1px; box-shadow: 0 0 0 3px rgba(243,210,122,.2); }
 .hero .orderfor label { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: rgba(241,232,214,.8); }
@@ -290,7 +290,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="orderDate"></span></span>
     <span class="pill" id="savedPill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Saved on device</span>
   </div>
-  <div class="hero-fields"><div class="field orderfor"><label for="orderCo">Order for company</label><input id="orderCo" type="text" list="companies" placeholder="Supplier / company" autocomplete="off" maxlength="60"></div><div class="field orderfor"><label for="phone">Shop phone</label><input id="phone" type="tel" inputmode="tel" placeholder="03xx-xxxxxxx" autocomplete="tel" maxlength="20"></div></div>
+  <div class="hero-fields"><div class="field orderfor"><label for="orderCo">Order for company</label><input id="orderCo" type="text" list="companies" placeholder="Supplier / company" autocomplete="off" maxlength="60"></div></div>
   </div></header>
 <div class="wrap">
   <div class="stats" aria-live="polite">
@@ -327,7 +327,7 @@ dialog img, dialog textarea { border-radius: 12px; }
   </div>
   <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search items, companies…" aria-label="Search the list" autocomplete="off"></div>
   <div id="list"></div>
-  <p class="foot">Saeedi Essence Order Book · v1.3 · Your data stays on this device</p>
+  <p class="foot">Saeedi Essence Order Book · v1.4 · Your data stays on this device</p>
 </div>
 
 <datalist id="cats"></datalist>
@@ -399,7 +399,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     if (!state.recentCos) state.recentCos = [];
     if (state.exportFilter == null) state.exportFilter = '';
     if (!state.groupBy) state.groupBy = 'cat';
-    if (state.phone == null) state.phone = '';
+    state.phone = ''; // phone no longer stored
     if (state.notes == null) state.notes = '';
     if (!(state.orderSeq >= 1)) state.orderSeq = 1;
     if (!state.orderDate) state.orderDate = new Date().toISOString();
@@ -464,7 +464,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     $('orderDate').textContent = dateStr();
   }
   var EMPTY_SVG = '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="#C89A2C" fill-opacity=".14"/><path d="M60 22s-24 30-24 48a24 24 0 0 0 48 0c0-18-24-48-24-48z" fill="#16302A"/><path d="M66 52c-12 2-12 12-5 15s7 13-5 15" fill="none" stroke="#F3D27A" stroke-width="4" stroke-linecap="round"/><circle cx="92" cy="30" r="4" fill="#C89A2C"/><circle cx="24" cy="86" r="3" fill="#C89A2C"/></svg>';
-  function slug() { return ((state.shop || '') + ' ' + orderNo()).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order'; }
+  function slug() { return ((state.shop || '') + ' ' + new Date(state.orderDate || Date.now()).toISOString().slice(0, 10)).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order'; }
 
   function uniq(field) {
     var seen = [];
@@ -692,8 +692,7 @@ dialog img, dialog textarea { border-radius: 12px; }
 
   function buildText() {
     var lines = [state.shop || 'Order'];
-    if (state.phone) lines.push('Tel: ' + state.phone);
-    lines.push('Order ' + orderNo() + '  ·  ' + dateStr(), '');
+    lines.push(dateStr(), '');
     // Customer-facing: no company, category or filter names
     [{ items: exportItems() }].forEach(function (g) {
       g.items.forEach(function (i, k) {
@@ -779,7 +778,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     });
     return out.slice(0, 12);
   }
-  function bandHeight() { return state.phone ? 206 : 176; }
+  function bandHeight() { return 176; }
   function planPages(pageH) {
     var top1 = bandHeight() + 30, topN = M;
     var bottom = pageH ? pageH - M - FOOT : Infinity;
@@ -841,12 +840,7 @@ dialog img, dialog textarea { border-radius: 12px; }
       x.font = 'italic 700 54px ' + HEAD;
       x.fillText(fit(x, state.shop || 'Order', IW - 150), M, 92);
       var ty = 142;
-      if (state.phone) {
-        x.font = '600 30px ' + BODY; x.fillStyle = GOLD;
-        x.fillText(fit(x, 'Tel: ' + state.phone, IW - 150), M, ty);
-        ty += 42;
-      }
-      var d = 'Order ' + orderNo() + '   ·   ' + dateStr();
+      var d = dateStr();
       x.font = '500 22px ' + MONO;
       x.fillStyle = '#B7AC8D';
       x.fillText(fit(x, d, IW - 150), M, ty);
@@ -1064,7 +1058,6 @@ dialog img, dialog textarea { border-radius: 12px; }
   });
   $('acat').addEventListener('input', renderChips);
   $('shop').addEventListener('input', function () { state.shop = $('shop').value; save(); });
-  $('phone').addEventListener('input', function () { state.phone = $('phone').value.trim(); save(); });
   $('notes').addEventListener('input', function () { state.notes = $('notes').value; save(); });
   $('q').addEventListener('input', applySearch);
   $('newBtn').addEventListener('click', function () {
@@ -1190,11 +1183,10 @@ dialog img, dialog textarea { border-radius: 12px; }
     save(); applyTheme();
   });
 
-  var APP_VERSION = '1.3.0';
+  var APP_VERSION = '1.4.0';
   load();
   $('shop').value = state.shop || 'Saeedi Essence';
   $('orderCo').value = state.orderCo || '';
-  $('phone').value = state.phone || '';
   $('notes').value = state.notes || '';
   applyTheme();
   render();
