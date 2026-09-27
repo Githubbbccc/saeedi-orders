@@ -462,6 +462,88 @@ test('manifest and cache include the current user-facing facts and localized Abo
   const worker = fs.readFileSync(path.join(__dirname, '../www/sw.js'), 'utf8');
   assert.match(manifest.description, /home, shops and teams/);
   assert.match(manifest.description, /offline after your first visit/);
-  assert.match(worker, /VERSION = '1\.8\.0'/);
+  assert.match(worker, /VERSION = '1\.9\.0'/);
   assert.match(worker, /\.\/i18n\.js/);
+});
+
+test('every page exposes one top-level heading and a translated order-number label', t => {
+  const p = page(t);
+  const headings = p.d.querySelectorAll('h1');
+  assert.equal(headings.length, 1, 'expected exactly one h1');
+  assert.match(headings[0].className, /sr-only/, 'the h1 must not print on the hero');
+  for (const lang of ['en', 'ur', 'es', 'ar']) {
+    p.$('langPref').value = lang;
+    p.$('langPref').dispatchEvent(new p.w.Event('change'));
+    assert.equal(headings[0].textContent, i18n.messages[lang].appTitle, `${lang} heading`);
+    assert.equal(p.$('orderNo').getAttribute('title'), i18n.messages[lang].orderNumber, `${lang} order number label`);
+    assert.match(i18n.messages[lang].orderNumber, /\S/);
+  }
+});
+
+test('native controls and browser chrome follow the chosen theme', t => {
+  const css = fs.readFileSync(path.join(__dirname, '../www/index.html'), 'utf8');
+  assert.match(css, /:root \{\s*color-scheme: light;/, 'light color-scheme');
+  assert.match(css, /:root\[data-theme="dark"\] \{\s*color-scheme: dark;/, 'explicit dark color-scheme');
+  assert.match(css, /:root:not\(\[data-theme="light"\]\) \{\s*color-scheme: dark;/, 'device dark color-scheme');
+  const p = page(t);
+  const meta = () => p.d.querySelector('meta[name="theme-color"]').getAttribute('content');
+  const pick = value => {
+    const radio = p.d.querySelector(`input[name="theme"][value="${value}"]`);
+    radio.checked = true;
+    radio.dispatchEvent(new p.w.Event('change', { bubbles: true }));
+  };
+  assert.equal(meta(), '#16302A', 'light hero colour by default');
+  pick('dark');
+  assert.equal(meta(), '#14231D', 'dark hero colour');
+  pick('light');
+  assert.equal(meta(), '#16302A');
+  pick('system');
+  assert.equal(meta(), '#16302A', 'device setting hands the colour back to the device');
+});
+
+test('deleting a custom category also frees its colour slot', t => {
+  const p = page(t);
+  p.w.confirm = () => true;
+  p.enter('aname', 'Rim tape');
+  p.enter('acat', 'Spares');
+  p.click('addBtn');
+  assert.equal(p.saved().items[0].cat, 'Spares');
+  assert.ok(p.saved().catOrder.indexOf('Spares') !== -1, 'rendering the group records its colour slot');
+  p.click('amanage');
+  const row = Array.from(p.d.querySelectorAll('#categoryManageList .manage-row'))
+    .find(r => r.querySelector('input').value === 'Spares');
+  assert.ok(row, 'the custom category should be listed');
+  row.querySelectorAll('button')[1].click(); // Delete
+  assert.equal(p.saved().items[0].cat, 'General');
+  assert.ok(p.saved().catOrder.indexOf('Spares') === -1, 'the colour map should not keep deleted categories');
+  assert.ok(p.saved().savedCategories.indexOf('Spares') === -1);
+});
+
+test('static assets revalidate in the background so updates reach returning visitors', () => {
+  const worker = fs.readFileSync(path.join(__dirname, '../www/sw.js'), 'utf8');
+  assert.match(worker, /stale-while-revalidate/i);
+  const assetBranch = worker.slice(worker.indexOf('e.respondWith(caches.match(req)'));
+  assert.ok(assetBranch.length, 'expected a cache lookup branch for assets');
+  assert.match(assetBranch, /fetch\(req\)/, 'assets must still be refreshed from the network');
+  assert.match(assetBranch, /c\.put\(req, cp\)/, 'the fresh copy must replace the cached one');
+  assert.match(assetBranch, /return r \|\| network;/, 'the cache is served first, the network backs it up');
+  assert.match(worker, /c\.add\(f\)\.catch/, 'one missing file must not abort the whole precache');
+});
+
+test('manifest keeps a stable install identity and declares language and categories', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../www/manifest.webmanifest'), 'utf8'));
+  assert.equal(manifest.id, manifest.start_url, 'the id must match start_url so existing installs are not duplicated');
+  assert.equal(manifest.start_url, './index.html');
+  assert.equal(manifest.scope, './');
+  assert.equal(manifest.lang, 'en');
+  assert.equal(manifest.dir, 'ltr');
+  assert.deepEqual(manifest.categories, ['productivity', 'utilities']);
+  assert.match(manifest.name, /Order App/);
+});
+
+test('a visitor without JavaScript is told why the page is empty', () => {
+  const html = fs.readFileSync(path.join(__dirname, '../www/index.html'), 'utf8');
+  const notice = html.match(/<noscript>([\s\S]*?)<\/noscript>/);
+  assert.ok(notice, 'expected a <noscript> notice');
+  assert.match(notice[1], /needs JavaScript/i);
 });

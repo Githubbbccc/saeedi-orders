@@ -4,7 +4,7 @@
   'use strict';
   var messages = {
     en: {
-      appTitle: 'Order App — Make & Share Orders', defaultTitle: 'My Orders', tag: 'Your orders · Tap name to change',
+      appTitle: 'Order App — Make & Share Orders', defaultTitle: 'My Orders', tag: 'Your orders · Tap name to change', orderNumber: 'Order number',
       titleLabel: 'Order title or shop name', titleHint: 'Tap to change the title on your shared orders',
       settings: 'Settings', settingsIntro: 'Make Order App yours. Preferences stay on this device.',
       aboutSummary: 'About Order App', aboutAudienceTitle: 'Who is it for?',
@@ -63,7 +63,7 @@
       exportSize: 'Size / wt', exportPage: 'page {page} of {total}'
     },
     ur: {
-      appTitle: 'Order App — آرڈر بنائیں اور شیئر کریں', defaultTitle: 'میرے آرڈر', tag: 'آپ کے آرڈر · نام بدلنے کے لیے دبائیں',
+      appTitle: 'Order App — آرڈر بنائیں اور شیئر کریں', defaultTitle: 'میرے آرڈر', tag: 'آپ کے آرڈر · نام بدلنے کے لیے دبائیں', orderNumber: 'آرڈر نمبر',
       titleLabel: 'آرڈر یا دکان کا نام', titleHint: 'شیئر کردہ آرڈر کا عنوان بدلنے کے لیے دبائیں',
       settings: 'ترتیبات', settingsIntro: 'Order App کو اپنی پسند کے مطابق بنائیں۔ ترجیحات اسی ڈیوائس پر محفوظ رہتی ہیں۔',
       aboutSummary: 'Order App کے بارے میں', aboutAudienceTitle: 'یہ کس کے لیے ہے؟',
@@ -122,7 +122,7 @@
       exportSize: 'سائز / وزن', exportPage: 'صفحہ {page} از {total}'
     },
     es: {
-      appTitle: 'Order App — Crea y comparte pedidos', defaultTitle: 'Mis pedidos', tag: 'Tus pedidos · Toca para cambiar el nombre',
+      appTitle: 'Order App — Crea y comparte pedidos', defaultTitle: 'Mis pedidos', tag: 'Tus pedidos · Toca para cambiar el nombre', orderNumber: 'Número de pedido',
       titleLabel: 'Título del pedido o nombre del negocio', titleHint: 'Toca para cambiar el título de tus pedidos compartidos',
       settings: 'Ajustes', settingsIntro: 'Personaliza Order App. Tus preferencias se guardan en este dispositivo.',
       aboutSummary: 'Acerca de Order App', aboutAudienceTitle: '¿Para quién es?',
@@ -181,7 +181,7 @@
       exportSize: 'Tamaño / peso', exportPage: 'página {page} de {total}'
     },
     ar: {
-      appTitle: 'Order App — أنشئ الطلبات وشاركها', defaultTitle: 'طلباتي', tag: 'طلباتك · اضغط لتغيير الاسم',
+      appTitle: 'Order App — أنشئ الطلبات وشاركها', defaultTitle: 'طلباتي', tag: 'طلباتك · اضغط لتغيير الاسم', orderNumber: 'رقم الطلب',
       titleLabel: 'عنوان الطلب أو اسم المتجر', titleHint: 'اضغط لتغيير عنوان الطلبات التي تشاركها',
       settings: 'الإعدادات', settingsIntro: 'خصّص Order App كما تحب. تُحفظ تفضيلاتك على هذا الجهاز.',
       aboutSummary: 'حول Order App', aboutAudienceTitle: 'لمن هذا التطبيق؟',

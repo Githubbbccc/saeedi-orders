@@ -20,6 +20,7 @@
 @font-face { font-family: "Noto Naskh Arabic"; src: url("fonts/noto-naskh-arabic.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 @font-face { font-family: "Noto Nastaliq Urdu"; src: url("fonts/noto-nastaliq-urdu.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 :root {
+  color-scheme: light;
   --bg: #EEE6D3; --panel: #FAF4E6; --field: #F1E9D8; --ink: #241E15; --muted: #7A6C52; --line: #D9CA9F;
   --hero: #16302A; --hero-2: #0F241F; --accent: #C89A2C; --accent-ink: #241E15; --stamp: #A6382C; --ring: #A6382C;
   --shadow: 0 1px 0 rgba(36,30,21,.05), 0 10px 22px rgba(36,30,21,.07);
@@ -27,18 +28,23 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #171310; --panel: #211B15; --field: #1B1611; --ink: #F1E8D6; --muted: #B4A484; --line: #3A3024;
     --hero: #14231D; --hero-2: #0D1712; --accent: #E0AE3B; --accent-ink: #171310; --stamp: #D96A55; --ring: #E0AE3B; --shadow: none;
     --c0: #E0AE3B; --c1: #D96A55; --c2: #7DAE63; --c3: #C08858; --c4: #C4B15E; --c5: #59A692; --c6: #C4667A; --c7: #A08F6B;
   }
 }
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #171310; --panel: #211B15; --field: #1B1611; --ink: #F1E8D6; --muted: #B4A484; --line: #3A3024;
   --hero: #14231D; --hero-2: #0D1712; --accent: #E0AE3B; --accent-ink: #171310; --stamp: #D96A55; --ring: #E0AE3B; --shadow: none;
   --c0: #E0AE3B; --c1: #D96A55; --c2: #7DAE63; --c3: #C08858; --c4: #C4B15E; --c5: #59A692; --c6: #C4667A; --c7: #A08F6B;
 }
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", "Noto Naskh Arabic", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.45; }
+/* Keeps a real heading in the outline without printing it on the receipt-style hero. */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+.noscript { margin: 0 0 14px; padding: 12px 14px; border: 1px solid rgba(241,232,214,.35); border-radius: 4px; background: rgba(241,232,214,.08); color: #F1E8D6; font-size: 15px; }
 h1, h2 { font-family: "Fraunces", "Noto Naskh Arabic", Georgia, serif; font-weight: 600; }
 .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 112px; background-image: repeating-linear-gradient(var(--line) 0 1px, transparent 1px 40px); background-position: 0 8px; }
 :root[data-theme="dark"] .wrap { background-image: none; }
@@ -343,13 +349,16 @@ dialog img, dialog textarea { border-radius: 12px; }
 </head>
 <body>
 <header class="hero"><div class="hero-in">
+  <h1 class="sr-only" data-i18n="appTitle">Order App — Make &amp; Share Orders</h1>
+  <!-- Only rendered when scripting is off, so it cannot be localized at runtime. -->
+  <noscript><p class="noscript">Order App needs JavaScript to build, save and share your order list. Please turn JavaScript on in your browser, then reload this page.</p></noscript>
   <div class="head">
     <span class="logo" aria-hidden="true"><span class="logo-ring"><img src="icon.svg" width="50" height="50" alt=""></span></span>
     <div class="brand"><input id="shop" class="title-input" type="text" value="My Orders" aria-label="Order title or shop name" data-i18n-aria="titleLabel" title="Tap to change the title on your shared orders" data-i18n-title="titleHint" maxlength="60"><span class="tag" data-i18n="tag">Your orders · Tap name to change</span></div>
     <button class="icon-btn theme-btn settings-btn" id="settingsBtn" aria-label="Settings" data-i18n-aria="settings" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h6m4 0h8M3 12h3m4 0h11M3 17h10m4 0h4"/><circle cx="11" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="15" cy="17" r="2"/></svg></button>
   </div>
   <div class="orderbar">
-    <span class="pill gold" id="orderNo" dir="ltr" title="Order number">#ORD-0001</span>
+    <span class="pill gold" id="orderNo" dir="ltr" title="Order number" data-i18n-title="orderNumber">#ORD-0001</span>
     <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="orderDate" dir="auto"></span></span>
     <span class="pill" id="savedPill" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="saveStatus">Saved on device</span></span>
   </div>
@@ -888,6 +897,9 @@ dialog img, dialog textarea { border-radius: 12px; }
     if (count && !window.confirm(t('categoryDeleteConfirm', { name: name, count: count }))) return;
     state.savedCategories = state.savedCategories.filter(function (c) { return c !== name; });
     state.items.forEach(function (it) { if (it.cat === name) it.cat = 'General'; });
+    // Drop the deleted name from the colour map too, so the palette slot is reused
+    // instead of the list growing by one entry per category ever deleted.
+    state.catOrder = state.catOrder.filter(function (c) { return c !== name; });
     ['a', 'e'].forEach(function (p) { if ($(p + 'cat').value.trim().toLowerCase() === name.toLowerCase()) $(p + 'cat').value = categoryLabel('General'); });
     if (state.groupBy === 'cat' && state.exportFilter === name) state.exportFilter = '';
     render(); renderCategoryManager(); save(); toast(t('categoryRemoved'));
@@ -1559,6 +1571,25 @@ dialog img, dialog textarea { border-radius: 12px; }
   function applyTheme() {
     if (state.theme) document.documentElement.setAttribute('data-theme', state.theme);
     else document.documentElement.removeAttribute('data-theme');
+    updateThemeColor();
+  }
+  // Keep the browser/OS chrome colour in step with the hero, which is a different
+  // green in light and dark mode, and with an explicit Light/Dark choice.
+  function prefersDark() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+  function updateThemeColor() {
+    var dark = state.theme ? state.theme === 'dark' : prefersDark();
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', dark ? '#14231D' : '#16302A');
+  }
+  if (window.matchMedia) {
+    var schemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    if (schemeQuery) {
+      var onSchemeChange = function () { if (!state.theme) updateThemeColor(); };
+      if (schemeQuery.addEventListener) schemeQuery.addEventListener('change', onSchemeChange);
+      else if (schemeQuery.addListener) schemeQuery.addListener(onSchemeChange);
+    }
   }
   load();
   $('shop').value = titleText();
