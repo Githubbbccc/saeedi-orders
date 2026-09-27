@@ -1,11 +1,11 @@
-// Saeedi Orders service worker
-// FIX: network-first for the page so new versions reach users; cache fallback keeps it working offline.
-var VERSION = '1.4.0';
+// Order App service worker. Keep the old cache prefix for existing installations.
+// Network-first for the page; cache fallback keeps it working offline.
+var VERSION = '1.8.0';
 var C = 'saeedi-orders-' + VERSION;
-var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+var FILES = ['./', './index.html', './i18n.js', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './fonts/noto-naskh-arabic.woff2', './fonts/noto-nastaliq-urdu.woff2'];
 self.addEventListener('install', function (e) { e.waitUntil(caches.open(C).then(function (c) { return c.addAll(FILES); })); self.skipWaiting(); });
 self.addEventListener('activate', function (e) {
-  e.waitUntil(caches.keys().then(function (k) { return Promise.all(k.filter(function (n) { return n !== C; }).map(function (n) { return caches.delete(n); })); }).then(function () { return self.clients.claim(); }));
+  e.waitUntil(caches.keys().then(function (k) { return Promise.all(k.filter(function (n) { return n.indexOf('saeedi-orders-') === 0 && n !== C; }).map(function (n) { return caches.delete(n); })); }).then(function () { return self.clients.claim(); }));
 });
 self.addEventListener('fetch', function (e) {
   var req = e.request;

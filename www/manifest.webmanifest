@@ -1,10 +1,11 @@
 {
-  "name": "Saeedi Essence Orders",
-  "short_name": "Saeedi Orders",
+  "name": "Order App — Make & Share Orders",
+  "short_name": "Order App",
+  "description": "An on-device order list for home, shops and teams. Organize items and share as text, picture or PDF; works offline after your first visit.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#EEE6D3",
+  "background_color": "#16302A",
   "theme_color": "#16302A",
   "icons": [
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },

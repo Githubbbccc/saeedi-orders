@@ -1,11 +1,13 @@
 {
-  "name": "saeedi-orders",
+  "name": "order-app",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "sync": "npx cap sync",
     "android": "npx cap open android",
-    "ios": "npx cap open ios"
+    "ios": "npx cap open ios",
+    "icons": "node scripts/generate-icons.cjs",
+    "test": "node --test tests/*.test.cjs"
   },
   "dependencies": {
     "@capacitor/android": "^6.1.2",
@@ -15,5 +17,10 @@
     "@capacitor/share": "^6.0.2",
     "@capacitor/splash-screen": "^6.0.2"
   },
-  "devDependencies": { "@capacitor/cli": "^6.1.2", "@capacitor/assets": "^3.0.5" }
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.1.2",
+    "@resvg/resvg-js": "^2.6.2",
+    "jsdom": "^26.1.0"
+  }
 }

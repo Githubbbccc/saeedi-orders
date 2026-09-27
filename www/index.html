@@ -4,19 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#16302A">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjExMiIgZmlsbD0iIzBGM0QyRSIvPjxwYXRoIGQ9Ik0yNTYgOTJDMjU2IDkyIDE1MCAyMjIgMTUwIDMwNmExMDYgMTA2IDAgMCAwIDIxMiAwQzM2MiAyMjIgMjU2IDkyIDI1NiA5MloiIGZpbGw9IiNGMkIwMUUiLz48cGF0aCBkPSJNMjg0IDIyNkMyMTIgMjM4IDIxMiAyOTIgMjU2IDMxMEMzMDAgMzI4IDMwMCAzODQgMjI4IDM5NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMEYzRDJFIiBzdHJva2Utd2lkdGg9IjIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=">
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAACXBIWXMAAAsTAAALEwEAmpwYAAAK5UlEQVR4nO2d+ZNU1RXH/Q9ONiUxyXTPMBsz3TdlSlPZBkRQEFRQICgoLhBDjIggqKgIUgGXEEGMBKIMskxEQMGyUkmlKlVJKmapRKtSiZFEs+9mzz9wU6elYzu81/1e91su931++FZRwHT3nPO5p88799xzz5ARYxE2EE9scEbeHwBhAwFoICAQGCI0EBjvbUDK4YATkAFoIGAhCBEaCMRzG5ByOOAEZAAaCFgIQoQGAvHcBqQcDjgBGYAGAhaCEKGBQDy3ASmHA05ABqCBgIUgRGggEM9tQMrhgBOQAWggYCEIERoIxHMbkHI44ARkABoIWAhChAYC8dwGpBwOOAEZgAYCFoIQoYFAPLcBKYcDTkAGoIGAhSBEaCAQz21AyuGAE5ABaCBgIQgRGgjEcxuQcjjgBGQAGghYCEKEBgLx3AakHA44ARmABgIWghChgUA8twEphwNOQAaggYCFIERoIBDPbUDK4YATkAFoIGAhCBEaCMRzG5ByOOAEZAAaCFgIQoQGAvHcBqQcDjgBGYAGAhaCEKGBQDy3ASlHBkY+e9obytvZUgABdAZGfnJLrx17qDd3Z0sBBNApG3jVygH73+NdNa28ZTB3h4vnAugUjTtlwZD9+zNvwKz6x7NddtrC4dydLh4LoFMybOnCqv3Z/vL/Ya7rxIGy7b6okrvjxVMBdApGfftkY5/fPvEUmOt6bltP7f/k7XzxUACdglHX3fZm3hym21cN5O588VAAnbBBPzZ/+C15c5j+9kyX/eg88mkBaHc14YKqfWn01Lw5TC+Olms/k/fnFo9EhE7QmDs39UWGua4dG6lPC0C7p7lLhux/jsWDWaU/M++6Sbl/fvFEROgEjNg3s2p//VT0VGO8fjlWshNnkHoIQLuhw58LL9FF1VMPTcz99xAPRITu0IDXLBvsGOa6rryB1EMAOr9oUL6wWksXkgL6tbFSbYcx7ygnp7GI0B0Yb++W3sRgruuJz1L1EIDOp6qRNMx1XXYNqYcQobOD+d0XVO3L+9qvarTSK/vLHAgYIeXIDOhHN8bfQImrRzb05Z6PymkocuiYBpu6cNj+u40NlLjS99B+6rwBkdNMAB3DWNry+e1dPanDXNcLu7tpMx0B6NRW/4qbW7eFJq1Pf4ZjW0KETqfm/JsOtrfb1e8OlTjhMkLK4UQnXVLasYHatJBDJwfzuXMq9p/PJrcjGFf63ufN5TCA8FCYDNDHt2X3IBimI1tpXhKA7hzmmYvS2xGMq1mLKeNJC39RtmtinLdNNva7u7tzB7kuLRnqZ0r6+UA8EkA3MY62c+YN8XjNu5Y+DwHo+CtdI+H3H8++TNdK+o1BlDZE6LhAL1qaTXR+/WipNiIszs8suJ4oLaQc8ba4f7gnndz5x3u7a41H1984aM+5bLgWbSdMrdoNa/sjv8b3vkSUFoCODrRGwCQh/vnBst10Z7/98BXDiZ1N1H7svB/AxEHxUBhglK9/IZm684+e6LZLlw/aM8+P5ozVDaN3W+krj/TkDo84KIAOGOXVcV58pGTvWD1g3zmlmmqfNaPEDEBHmbbfUVTe020/cGn8cbmzFw/V5t3Fea/RzfR4CBE6HKreGdVIgxbD9LVHe+z7p0eLyv0XV2p17gfu6rPfeKynralL+lkZUGNIOcIgW3tr+/3OWnloNXhRJyzduXqgtuPXDsBB0rw777xVHBI5dIMxfvB4e6U67ZMeml1pGo13beqNnVJEkZYX84ZIHBJAnzSEnt9rF6qVK8JPldx406D94+F0W095ODQAndRJ7p88WbbvmhIM89b12RwK4IS4AehG8HS37tWD7fVtbLy9PxDmNaui7/x1Kv3s9HcYUo46fCML2q89a916PMyTZlVqPRpZAU3aYYjQjQBqlG0HIq1UBO0C3r0mu+hc171rqXbwUHgSwO/saq+6oUPOg9INnfWcNdDf3Em1A6BHjH3v9Grbk5B+e6gUCPTBB5OfStpK+ju8hwuIKNvNuKqzM4Pa+jkeaL2DMGugVdOvpAOv8HXoTqsR539iKHBH8K9Hsh97sIpdQ4Ded39n+e7mdcFlO91syRrovTQrAXSnp7pP7C/Zs0L6nbXxKEugX9jNg2HhU44TB8qpNgjd8KlB+4ens0k/XtkfXHUpkgoPtDbjdwqSAmua9ED3XFSx99/Vb/98OF2g/3IkuOpSJBUaaE0VkoJJRx7oVRXN3k9vuLrvjv5Um5XOinjcy1cVGmgFLEmYtM9Zx+62el+tghx7OJ3Nl1LBr4UrNNBJRujG/uTzLm89KVSbidrdcm+mM4nQ+YOVp+IOeYkibeRfd9uAnTC19ftr7TjJ9xUHbJqnCh2hVVoZSOOrv97WqRWQVkeztt+bTHnvp/uochQe6Oe3p99IpNcnayR+x+RgsDVN0Bpyp+/z3DZmdRQe6IczOlWi0tPdWsILG2PQ6etvXc/dhoUHemHGI3NfHC3brpBKhALfyWvPv44hjoUHWstcWVyk2Sjtl076AfFfx0qRZ4L4rMIDneQsuzjSY1/jnaETlzoZciMOAJW3AHrE2OU3Zd8Zp1vh452hs/Da/bZYtpwLOgG64dRK2n0WUdOOX305/rb4n54u2bOn5R8dXRAR+qQhHry7z4ne5XYOBoT1ZEsBBdANgxqT6LyLKk1zxjtDo2w7HXZhpUApoAC6wRjrY1wL0YleHQvuzJuzJH4JUYc/5g2ROCSAHrdj99JoujdfaXnt8pDrJB67ry/2LOqwMWRSUAH0OIN8fP5wKlNCVa8f7bKLlwVvfmjbaZyTLfoZg6Y2ScEF0AFGufWW5McQaK90symhn78nXrqz4mZSDQHo6Cs9qQ44nWikUVmvims2GyROG6tOSs07EoqjIkKHGEYBbGcCkh6v+uqOntqlQR+c07r6ULmkUhspFvX1DzzQ23RxSMEF0E2Mo+2eOze1jtTa+rnkk4O2ekkl1ljbj1xRsb+Icep8z+be2DdrScEE0C0MpIDqLa9anQjrngsaB9ZKVy8djLw7qe99zxo2TwSgk1v5sxYP2dfGToVaR+fGeR1NMY5v64l16mXmImbWCRE6+a8zbc/Uh8XGaK3RO2o5UMeORX340yalvVt6bTe7gJaUI+U8Teu/R7dOrA08f3lf2b5vWjUwVdH/p3M44owbU5D1zm8uAjLk0FnrQ3OH7Y4NvfZbX+ypNefrjVdaT9Yqx+8PxesL0UqHXv4TZQQCMqE24KEwAUB0+/nSqyfVOvZ0A0V3BFsBrHew6ELQgY76s2xhm0QWKkCnEPG0Tjw8u2IvXjRUO7OoAxtV+mf9O/03askmlW8agOYr3PpkA4B2wAnIADQQsBCECA0E4rkNSDkccAIyAA0ELAQhQgOBeG4DUg4HnIAMQAMBC0GI0EAgntuAlMMBJyAD0EDAQhAiNBCI5zYg5XDACcgANBCwEIQIDQTiuQ1IORxwAjIADQQsBCFCA4F4bgNSDgecgAxAAwELQYjQQCCe24CUwwEnIAPQQMBCECI0EIjnNiDlcMAJyAA0ELAQhAgNBOK5DUg5HHACMgANBCwEIUIDgXhuA1IOB5yADEADAQtBiNBAIJ7bgJTDAScgA9BAwEIQIjQQiOc2IOVwwAnIADQQsBCECA0E4rkNSDkccAIyAA0ELAQhQgOBeG4DUg4HnIAMQAMBC0GI0EAgntuAlMMBJyAD0EDAQhAiNBCI5zYg5XDACcgANBCwECTABv8DBaJPTd3/pVQAAAAASUVORK5CYII=">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Saeedi Essence">
-<title>Saeedi Essence Orders</title>
-<meta name="description" content="Saeedi Essence order list: add items with company, weight and quantity, then share as text, picture or PDF. Works offline.">
+<meta name="apple-mobile-web-app-title" content="Order App">
+<title>Order App — Make &amp; Share Orders</title>
+<meta name="description" content="An on-device order list for home, shops and teams. Organize items and share as text, picture or PDF. Works offline after your first visit.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=optional" media="print" onload="this.media='all'">
 <style>
+@font-face { font-family: "Noto Naskh Arabic"; src: url("fonts/noto-naskh-arabic.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Noto Nastaliq Urdu"; src: url("fonts/noto-nastaliq-urdu.woff2") format("woff2"); font-weight: 400; font-display: swap; }
 :root {
   --bg: #EEE6D3; --panel: #FAF4E6; --field: #F1E9D8; --ink: #241E15; --muted: #7A6C52; --line: #D9CA9F;
   --hero: #16302A; --hero-2: #0F241F; --accent: #C89A2C; --accent-ink: #241E15; --stamp: #A6382C; --ring: #A6382C;
@@ -36,8 +38,8 @@
   --c0: #E0AE3B; --c1: #D96A55; --c2: #7DAE63; --c3: #C08858; --c4: #C4B15E; --c5: #59A692; --c6: #C4667A; --c7: #A08F6B;
 }
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.45; }
-h1, h2 { font-family: "Fraunces", Georgia, serif; font-weight: 600; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", "Noto Naskh Arabic", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.45; }
+h1, h2 { font-family: "Fraunces", "Noto Naskh Arabic", Georgia, serif; font-weight: 600; }
 .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 112px; background-image: repeating-linear-gradient(var(--line) 0 1px, transparent 1px 40px); background-position: 0 8px; }
 :root[data-theme="dark"] .wrap { background-image: none; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .wrap { background-image: none; } }
@@ -51,13 +53,13 @@ h1, h2 { font-family: "Fraunces", Georgia, serif; font-weight: 600; }
 .head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .logo { flex: none; display: block; transform: rotate(-7deg); }
 .logo-ring { display: block; filter: drop-shadow(0 2px 3px rgba(0,0,0,.35)); }
-.logo svg { display: block; }
-.hero .title-input { width: 100%; min-width: 0; border: 0; background: transparent; color: #F8F2E2; font-family: "Fraunces", Georgia, serif; font-weight: 600; font-style: italic; font-size: clamp(21px, 6.8vw, 36px); line-height: 1.1; text-overflow: ellipsis; padding: 4px 0; letter-spacing: 0; border-bottom: 2px solid transparent; border-radius: 0; }
+.logo img { display: block; border-radius: 11px; }
+.hero .title-input { width: 100%; min-width: 0; border: 0; background: transparent; color: #F8F2E2; font-family: "Fraunces", "Noto Naskh Arabic", Georgia, serif; font-weight: 600; font-style: italic; font-size: clamp(21px, 6.8vw, 36px); line-height: 1.1; text-overflow: ellipsis; padding: 4px 0; letter-spacing: 0; border-bottom: 2px solid transparent; border-radius: 0; }
 .hero .title-input:focus { outline: none; border-bottom-color: var(--accent); }
 .hero .theme-btn { flex: none; margin-top: 0; background: rgba(241,232,214,.1); border: 1px solid rgba(241,232,214,.3); color: #F1E8D6; border-radius: 50%; }
 .orderfor { margin: 0; }
 .hero .orderfor label { color: rgba(241,232,214,.65); font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .02em; }
-.hero .orderfor input { height: 46px; font-size: 18px; font-weight: 500; font-family: "IBM Plex Sans", sans-serif; background: transparent; border: 0; border-bottom: 1px dashed rgba(241,232,214,.45); color: #F8F2E2; border-radius: 0; padding: 0 2px; }
+.hero .orderfor input { height: 46px; font-size: 18px; font-weight: 500; font-family: "IBM Plex Sans", "Noto Naskh Arabic", sans-serif; background: transparent; border: 0; border-bottom: 1px dashed rgba(241,232,214,.45); color: #F8F2E2; border-radius: 0; padding: 0 2px; }
 .hero .orderfor input::placeholder { color: rgba(241,232,214,.45); font-weight: 400; }
 .hero .orderfor input:focus-visible { outline: none; border-bottom-color: var(--accent); border-bottom-width: 2px; }
 .sub { color: var(--muted); font-size: 14px; margin: 18px 0 14px; }
@@ -99,7 +101,7 @@ input[type=number] { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 
 .cat { background: var(--panel); border: 1px solid var(--line); border-radius: 4px; margin-bottom: 14px; overflow: hidden; box-shadow: var(--shadow); }
 .cat-head { display: flex; align-items: baseline; gap: 10px; padding: 12px 14px; border-bottom: 1px dashed var(--line); border-left: 5px solid var(--cc); }
-.cat-head h3 { margin: 0; font-family: "Fraunces", Georgia, serif; font-style: italic; font-size: 19px; font-weight: 600; flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.cat-head h3 { margin: 0; font-family: "Fraunces", "Noto Naskh Arabic", Georgia, serif; font-style: italic; font-size: 19px; font-weight: 600; flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .cat-head small { color: var(--muted); font-size: 12px; text-align: right; font-family: "IBM Plex Mono", ui-monospace, monospace; }
 .item { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 10px; border-bottom: 1px dashed var(--line); border-left: 5px solid var(--cc); }
 .item:nth-child(2n) { background: color-mix(in srgb, var(--cc) 5%, transparent); }
@@ -107,7 +109,7 @@ input[type=number] { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 .no { flex: none; width: 26px; height: 26px; border-radius: 50%; background: transparent; border: 1px solid var(--muted); display: grid; place-items: center; font-size: 12px; font-weight: 600; font-family: "IBM Plex Mono", ui-monospace, monospace; color: var(--muted); }
 .info { flex: 1; min-width: 0; text-align: left; background: none; border: 0; padding: 2px 0; display: flex; flex-direction: column; gap: 3px; }
 .iname { font-size: 16px; font-weight: 500; overflow-wrap: anywhere; }
-.meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); font-family: "IBM Plex Mono", ui-monospace, monospace; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; color: var(--muted); font-family: "IBM Plex Mono", "Noto Naskh Arabic", ui-monospace, monospace; }
 .wchip { border: 1px solid var(--line); background: var(--field); color: var(--ink); border-radius: 4px; padding: 0 8px; }
 .stepper { flex: none; display: flex; align-items: center; gap: 2px; }
 .stepper button { width: 32px; height: 32px; border-radius: 4px; border: 1px solid var(--line); background: var(--field); font-size: 17px; line-height: 1; padding: 0; }
@@ -135,7 +137,7 @@ input[type=number] { font-family: "IBM Plex Mono", ui-monospace, monospace; }
 dialog { width: min(92vw, 520px); max-height: 92vh; overflow: auto; border: 1px solid var(--line); border-radius: 4px; padding: 20px; background: var(--panel); color: var(--ink); }
 dialog::backdrop { background: rgba(20,15,8,.62); }
 dialog h2 { margin: 0 0 12px; font-size: 21px; font-style: italic; }
-dialog textarea { width: 100%; height: 230px; font: 14px/1.6 "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--field); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 10px; resize: vertical; }
+dialog textarea { width: 100%; height: 230px; font: 14px/1.6 "IBM Plex Mono", "Noto Naskh Arabic", ui-monospace, Menlo, Consolas, monospace; background: var(--field); color: var(--ink); border: 1px solid var(--line); border-radius: 4px; padding: 10px; resize: vertical; }
 dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid var(--line); display: block; max-height: 56vh; object-fit: contain; background: #FAF4E6; }
 .hint { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
 .dlg-actions { display: flex; gap: 8px; margin-top: 14px; }
@@ -173,15 +175,17 @@ dialog img { width: 100%; height: auto; border-radius: 4px; border: 1px solid va
   --shadow: 0 1px 2px rgba(22,48,42,.06), 0 8px 24px -6px rgba(22,48,42,.16); --shadow-lg: 0 18px 40px -12px rgba(22,48,42,.35); }
 body { background: radial-gradient(1200px 500px at 50% -120px, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%), var(--bg); background-attachment: fixed; -webkit-tap-highlight-color: transparent; }
 .wrap { background-image: none !important; padding-top: 6px; }
+.wrap.no-bar { padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
+.bar[hidden] { display: none; }
 h1,h2,h3 { letter-spacing: -.01em; }
 .hero { clip-path: none !important; border-radius: 0 0 28px 28px; padding: calc(env(safe-area-inset-top,0px) + 16px) 18px 22px;
   background: radial-gradient(600px 260px at 100% 0%, rgba(200,154,44,.28), transparent 60%), radial-gradient(500px 300px at 0% 120%, rgba(47,107,94,.45), transparent 60%), linear-gradient(160deg,#1B3B33 0%,#10261F 60%,#0B1C17 100%);
   box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
 .hero::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:.07;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Cpath d='M22 4c0 0-10 12-10 20a10 10 0 0 0 20 0C32 16 22 4 22 4z' fill='none' stroke='%23F3D27A' stroke-width='1'/%3E%3C/svg%3E"); }
+  background-image: radial-gradient(circle, #F3D27A 1px, transparent 1px); background-size: 24px 24px; }
 .hero-in { position: relative; z-index: 1; }
 .logo { transform: none; } .logo-ring { filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); }
-.logo svg { animation: float 6s ease-in-out infinite; }
+.logo img { animation: float 6s ease-in-out infinite; }
 @keyframes float { 50% { transform: translateY(-3px) rotate(-4deg); } }
 .brand { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .brand .tag { font: 600 10.5px/1 "IBM Plex Mono", monospace; letter-spacing: .2em; text-transform: uppercase; color: #F3D27A; margin-top: 2px; }
@@ -211,6 +215,19 @@ h1,h2,h3 { letter-spacing: -.01em; }
 input[type=text], input[type=number], input[type=search], input[type=tel], select, textarea.notes { border-radius: var(--r-sm); transition: border-color .15s, box-shadow .15s, background .15s; }
 .wrap input:focus, .wrap select:focus, dialog input:focus, dialog select:focus, textarea.notes:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); outline: none; background: var(--panel); }
 .chip { border-radius: 999px; transition: transform .12s; } .chip:active { transform: scale(.95); }
+.category-picker { border: 1px solid var(--line); border-radius: var(--r-sm); background: color-mix(in srgb, var(--accent) 5%, var(--panel)); padding: 12px; }
+.category-title { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 3px 10px; }
+.category-title .hint { margin: 0; font-size: 12px; }
+.category-picker input { background: var(--field); }
+.category-picker .chips { margin-top: 5px; }
+.category-picker .chip { min-height: 34px; }
+.category-picker .chip[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 19%, var(--panel)); color: var(--ink); }
+.category-actions { display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px 10px; align-items:center; }
+.category-actions .linkbtn { color:var(--c5); padding:5px 4px !important; font-size:12px; white-space:normal; text-align:start; }
+.category-actions .linkbtn:last-child { color:var(--stamp); }
+.pill.unsaved { border-color: var(--stamp); color: #FFE0D5; }
+.pill.unsaved svg { display: none; }
+.pill.unsaved::before { content: '!'; font-weight: 700; }
 .primary { border-radius: var(--r-sm); border: 0; background: var(--gold-grad); color: #1B150B; box-shadow: 0 10px 22px -8px rgba(154,114,25,.75), inset 0 1px 0 rgba(255,255,255,.4); display:flex; align-items:center; justify-content:center; gap:8px; font-size: 17px; }
 .primary:active { transform: translateY(1px) scale(.99); box-shadow: 0 4px 10px -4px rgba(154,114,25,.7); }
 .notes-card { background: var(--panel); border:1px solid var(--line); border-radius: var(--r); padding: 14px 16px; margin-top: 14px; box-shadow: var(--shadow); }
@@ -272,8 +289,54 @@ dialog img, dialog textarea { border-radius: 12px; }
 .toast { border-radius: 999px; padding: 11px 18px; box-shadow: var(--shadow-lg); animation: toastIn .25s cubic-bezier(.2,.9,.3,1.2); }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 12px); } }
 .foot { text-align:center; color: var(--muted); font: 500 11.5px/1.6 "IBM Plex Mono", monospace; margin: 22px 0 0; }
+.settings-section { margin:16px 0; }
+.settings-section > label, .settings-section legend { display:block; color:var(--ink); font-size:14px; font-weight:700; margin-bottom:7px; }
+.settings-section select { width:100%; }
+.settings-note { color:var(--muted); font-size:13px; margin:6px 0 0; }
+.about-details { border:1px solid var(--line); border-radius:12px; background:var(--field); overflow:hidden; }
+.about-details summary { cursor:pointer; padding:12px 14px; font-weight:700; }
+.about-details summary:focus-visible { outline:3px solid var(--ring); outline-offset:-3px; }
+.about-details[open] summary { border-bottom:1px solid var(--line); }
+.about-copy { padding:4px 14px 16px; font-size:14px; line-height:1.55; max-height:min(22vh,240px); overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+.about-copy:focus-visible { outline:3px solid var(--ring); outline-offset:-3px; }
+.about-copy h3 { font:inherit; font-weight:700; color:var(--ink); margin:12px 0 4px; }
+.about-copy p { color:var(--muted); margin:0; }
+.theme-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; border:0; padding:0; min-width:0; }
+.theme-option { position:relative; cursor:pointer; text-align:center; min-width:0; }
+.theme-option input { position:absolute; opacity:0; width:1px; height:1px; }
+.theme-option span { display:grid; place-items:center; min-height:44px; border:1px solid var(--line); border-radius:11px; background:var(--field); font-size:13px; font-weight:600; padding:4px; }
+.theme-option input:checked + span { background:var(--hero); color:#F8F2E2; border-color:var(--accent); }
+.theme-option input:focus-visible + span { outline:3px solid var(--ring); outline-offset:2px; }
+.manage-list { max-height: min(48vh,400px); overflow:auto; margin:12px 0; }
+.manage-row { border:1px solid var(--line); border-radius:12px; padding:10px; margin:8px 0; background:var(--field); }
+.manage-row small { display:block; color:var(--muted); margin-bottom:6px; }
+.manage-controls { display:flex; gap:6px; }
+.manage-controls input { flex:1; min-width:0; height:40px; background:var(--panel); }
+.manage-controls button, .category-create button { flex:none; border:1px solid var(--line); border-radius:9px; background:var(--panel); font-size:13px; font-weight:600; padding:0 9px; min-height:40px; }
+.manage-controls button:last-child { color:var(--stamp); }
+.category-create { display:flex; gap:8px; }
+.category-create input { min-width:0; flex:1; }
+.category-create button { background:var(--gold-grad); border:0; color:#1B150B; }
+:root[dir="rtl"] body { font-family:"Noto Naskh Arabic","Geeza Pro",Tahoma,system-ui,sans-serif; }
+:root[dir="rtl"] h1, :root[dir="rtl"] h2, :root[dir="rtl"] h3, :root[dir="rtl"] .hero .title-input, :root[dir="rtl"] .primary { font-family:"Noto Naskh Arabic","Geeza Pro",Tahoma,system-ui,sans-serif; }
+:root[lang="ur-PK"] h1, :root[lang="ur-PK"] h2, :root[lang="ur-PK"] h3 { font-family:"Noto Nastaliq Urdu","Noto Naskh Arabic",Tahoma,sans-serif; line-height:1.8; }
+:root[dir="rtl"] .field label, :root[dir="rtl"] .hero .orderfor label, :root[dir="rtl"] .hero .orderfor input,
+:root[dir="rtl"] .brand .tag, :root[dir="rtl"] .pill, :root[dir="rtl"] .stat span,
+:root[dir="rtl"] .summary span, :root[dir="rtl"] .cat-head small, :root[dir="rtl"] .meta,
+:root[dir="rtl"] .stepper .val, :root[dir="rtl"] .stepper .val small, :root[dir="rtl"] .tl,
+:root[dir="rtl"] .tv, :root[dir="rtl"] .empty b, :root[dir="rtl"] .add-title,
+:root[dir="rtl"] .bar button.main, :root[dir="rtl"] .foot, :root[dir="rtl"] dialog textarea {
+  font-family:"Noto Naskh Arabic",Tahoma,system-ui,sans-serif; letter-spacing:normal;
+}
+:root[dir="rtl"] .brand .tag, :root[dir="rtl"] .stat span, :root[dir="rtl"] .foot { font-size:12px; line-height:1.5; }
+:root[dir="rtl"] .info { text-align:right; }
+:root[dir="rtl"] .search svg { left:auto; right:13px; }
+:root[dir="rtl"] .search input { padding-left:12px !important; padding-right:40px !important; }
+:root[dir="rtl"] .tv { text-align:left; }
+:root[dir="rtl"] #orderNo { direction:ltr; }
+@media (max-width: 380px) { .manage-controls { flex-wrap:wrap; } .manage-controls input { flex:1 1 100%; } .manage-controls button { flex:1; } }
 @media (max-width: 360px) { .hero-fields, .grid2 { grid-template-columns: 1fr; } .stat b { font-size: 20px; } }
-@media print { .hero-fields .orderfor:first-child, .cat-head, .meta > span:not(.wchip), .filterRow { display:none !important; } .search, .foot, .newbtn, .stats, .notes-card label, .orderbar #savedPill { display:none !important; } .hero { border-radius: 0; box-shadow: none; } .hero::after { display:none; } .pill { color:#000 !important; border-color:#999 !important; background:none !important; } .notes-card { box-shadow:none; border:0; padding:0; } textarea.notes { border:0; background:none; resize:none; } }
+@media print { .hero-fields .orderfor:first-child, .cat-head, .meta > span:not(.wchip), .filterRow { display:none !important; } .search, .foot, .newbtn, .stats, .notes-card label, .orderbar #savedPill, .nomatch { display:none !important; } .hero { border-radius: 0; box-shadow: none; } .hero::after { display:none; } .pill { color:#000 !important; border-color:#999 !important; background:none !important; } .notes-card { box-shadow:none; border:0; padding:0; } textarea.notes { border:0; background:none; resize:none; } .cat.print-show[hidden] { display:block !important; } .item.hidden-s:not(.zero) { display:flex !important; } .item.zero { display:none !important; } }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
 </style>
@@ -281,53 +344,53 @@ dialog img, dialog textarea { border-radius: 12px; }
 <body>
 <header class="hero"><div class="hero-in">
   <div class="head">
-    <span class="logo" aria-hidden="true"><span class="logo-ring"><svg viewBox="0 0 512 512" width="50" height="50"><circle cx="256" cy="256" r="248" fill="#F4ECDA" stroke="#C89A2C" stroke-width="10"/><circle cx="256" cy="256" r="222" fill="none" stroke="#C89A2C" stroke-width="3" stroke-dasharray="4 7"/><path d="M256 122C256 122 168 232 168 306a88 88 0 0 0 176 0C344 232 256 122 256 122Z" fill="#16302A"/><path d="M280 236C222 246 222 292 256 306C290 320 290 366 232 376" fill="none" stroke="#F4ECDA" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-    <div class="brand"><input id="shop" class="title-input" type="text" value="Saeedi Essence" aria-label="Shop name" maxlength="60"><span class="tag">Order Book · Fragrances</span></div>
-    <button class="icon-btn theme-btn" id="themeBtn" aria-label="Switch light or dark theme" type="button"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+    <span class="logo" aria-hidden="true"><span class="logo-ring"><img src="icon.svg" width="50" height="50" alt=""></span></span>
+    <div class="brand"><input id="shop" class="title-input" type="text" value="My Orders" aria-label="Order title or shop name" data-i18n-aria="titleLabel" title="Tap to change the title on your shared orders" data-i18n-title="titleHint" maxlength="60"><span class="tag" data-i18n="tag">Your orders · Tap name to change</span></div>
+    <button class="icon-btn theme-btn settings-btn" id="settingsBtn" aria-label="Settings" data-i18n-aria="settings" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h6m4 0h8M3 12h3m4 0h11M3 17h10m4 0h4"/><circle cx="11" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="15" cy="17" r="2"/></svg></button>
   </div>
   <div class="orderbar">
-    <span class="pill gold" id="orderNo" title="Order number">#SE-0001</span>
-    <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="orderDate"></span></span>
-    <span class="pill" id="savedPill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Saved on device</span>
+    <span class="pill gold" id="orderNo" dir="ltr" title="Order number">#ORD-0001</span>
+    <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="orderDate" dir="auto"></span></span>
+    <span class="pill" id="savedPill" role="status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="saveStatus">Saved on device</span></span>
   </div>
-  <div class="hero-fields"><div class="field orderfor"><label for="orderCo">Order for company</label><input id="orderCo" type="text" list="companies" placeholder="Supplier / company" autocomplete="off" maxlength="60"></div></div>
+  <div class="hero-fields"><div class="field orderfor"><label for="orderCo" data-i18n="supplierLabel">Default supplier (optional)</label><input id="orderCo" type="text" list="companies" placeholder="Company or supplier" data-i18n-placeholder="supplierPlaceholder" autocomplete="off" maxlength="60"></div></div>
   </div></header>
 <div class="wrap">
   <div class="stats" aria-live="polite">
-    <div class="stat" id="stItems"><b>0</b><span>Items</span></div>
-    <div class="stat" id="stGroups"><b>0</b><span>Groups</span></div>
-    <div class="stat" id="stUnits"><b>0</b><span>Total qty</span></div>
+    <div class="stat" id="stItems"><b>0</b><span data-i18n="statItems">Items</span></div>
+    <div class="stat" id="stGroups"><b>0</b><span data-i18n="statGroups">Groups</span></div>
+    <div class="stat" id="stUnits"><b>0</b><span data-i18n="statQuantity">Total qty</span></div>
   </div>
-  <p class="sub">Add items with company, weight and quantity. Then send the order as a picture, PDF or text.</p>
+  <p class="sub" data-i18n="intro">Make a list for anything. Pick a category or create your own, then share your order as text, a picture or a PDF.</p>
 
   <div class="add">
-    <div class="add-title"><i aria-hidden="true">+</i>New item</div>
+    <div class="add-title"><i aria-hidden="true">+</i><span data-i18n="newItem">New item</span></div>
     <div class="stack" id="addFields"></div>
-    <button class="primary" id="addBtn" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add to order</button>
+    <button class="primary" id="addBtn" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="addToOrder">Add to order</span></button>
   </div>
   <div class="notes-card field">
-    <label for="notes">Delivery notes / remarks (added to the order)</label>
-    <textarea id="notes" class="notes" maxlength="300" placeholder="e.g. Deliver by Friday · Cash on delivery"></textarea>
+    <label for="notes" data-i18n="notesLabel">Delivery notes / remarks (added to the order)</label>
+    <textarea id="notes" class="notes" maxlength="300" placeholder="e.g. Deliver by Friday · Cash on delivery" data-i18n-placeholder="notesPlaceholder"></textarea>
   </div>
 
   <div class="summary">
-    <h2>Your list</h2>
+    <h2 data-i18n="yourList">Your list</h2>
     <span id="count"></span>
   </div>
   <div class="tools">
-    <div class="seg" role="group" aria-label="Group list by">
-      <button type="button" id="gCat" aria-pressed="true">By category</button>
-      <button type="button" id="gCo" aria-pressed="false">By company</button>
+    <div class="seg" role="group" aria-label="Group list by" data-i18n-aria="groupBy">
+      <button type="button" id="gCat" aria-pressed="true" data-i18n="byCategory">By category</button>
+      <button type="button" id="gCo" aria-pressed="false" data-i18n="byCompany">By company</button>
     </div>
-    <div class="tools-r"><button class="linkbtn alt newbtn" id="newBtn" type="button">New order</button><button class="linkbtn" id="clearBtn" type="button">Clear all</button></div>
+    <div class="tools-r"><button class="linkbtn alt newbtn" id="newBtn" type="button" data-i18n="newOrder">New order</button><button class="linkbtn" id="clearBtn" type="button" data-i18n="clearAll">Clear all</button></div>
   </div>
   <div class="field filterRow">
-    <label for="exportFilter">Export</label>
+    <label for="exportFilter" data-i18n="export">Export</label>
     <select id="exportFilter"><option value="">All groups</option></select>
   </div>
-  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search items, companies…" aria-label="Search the list" autocomplete="off"></div>
+  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search items, categories, companies…" data-i18n-placeholder="searchPlaceholder" aria-label="Search the list" data-i18n-aria="searchLabel" autocomplete="off"></div>
   <div id="list"></div>
-  <p class="foot">Saeedi Essence Order Book · v1.4 · Your data stays on this device</p>
+  <p class="foot" data-i18n="foot">Order App · Your data stays on this device</p>
 </div>
 
 <datalist id="cats"></datalist>
@@ -335,85 +398,240 @@ dialog img, dialog textarea { border-radius: 12px; }
 
 <div class="bar">
   <div class="bar-in">
-    <button id="textBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Text</button>
-    <button id="printBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>Print</button>
-    <button id="pdfBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg>PDF</button>
-    <button id="picBtn" class="main" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></svg>Share</button>
+    <button id="textBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span data-i18n="text">Text</span></button>
+    <button id="printBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1 2-2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg><span data-i18n="print">Print</span></button>
+    <button id="pdfBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg><span data-i18n="pdf">PDF</span></button>
+    <button id="picBtn" class="main" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v13"/></svg><span data-i18n="share">Share</span></button>
   </div>
 </div>
 
-<dialog id="dlg">
-  <h2>Order text</h2>
-  <textarea id="out" readonly></textarea>
+<dialog id="dlg" aria-labelledby="textTitle">
+  <h2 id="textTitle" data-i18n="textTitle">Order text</h2>
+  <textarea id="out" dir="auto" readonly></textarea>
   <div class="dlg-actions">
-    <button id="closeDlg" type="button">Close</button>
-    <button id="copyBtn" class="main" type="button">Copy text</button>
+    <button id="closeDlg" type="button" data-i18n="close">Close</button>
+    <button id="copyBtn" class="main" type="button" data-i18n="copyText">Copy text</button>
   </div>
 </dialog>
 
-<dialog id="picDlg">
-  <h2>Picture to send</h2>
-  <img id="picImg" alt="Picture of your order list">
+<dialog id="picDlg" aria-labelledby="pictureTitle">
+  <h2 id="pictureTitle" data-i18n="pictureTitle">Picture to send</h2>
+  <img id="picImg" alt="Picture of your order list" data-i18n-alt="pictureAlt">
   <p class="pic-pages" id="picPages" hidden></p>
-  <p class="hint">Share it straight to WhatsApp, Instagram or any app. If sharing is not available, save it or press and hold the picture.</p>
+  <p class="hint" data-i18n="pictureHint">Share it to any app. If sharing is unavailable, save it or press and hold the picture.</p>
   <div class="dlg-actions">
-    <button id="picClose" type="button">Close</button>
-    <button id="picSave" type="button">Save</button>
-    <button id="picShare" class="main" type="button">Share</button>
+    <button id="picClose" type="button" data-i18n="close">Close</button>
+    <button id="picSave" type="button" data-i18n="save">Save</button>
+    <button id="picShare" class="main" type="button" data-i18n="share">Share</button>
   </div>
 </dialog>
 
-<dialog id="editDlg">
-  <h2>Edit item</h2>
+<dialog id="editDlg" aria-labelledby="editTitle">
+  <h2 id="editTitle" data-i18n="editTitle">Edit item</h2>
   <div class="stack" id="editFields"></div>
   <div class="dlg-actions">
-    <button id="eDel" type="button">Remove</button>
-    <button id="eCancel" type="button">Cancel</button>
-    <button id="eSave" class="main" type="button">Save</button>
+    <button id="eDel" type="button" data-i18n="remove">Remove</button>
+    <button id="eCancel" type="button" data-i18n="cancel">Cancel</button>
+    <button id="eSave" class="main" type="button" data-i18n="save">Save</button>
   </div>
 </dialog>
-<div class="toast" id="toast" hidden></div>
 
+<dialog id="settingsDlg" aria-labelledby="settingsTitle">
+  <h2 id="settingsTitle" data-i18n="settings">Settings</h2>
+  <p class="settings-note" data-i18n="settingsIntro">Make Order App yours. Preferences stay on this device.</p>
+  <div class="settings-section">
+    <fieldset class="theme-choices" aria-label="Appearance" data-i18n-aria="appearance">
+      <legend data-i18n="appearance">Appearance</legend>
+      <label class="theme-option"><input type="radio" name="theme" value="system"><span data-i18n="themeSystem">Device setting</span></label>
+      <label class="theme-option"><input type="radio" name="theme" value="light"><span data-i18n="themeLight">Light</span></label>
+      <label class="theme-option"><input type="radio" name="theme" value="dark"><span data-i18n="themeDark">Dark</span></label>
+    </fieldset>
+  </div>
+  <div class="settings-section field">
+    <label for="langPref" data-i18n="language">Language</label>
+    <select id="langPref">
+      <option value="auto" data-i18n="langAuto">Device language</option>
+      <option value="en" data-i18n="langEnglish">English</option>
+      <option value="ur" data-i18n="langUrdu">Urdu · اردو</option>
+      <option value="es" data-i18n="langSpanish">Spanish · Español</option>
+      <option value="ar" data-i18n="langArabic">Arabic · العربية</option>
+    </select>
+    <p class="settings-note" data-i18n="languageHint">Choose the app language. Your item names stay as you typed them.</p>
+  </div>
+  <details class="about-details settings-section" id="aboutDetails">
+    <summary data-i18n="aboutSummary">About Order App</summary>
+    <div class="about-copy" role="region" tabindex="0" aria-label="About Order App" data-i18n-aria="aboutSummary">
+      <h3 data-i18n="aboutAudienceTitle">Who is it for?</h3>
+      <p data-i18n="aboutAudience">Anyone preparing an order for home, a shop or a team. You can name each order yourself.</p>
+      <h3 data-i18n="aboutFeaturesTitle">What can it do?</h3>
+      <p data-i18n="aboutFeatures">Add items with a category (including RIM), optional company, size or weight, quantity and notes. Search or group them, then share text, pictures or a PDF, or print. Items with zero quantity are left out of exports.</p>
+      <h3 data-i18n="aboutPrivacyTitle">Where is my data?</h3>
+      <p data-i18n="aboutPrivacy">Orders and settings stay in this browser or installed app on your device. No account or cloud sync. Export a copy before clearing site data.</p>
+      <h3 data-i18n="aboutPlatformTitle">Where does it work?</h3>
+      <p data-i18n="aboutPlatform">Use the web app in a modern browser on desktop or mobile. After its first successful visit it can reload offline. Install and sharing options vary by platform. Choose a system, light or dark theme and English, Urdu, Spanish or Arabic.</p>
+    </div>
+  </details>
+  <div class="dlg-actions"><button id="settingsClose" class="main" type="button" data-i18n="done">Done</button></div>
+</dialog>
+
+<dialog id="categoryDlg" aria-labelledby="manageTitle">
+  <h2 id="manageTitle" data-i18n="manageTitle">Manage categories</h2>
+  <p class="settings-note" data-i18n="manageIntro">Add your own categories, rename them or remove ones you no longer need.</p>
+  <div class="settings-section field">
+    <label for="newCategory" data-i18n="newCategory">New category</label>
+    <div class="category-create"><input id="newCategory" type="text" maxlength="40" autocomplete="off" placeholder="Enter a category name" data-i18n-placeholder="categoryNamePlaceholder"><button id="createCategory" type="button" data-i18n="addCategory">Add category</button></div>
+  </div>
+  <div class="settings-section">
+    <h3 data-i18n="customCategories">Your categories</h3>
+    <div id="categoryManageList" class="manage-list"></div>
+    <p class="settings-note" data-i18n="presetNote">Built-in categories, including RIM, are always available.</p>
+  </div>
+  <div class="dlg-actions"><button id="closeCategories" class="main" type="button" data-i18n="done">Done</button></div>
+</dialog>
+<div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+<script src="i18n.js"></script>
 <script>
 (function () {
+  // Keep the storage key and native app ID so existing users keep their lists after the rebrand.
   var KEY = 'order-list-maker-v1';
-  var PAL = ['#C89A2C', '#A6382C', '#4B6B3A', '#6B4226', '#8A7B3E', '#2F6B5E', '#7A2E3A', '#4A3B2A'];
-  var WU = ['', 'g', 'kg', 'lb', 'oz', 'ml', 'L'];
-  var QU = ['pcs', 'box', 'pack', 'dozen', 'bag', 'bottle', 'carton', ''];
-  var state = { shop: 'Saeedi Essence', orderCo: '', phone: '', notes: '', orderSeq: 1, orderDate: '', recentCos: [], items: [], theme: '', groupBy: 'cat', catOrder: [], exportFilter: '' };
-  var dl = null;
-  var editing = null;
-  var picCanvas = null;
+  var DEFAULT_TITLE = 'My Orders';
+  var DEFAULT_CATS = ['General', 'RIM', 'Groceries', 'Electronics', 'Clothing', 'Home', 'Beauty', 'Office', 'Hardware', 'Other'];
+  var WU = ['', 'g', 'kg', 'lb', 'oz', 'ml', 'L', 'cm', 'in'];
+  var QU = ['pcs', 'box', 'pack', 'dozen', 'bag', 'bottle', 'carton', 'set', 'pair', ''];
+  var state = { shop: DEFAULT_TITLE, titleCustomized: false, brandMigrated: true, language: 'auto', orderCo: '', notes: '', orderSeq: 1, orderDate: '', recentCos: [], savedCategories: [], items: [], theme: '', groupBy: 'cat', catOrder: [], exportFilter: '' };
+  var editing = null, saveTimer = null;
+  var expandedCategories = { a: false, e: false };
+  var I18N = window.OrderBookI18n;
+
+  function activeLanguage() {
+    if (I18N.messages[state.language]) return state.language;
+    var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+    for (var i = 0; i < langs.length; i++) {
+      var code = String(langs[i]).toLowerCase().split('-')[0];
+      if (I18N.messages[code]) return code;
+    }
+    return 'en';
+  }
+  function t(key, vars) {
+    var message = I18N.messages[activeLanguage()][key] || I18N.messages.en[key] || key;
+    return message.replace(/\{(\w+)\}/g, function (_, k) { return vars && vars[k] != null ? String(vars[k]) : ''; });
+  }
+  function categoryLabel(cat, language) {
+    return (I18N.categories[language || activeLanguage()] || I18N.categories.en)[cat] || cat;
+  }
+  function canonicalCategory(value) {
+    var val = value.trim();
+    if (!val) return 'General';
+    var custom = state.savedCategories.filter(function (c) { return c.toLowerCase() === val.toLowerCase(); })[0];
+    if (custom) return custom;
+    var preset = DEFAULT_CATS.filter(function (cat) {
+      return cat.toLowerCase() === val.toLowerCase() || Object.keys(I18N.categories).some(function (lang) {
+        return I18N.categories[lang][cat].toLowerCase() === val.toLowerCase();
+      });
+    })[0];
+    return preset || val;
+  }
+  function titleText() { return state.titleCustomized ? (state.shop || t('defaultTitle')) : t('defaultTitle'); }
+  function groupLabel(name) {
+    return state.groupBy === 'cat' ? categoryLabel(name) : (name === 'No company' ? t('noCompany') : name);
+  }
+  function unitLabel(unit, count) {
+    var forms = I18N.units[activeLanguage()][unit] || I18N.units.en[unit] || [unit, unit];
+    return forms[Number(count) === 1 ? 0 : 1];
+  }
+  function translateStatic() {
+    var lang = activeLanguage();
+    document.documentElement.lang = lang === 'ur' ? 'ur-PK' : lang === 'ar' ? 'ar' : lang;
+    document.documentElement.dir = lang === 'ur' || lang === 'ar' ? 'rtl' : 'ltr';
+    document.title = t('appTitle');
+    document.querySelectorAll('[data-i18n]').forEach(function (e) { e.textContent = t(e.dataset.i18n); });
+    [['placeholder', 'placeholder'], ['aria', 'aria-label'], ['title', 'title'], ['alt', 'alt']].forEach(function (pair) {
+      document.querySelectorAll('[data-i18n-' + pair[0] + ']').forEach(function (e) {
+        e.setAttribute(pair[1], t(e.dataset['i18n' + pair[0].charAt(0).toUpperCase() + pair[0].slice(1)]));
+      });
+    });
+    ['a', 'e'].forEach(function (p) {
+      [p + 'qu', p + 'wu'].forEach(function (id) {
+        Array.from($(id).options).forEach(function (o) {
+          o.textContent = o.value ? (id.endsWith('qu') ? unitLabel(o.value, 1) : o.value) : t('noUnit');
+        });
+      });
+    });
+    $('langPref').value = state.language;
+    document.querySelector('input[name="theme"][value="' + (state.theme || 'system') + '"]').checked = true;
+    if (!state.titleCustomized) $('shop').value = titleText();
+    $('saveStatus').textContent = $('savedPill').classList.contains('unsaved') ? t('notSaved') : t('saved');
+    if ($('savedPill').classList.contains('unsaved')) $('savedPill').title = t('notSavedHint');
+    ['newBtn', 'clearBtn'].forEach(function (id) { var b = $(id); clearTimeout(b._t); b.dataset.armed = '0'; });
+  }
 
   function load() {
     try {
       var raw = localStorage.getItem(KEY);
       if (raw) {
         var s = JSON.parse(raw);
-        if (s && Array.isArray(s.items)) { s.items = s.items.filter(function (i) { return i && typeof i.name === 'string'; }); state = s; }
+        if (s && Array.isArray(s.items)) { state = s; }
       }
     } catch (e) {}
-    if (!state.catOrder) state.catOrder = [];
-    if (!state.shop) state.shop = 'Saeedi Essence';
-    if (state.orderCo == null) state.orderCo = '';
-    if (!state.recentCos) state.recentCos = [];
-    if (state.exportFilter == null) state.exportFilter = '';
-    if (!state.groupBy) state.groupBy = 'cat';
-    state.phone = ''; // phone no longer stored
-    if (state.notes == null) state.notes = '';
-    if (!(state.orderSeq >= 1)) state.orderSeq = 1;
-    if (!state.orderDate) state.orderDate = new Date().toISOString();
+    if (!Array.isArray(state.catOrder)) state.catOrder = [];
+    state.catOrder = state.catOrder.filter(function (c) { return typeof c === 'string'; });
+    if (!Array.isArray(state.savedCategories)) state.savedCategories = [];
+    state.savedCategories = state.savedCategories.filter(function (c) { return typeof c === 'string' && c.trim(); });
+    if (typeof state.shop !== 'string' || !state.shop.trim() || (state.shop === 'Saeedi Essence' && !state.brandMigrated)) state.shop = DEFAULT_TITLE;
+    if (typeof state.titleCustomized !== 'boolean') state.titleCustomized = state.shop !== DEFAULT_TITLE;
+    if (state.language !== 'auto' && !I18N.messages[state.language]) state.language = 'auto';
+    state.brandMigrated = true; // only rename the old default once; later custom titles stay custom
+    if (typeof state.orderCo !== 'string') state.orderCo = '';
+    if (!Array.isArray(state.recentCos)) state.recentCos = [];
+    state.recentCos = state.recentCos.filter(function (c) { return typeof c === 'string'; });
+    if (typeof state.exportFilter !== 'string') state.exportFilter = '';
+    if (state.groupBy !== 'cat' && state.groupBy !== 'company') state.groupBy = 'cat';
+    if (state.theme !== 'light' && state.theme !== 'dark') state.theme = '';
+    delete state.phone; // remove the unused phone field from old saved orders
+    if (typeof state.notes !== 'string') state.notes = '';
+    state.orderSeq = Number(state.orderSeq);
+    if (!Number.isSafeInteger(state.orderSeq) || state.orderSeq < 1) state.orderSeq = 1;
+    if (!state.orderDate || !isFinite(new Date(state.orderDate).getTime())) state.orderDate = new Date().toISOString();
+    var ids = Object.create(null);
+    state.items = state.items.filter(function (it) { return it && typeof it.name === 'string' && it.name.trim(); });
     state.items.forEach(function (it) {
-      if (it.company == null) it.company = '';
+      if (typeof it.company !== 'string') it.company = '';
+      if (it.wt !== '' && (!isFinite(Number(it.wt)) || Number(it.wt) < 0)) it.wt = '';
       if (it.wt == null) it.wt = '';
-      if (it.wu == null) it.wu = '';
-      if (it.qu == null) it.qu = it.unit || '';
-      if (it.qty == null || !isFinite(Number(it.qty))) it.qty = 1;
-      if (!it.id) it.id = uid();
-      if (!it.cat) it.cat = 'General';
+      if (typeof it.wu !== 'string') it.wu = '';
+      if (typeof it.qu !== 'string') it.qu = typeof it.unit === 'string' ? it.unit : '';
+      if (it.qty == null || it.qty === '') it.qty = 1;
+      it.qty = Number(it.qty);
+      if (!isFinite(it.qty) || it.qty < 0) it.qty = 1;
+      it.qty = Math.min(it.qty, MAX_QTY);
+      if (typeof it.id !== 'string' || ids[it.id]) it.id = uid();
+      ids[it.id] = true;
+      if (typeof it.cat !== 'string' || !it.cat.trim()) it.cat = 'General';
+      rememberCategory(it.cat); // keep existing categories even if all their items are removed later
     });
   }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function save() {
+    clearTimeout(saveTimer); saveTimer = null;
+    try {
+      localStorage.setItem(KEY, JSON.stringify(state));
+      $('savedPill').classList.remove('unsaved');
+      $('saveStatus').textContent = t('saved');
+      $('savedPill').removeAttribute('title');
+    } catch (e) {
+      $('savedPill').classList.add('unsaved');
+      $('saveStatus').textContent = t('notSaved');
+      $('savedPill').title = t('notSavedHint');
+    }
+  }
+  function scheduleSave() {
+    clearTimeout(saveTimer);
+    $('saveStatus').textContent = t('saving');
+    saveTimer = setTimeout(save, 180);
+  }
+  function flushSave() { if (saveTimer) save(); }
+  window.addEventListener('pagehide', flushSave);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) flushSave(); });
 
   var $ = function (id) { return document.getElementById(id); };
   var uid = function () { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); };
@@ -437,12 +655,11 @@ dialog img, dialog textarea { border-radius: 12px; }
   function closeD(d) { if (d.close) d.close(); else d.removeAttribute('open'); }
   function fmt(n) { return (Math.round(Number(n) * 100) / 100).toString(); }
   function fmtWeight(it) { return (it.wt !== '' && it.wt != null) ? fmt(it.wt) + (it.wu ? ' ' + it.wu : '') : ''; }
-  function fmtQty(it) { return fmt(it.qty) + (it.qu ? ' ' + it.qu : ''); }
+  function fmtQty(it) { return fmt(it.qty) + (it.qu ? ' ' + unitLabel(it.qu, it.qty) : ''); }
   var MAX_QTY = 1000000;
-  var PL = { box: 'boxes', pack: 'packs', bag: 'bags', bottle: 'bottles', carton: 'cartons' };
-  function plural(u, n) { return Number(n) === 1 ? (u || 'unit') : (u ? (PL[u] || u) : 'units'); }
+  function plural(u, n) { return unitLabel(u || '', n); }
   function totalsStr(items) {
-    var map = {}, order = [];
+    var map = Object.create(null), order = [];
     items.forEach(function (i) {
       var u = i.qu || '';
       if (map[u] == null) { map[u] = 0; order.push(u); }
@@ -450,8 +667,8 @@ dialog img, dialog textarea { border-radius: 12px; }
     });
     return order.map(function (u) { return fmt(map[u]) + ' ' + plural(u, map[u]); }).join(', ');
   }
-  function orderNo() { return 'SE-' + String(state.orderSeq).padStart(4, '0'); }
-  function dateStr() { return new Date(state.orderDate || Date.now()).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' }); }
+  function orderNo() { return 'ORD-' + String(state.orderSeq).padStart(4, '0'); }
+  function dateStr() { return new Date(state.orderDate || Date.now()).toLocaleDateString(I18N.locale[activeLanguage()], { day: 'numeric', month: 'long', year: 'numeric' }); }
   function haptic() { try { if (navigator.vibrate) navigator.vibrate(8); } catch (e) {} }
   function totalQty(items) { return items.reduce(function (a, i) { return a + (Number(i.qty) || 0); }, 0); }
   function popEl(e) { if (e.animate) e.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(1)' }], { duration: 300, easing: 'ease-out' }); }
@@ -463,8 +680,12 @@ dialog img, dialog textarea { border-radius: 12px; }
     $('orderNo').textContent = '#' + orderNo();
     $('orderDate').textContent = dateStr();
   }
-  var EMPTY_SVG = '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="#C89A2C" fill-opacity=".14"/><path d="M60 22s-24 30-24 48a24 24 0 0 0 48 0c0-18-24-48-24-48z" fill="#16302A"/><path d="M66 52c-12 2-12 12-5 15s7 13-5 15" fill="none" stroke="#F3D27A" stroke-width="4" stroke-linecap="round"/><circle cx="92" cy="30" r="4" fill="#C89A2C"/><circle cx="24" cy="86" r="3" fill="#C89A2C"/></svg>';
-  function slug() { return ((state.shop || '') + ' ' + new Date(state.orderDate || Date.now()).toISOString().slice(0, 10)).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order'; }
+  var EMPTY_SVG = '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="56" fill="#C89A2C" fill-opacity=".14"/><rect x="32" y="23" width="56" height="78" rx="9" fill="#16302A"/><rect x="48" y="18" width="24" height="12" rx="4" fill="#C89A2C"/><path d="m43 50 5 5 8-10m9 6h13M43 73l5 5 8-10m9 6h13" fill="none" stroke="#F3D27A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function slug() {
+    var d = new Date(state.orderDate || Date.now());
+    var localDate = [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-');
+    return ((state.shop || '') + ' ' + localDate).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'order';
+  }
 
   function uniq(field) {
     var seen = [];
@@ -487,7 +708,7 @@ dialog img, dialog textarea { border-radius: 12px; }
   }
   function gkey(it) { return state.groupBy === 'company' ? (coOf(it) || 'No company') : (it.cat || 'General'); }
   function groups() {
-    var map = {}, arr = [];
+    var map = Object.create(null), arr = [];
     state.items.forEach(function (it) {
       var k = gkey(it);
       if (!map[k]) { map[k] = { name: k, items: [] }; arr.push(map[k]); }
@@ -507,38 +728,62 @@ dialog img, dialog textarea { border-radius: 12px; }
   }
   function fieldsHTML(p) {
     return '' +
-      '<div class="field"><label for="' + p + 'name">Item</label><input id="' + p + 'name" type="text" placeholder="e.g. Oud Al Layl 12ml" autocomplete="off" maxlength="80"></div>' +
-      '<div class="grid2"><div class="field"><label for="' + p + 'company">Company</label><input id="' + p + 'company" type="text" list="companies" placeholder="Optional" autocomplete="off" maxlength="60"></div>' +
-      '<div class="field"><label for="' + p + 'cat">Category</label><input id="' + p + 'cat" type="text" list="cats" placeholder="e.g. Attar" autocomplete="off" maxlength="40"></div></div>' +
-      (p === 'a' ? '<div class="chips" id="chips" aria-label="Existing categories"></div>' : '') +
-      '<div class="grid2"><div class="field"><label for="' + p + 'wt">Weight</label><div class="pair"><input id="' + p + 'wt" type="number" inputmode="decimal" min="0" step="any" placeholder="0"><select id="' + p + 'wu" aria-label="Weight unit">' + opts(WU) + '</select></div></div>' +
-      '<div class="field"><label for="' + p + 'qty">Quantity</label><div class="pair"><input id="' + p + 'qty" type="number" inputmode="decimal" min="0" max="1000000" step="any" value="1"><select id="' + p + 'qu" aria-label="Quantity unit">' + opts(QU) + '</select></div></div></div>';
+      '<div class="field"><label for="' + p + 'name" data-i18n="item">Item</label><input id="' + p + 'name" type="text" placeholder="e.g. Notebook or wheel rim" data-i18n-placeholder="itemExample" autocomplete="off" maxlength="80"></div>' +
+      '<div class="field"><label for="' + p + 'company" data-i18n="companyLabel">Company / supplier (optional)</label><input id="' + p + 'company" type="text" list="companies" placeholder="Company name" data-i18n-placeholder="companyPlaceholder" autocomplete="off" maxlength="60"></div>' +
+      '<div class="category-picker field"><div class="category-title"><label for="' + p + 'cat" data-i18n="category">Category</label><span class="hint" data-i18n="categoryHint">Pick one or type your own</span></div>' +
+      '<input id="' + p + 'cat" type="text" list="cats" placeholder="General" data-i18n-placeholder="categoryPlaceholder" autocomplete="off" maxlength="40">' +
+      '<div class="chips" id="' + p + 'chips" role="group" aria-label="Choose a category" data-i18n-aria="chooseCategory"></div>' +
+      '<div class="category-actions"><button id="' + p + 'more" type="button" class="linkbtn" aria-expanded="false">More categories</button>' +
+      '<button id="' + p + 'manage" type="button" class="linkbtn" data-i18n="manageCategories">Manage categories</button></div></div>' +
+      '<div class="grid2"><div class="field"><label for="' + p + 'wt" data-i18n="sizeLabel">Size / weight (optional)</label><div class="pair"><input id="' + p + 'wt" type="number" inputmode="decimal" min="0" max="1000000" step="any" placeholder="0"><select id="' + p + 'wu" aria-label="Size or weight unit" data-i18n-aria="sizeUnit">' + opts(WU) + '</select></div></div>' +
+      '<div class="field"><label for="' + p + 'qty" data-i18n="qtyLabel">Quantity</label><div class="pair"><input id="' + p + 'qty" type="number" inputmode="decimal" min="0" max="1000000" step="any" value="1"><select id="' + p + 'qu" aria-label="Quantity unit" data-i18n-aria="qtyUnit">' + opts(QU) + '</select></div></div></div>';
   }
   function readFields(p) {
-    var wt = parseFloat($(p + 'wt').value);
-    var qty = parseFloat($(p + 'qty').value);
+    var name = $(p + 'name').value.trim();
+    if (!name) { toast(t('itemRequired')); $(p + 'name').focus(); return null; }
+    var weightText = $(p + 'wt').value.trim(), quantityText = $(p + 'qty').value.trim();
+    var wt = weightText === '' ? '' : Number(weightText), qty = Number(quantityText);
+    if (wt !== '' && (!isFinite(wt) || wt < 0 || wt > MAX_QTY)) {
+      toast(t('invalidWeight')); $(p + 'wt').focus(); return null;
+    }
+    if (quantityText === '' || !isFinite(qty) || qty < 0 || qty > MAX_QTY) {
+      toast(t('invalidQuantity', { max: MAX_QTY })); $(p + 'qty').focus(); return null;
+    }
     return {
-      name: $(p + 'name').value.trim(),
+      name: name,
       company: $(p + 'company').value.trim(),
-      cat: $(p + 'cat').value.trim() || 'General',
-      wt: (isFinite(wt) && wt >= 0) ? Math.min(wt, MAX_QTY) : '',
+      cat: canonicalCategory($(p + 'cat').value),
+      wt: wt,
       wu: $(p + 'wu').value,
-      qty: (isFinite(qty) && qty >= 0) ? Math.min(qty, MAX_QTY) : 1,
+      qty: qty,
       qu: $(p + 'qu').value
     };
   }
   function setFields(p, it) {
     $(p + 'name').value = it.name || '';
     $(p + 'company').value = it.company || '';
-    $(p + 'cat').value = it.cat || '';
+    $(p + 'cat').value = it.cat ? categoryLabel(it.cat) : '';
     $(p + 'wt').value = (it.wt === '' || it.wt == null) ? '' : it.wt;
     $(p + 'wu').value = it.wu || '';
     $(p + 'qty').value = it.qty == null ? 1 : it.qty;
     $(p + 'qu').value = it.qu || '';
+    renderChips(p);
   }
   function matchCase(val, list) {
     var f = list.filter(function (c) { return c.toLowerCase() === val.toLowerCase(); })[0];
     return f || val;
+  }
+  function categoryNames() {
+    var names = DEFAULT_CATS.slice();
+    state.savedCategories.forEach(function (c) {
+      if (typeof c === 'string' && c.trim() && !names.some(function (v) { return v.toLowerCase() === c.toLowerCase(); })) names.push(c);
+    });
+    return names;
+  }
+  function rememberCategory(cat) {
+    if (!DEFAULT_CATS.concat(state.savedCategories).some(function (c) { return c.toLowerCase() === cat.toLowerCase(); })) {
+      state.savedCategories.push(cat);
+    }
   }
 
   function renderExportFilter() {
@@ -548,34 +793,105 @@ dialog img, dialog textarea { border-radius: 12px; }
     var names = gs.map(function (g) { return g.name; });
     if (cur && names.indexOf(cur) === -1) { cur = ''; state.exportFilter = ''; save(); }
     sel.textContent = '';
-    var o0 = el('option', '', 'All groups'); o0.value = ''; sel.appendChild(o0);
+    var o0 = el('option', '', t('allGroups')); o0.value = ''; sel.appendChild(o0);
     gs.forEach(function (g) {
-      var o = el('option', '', g.name); o.value = g.name; sel.appendChild(o);
+      var o = el('option', '', groupLabel(g.name)); o.value = g.name; sel.appendChild(o);
     });
     sel.value = cur;
   }
   function renderLists() {
     var dc = $('cats'), dco = $('companies');
     dc.textContent = ''; dco.textContent = '';
-    uniq('cat').forEach(function (c) { var o = el('option'); o.value = c; dc.appendChild(o); });
+    categoryNames().forEach(function (c) { var o = el('option'); o.value = categoryLabel(c); dc.appendChild(o); });
     var cos = uniq('company');
-    (state.recentCos || []).forEach(function (c) { if (cos.indexOf(c) === -1) cos.push(c); });
+    state.recentCos.forEach(function (c) { if (cos.indexOf(c) === -1) cos.push(c); });
     cos.forEach(function (c) { var o = el('option'); o.value = c; dco.appendChild(o); });
   }
-  function renderChips() {
-    var box = $('chips'); box.textContent = '';
-    var cur = $('acat').value.trim();
-    uniq('cat').forEach(function (c) {
-      var b = el('button', 'chip'); b.type = 'button';
-      b.setAttribute('aria-pressed', String(cur === c));
-      var dot = el('i'); dot.style.background = colorVar(c);
-      b.appendChild(dot); b.appendChild(document.createTextNode(c));
-      b.addEventListener('click', function () { $('acat').value = c; renderChips(); });
-      box.appendChild(b);
+  function renderChips(p) {
+    (p ? [p] : ['a', 'e']).forEach(function (prefix) {
+      var box = $(prefix + 'chips'); box.textContent = '';
+      var all = categoryNames(), cur = canonicalCategory($(prefix + 'cat').value);
+      var quick = DEFAULT_CATS.slice(0, 4);
+      state.savedCategories.slice(-2).forEach(function (c) { if (quick.indexOf(c) === -1) quick.push(c); });
+      var shown = expandedCategories[prefix] ? all : quick.slice();
+      if (!expandedCategories[prefix] && all.indexOf(cur) !== -1 && shown.indexOf(cur) === -1) shown.push(cur);
+      shown.forEach(function (c) {
+        var b = el('button', 'chip'); b.type = 'button';
+        b.setAttribute('aria-pressed', String(cur === c));
+        var dot = el('i'); dot.style.background = colorVar(c); dot.setAttribute('aria-hidden', 'true');
+        b.appendChild(dot); b.appendChild(document.createTextNode(categoryLabel(c)));
+        b.addEventListener('click', function () { $(prefix + 'cat').value = categoryLabel(c); renderChips(prefix); });
+        box.appendChild(b);
+      });
+      var more = $(prefix + 'more');
+      more.hidden = all.length <= quick.length;
+      more.textContent = t(expandedCategories[prefix] ? 'fewerCategories' : 'moreCategories');
+      more.setAttribute('aria-expanded', String(expandedCategories[prefix]));
     });
   }
 
-  var CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>';
+  var managerOrigin = 'a';
+  function validCategoryName(value, oldName) {
+    var name = value.trim();
+    if (!name) { toast(t('categoryRequired')); return null; }
+    if (name.length > 40) { toast(t('categoryRequired')); return null; }
+    if (name === oldName) return name;
+    var reserved = DEFAULT_CATS.some(function (c) {
+      return c.toLowerCase() === name.toLowerCase() || Object.keys(I18N.categories).some(function (lang) {
+        return I18N.categories[lang][c].toLowerCase() === name.toLowerCase();
+      });
+    });
+    if (reserved || state.savedCategories.some(function (c) { return c !== oldName && c.toLowerCase() === name.toLowerCase(); })) {
+      toast(t('categoryDuplicate')); return null;
+    }
+    return name;
+  }
+  function renderCategoryManager() {
+    var box = $('categoryManageList'); box.textContent = '';
+    if (!state.savedCategories.length) { box.appendChild(el('p', 'hint', t('noCustomCategories'))); return; }
+    state.savedCategories.forEach(function (name) {
+      var count = state.items.filter(function (it) { return it.cat === name; }).length;
+      var row = el('div', 'manage-row');
+      row.appendChild(el('small', '', t(count === 1 ? 'categoryUsesOne' : 'categoryUsesMany', { count: count })));
+      var controls = el('div', 'manage-controls');
+      var input = el('input'); input.type = 'text'; input.value = name; input.maxLength = 40;
+      input.setAttribute('aria-label', t('renameLabel', { name: name }));
+      var rename = el('button', '', t('rename')); rename.type = 'button';
+      rename.setAttribute('aria-label', t('renameLabel', { name: name }));
+      rename.addEventListener('click', function () { renameCategory(name, input.value); });
+      input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); rename.click(); } });
+      var del = el('button', '', t('delete')); del.type = 'button';
+      del.setAttribute('aria-label', t('deleteLabel', { name: name }));
+      del.addEventListener('click', function () { deleteCategory(name); });
+      controls.appendChild(input); controls.appendChild(rename); controls.appendChild(del);
+      row.appendChild(controls); box.appendChild(row);
+    });
+  }
+  function openCategoryManager(origin) {
+    managerOrigin = origin;
+    renderCategoryManager(); openD($('categoryDlg')); $('newCategory').focus();
+  }
+  function renameCategory(oldName, input) {
+    var name = validCategoryName(input, oldName);
+    if (!name || name === oldName) return;
+    var index = state.savedCategories.indexOf(oldName);
+    if (index === -1) return;
+    state.savedCategories[index] = name;
+    state.items.forEach(function (it) { if (it.cat === oldName) it.cat = name; });
+    state.catOrder = state.catOrder.map(function (c) { return c === oldName ? name : c; });
+    ['a', 'e'].forEach(function (p) { if ($(p + 'cat').value.trim().toLowerCase() === oldName.toLowerCase()) $(p + 'cat').value = name; });
+    if (state.groupBy === 'cat' && state.exportFilter === oldName) state.exportFilter = name;
+    render(); renderCategoryManager(); save(); toast(t('categoryRenamed'));
+  }
+  function deleteCategory(name) {
+    var count = state.items.filter(function (it) { return it.cat === name; }).length;
+    if (count && !window.confirm(t('categoryDeleteConfirm', { name: name, count: count }))) return;
+    state.savedCategories = state.savedCategories.filter(function (c) { return c !== name; });
+    state.items.forEach(function (it) { if (it.cat === name) it.cat = 'General'; });
+    ['a', 'e'].forEach(function (p) { if ($(p + 'cat').value.trim().toLowerCase() === name.toLowerCase()) $(p + 'cat').value = categoryLabel('General'); });
+    if (state.groupBy === 'cat' && state.exportFilter === name) state.exportFilter = '';
+    render(); renderCategoryManager(); save(); toast(t('categoryRemoved'));
+  }
 
   function render() {
     renderLists(); renderChips(); renderExportFilter();
@@ -583,15 +899,17 @@ dialog img, dialog textarea { border-radius: 12px; }
     $('gCo').setAttribute('aria-pressed', String(state.groupBy === 'company'));
     var list = $('list'); list.textContent = '';
     var total = state.items.length;
+    document.querySelector('.bar').hidden = !total; // empty orders have nothing to share; don't cover category choices
+    document.querySelector('.wrap').classList.toggle('no-bar', !total);
     var gs = groups();
-    $('count').textContent = total ? total + (total === 1 ? ' item' : ' items') : '';
+    $('count').textContent = total ? t(total === 1 ? 'countOne' : 'countMany', { count: total }) : '';
     renderStats();
 
     if (!total) {
       var em = el('div', 'empty');
       em.innerHTML = EMPTY_SVG;
-      em.appendChild(el('b', '', 'No items yet'));
-      em.appendChild(document.createTextNode('Type an item above, add its company, weight and quantity, then choose a category.'));
+      em.appendChild(el('b', '', t('emptyTitle')));
+      em.appendChild(document.createTextNode(t('emptyHelp')));
       list.appendChild(em);
       return;
     }
@@ -601,19 +919,21 @@ dialog img, dialog textarea { border-radius: 12px; }
       card.dataset.group = g.name;
       card.style.setProperty('--cc', colorVar(g.name));
       var head = el('div', 'cat-head');
-      head.appendChild(el('h3', '', g.name));
-      head.appendChild(el('small', '', g.items.length + (g.items.length === 1 ? ' item' : ' items') + ', ' + totalsStr(g.items)));
+      head.appendChild(el('h3', '', groupLabel(g.name)));
+      function groupSummary() { return t(g.items.length === 1 ? 'groupOne' : 'groupMany', { count: g.items.length, total: totalsStr(g.items) }); }
+      head.appendChild(el('small', '', groupSummary()));
       card.appendChild(head);
 
       g.items.forEach(function (it, idx) {
         var row = el('div', 'item' + (Number(it.qty) > 0 ? '' : ' zero'));
+        row.dataset.search = [it.name, it.cat, categoryLabel(it.cat), coOf(it), fmtWeight(it)].join(' ').toLowerCase();
         var no = el('span', 'no', String(idx + 1));
 
         var info = el('button', 'info'); info.type = 'button';
-        info.setAttribute('aria-label', 'Edit ' + it.name);
+        info.setAttribute('aria-label', t('editLabel', { name: it.name }));
         info.appendChild(el('span', 'iname', it.name));
         var meta = el('span', 'meta');
-        var second = state.groupBy === 'company' ? it.cat : ((it.company && it.company !== state.orderCo) ? it.company : '');
+        var second = state.groupBy === 'company' ? categoryLabel(it.cat) : ((it.company && it.company !== state.orderCo) ? it.company : '');
         if (second) meta.appendChild(el('span', '', second));
         var w = fmtWeight(it);
         if (w) meta.appendChild(el('span', 'wchip', w));
@@ -621,35 +941,35 @@ dialog img, dialog textarea { border-radius: 12px; }
         info.addEventListener('click', function () { openEdit(it); });
 
         var st = el('div', 'stepper');
-        var minus = el('button', '', '−'); minus.type = 'button'; minus.setAttribute('aria-label', 'Decrease ' + it.name);
-        var plus = el('button', '', '+'); plus.type = 'button'; plus.setAttribute('aria-label', 'Increase ' + it.name);
+        var minus = el('button', '', '−'); minus.type = 'button'; minus.setAttribute('aria-label', t('decreaseLabel', { name: it.name }));
+        var plus = el('button', '', '+'); plus.type = 'button'; plus.setAttribute('aria-label', t('increaseLabel', { name: it.name }));
         var val = el('div', 'val', fmt(it.qty));
-        if (it.qu) val.appendChild(el('small', '', it.qu));
+        if (it.qu) val.appendChild(el('small', '', unitLabel(it.qu, it.qty)));
         // PERF FIX: only refresh this row, its group header and the grand total (was a full re-render)
         function bump(d) {
           it.qty = Math.min(MAX_QTY, Math.max(0, Math.round((Number(it.qty) + d) * 100) / 100)); save();
-          val.firstChild.nodeValue = fmt(it.qty); haptic();
-          popEl(val); setStat('stUnits', fmt(totalQty(state.items)));
+          val.firstChild.nodeValue = fmt(it.qty); if (it.qu) val.querySelector('small').textContent = unitLabel(it.qu, it.qty);
+          haptic(); popEl(val); setStat('stUnits', fmt(totalQty(state.items)));
           row.classList.toggle('zero', !(it.qty > 0));
-          head.lastChild.textContent = g.items.length + (g.items.length === 1 ? ' item' : ' items') + ', ' + totalsStr(g.items);
+          head.lastChild.textContent = groupSummary();
           var tv = list.querySelector('.tv'); if (tv) tv.textContent = totalsStr(state.items);
         }
         minus.addEventListener('click', function () { bump(-1); });
         plus.addEventListener('click', function () { bump(1); });
         st.appendChild(minus); st.appendChild(val); st.appendChild(plus);
 
-        var del = el('button', 'del', '×'); del.type = 'button'; del.setAttribute('aria-label', 'Remove ' + it.name);
-        del.addEventListener('click', function () { haptic(); row.classList.add('leaving'); setTimeout(function () { removeItem(it); }, 180); });
+        var del = el('button', 'del', '×'); del.type = 'button'; del.setAttribute('aria-label', t('removeLabel', { name: it.name }));
+        del.addEventListener('click', function () { del.disabled = true; haptic(); row.classList.add('leaving'); setTimeout(function () { removeItem(it); }, 180); });
 
         row.appendChild(no); row.appendChild(info); row.appendChild(st); row.appendChild(del);
         card.appendChild(row);
       });
       list.appendChild(card);
     });
-    var nm = el('div', 'nomatch', 'No items match your search'); nm.hidden = true; list.appendChild(nm);
+    var nm = el('div', 'nomatch', t('noMatch')); nm.hidden = true; list.appendChild(nm);
     applySearch();
     var tb = el('div', 'totalbox');
-    tb.appendChild(el('span', 'tl', 'Total'));
+    tb.appendChild(el('span', 'tl', t('total')));
     tb.appendChild(el('strong', 'tv', totalsStr(state.items)));
     list.appendChild(tb);
   }
@@ -659,7 +979,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     document.querySelectorAll('#list .cat').forEach(function (c) {
       var vis = 0;
       c.querySelectorAll('.item').forEach(function (r) {
-        var hit = !q || r.textContent.toLowerCase().indexOf(q) !== -1;
+        var hit = !q || r.dataset.search.indexOf(q) !== -1;
         r.classList.toggle('hidden-s', !hit); if (hit) vis++;
       });
       c.hidden = !vis; if (vis) any = true;
@@ -668,63 +988,72 @@ dialog img, dialog textarea { border-radius: 12px; }
   }
   function removeItem(it) {
     var pos = state.items.indexOf(it);
-    state.items = state.items.filter(function (x) { return x.id !== it.id; });
-    save(); render();
-    toast('Removed ' + it.name, 'Undo', function () {
-      state.items.splice(Math.max(0, Math.min(pos, state.items.length)), 0, it); save(); render();
+    if (pos < 0) return;
+    state.items.splice(pos, 1);
+    render(); save();
+    toast(t('removedItem', { name: it.name }), t('undo'), function () {
+      state.items.splice(Math.min(pos, state.items.length), 0, it); render(); save();
     });
   }
 
   function addItem() {
     var f = readFields('a');
-    if (!f.name) { toast('Type an item name first'); $('aname').focus(); return; }
-    f.cat = matchCase(f.cat, uniq('cat'));
-    if (f.company) f.company = matchCase(f.company, uniq('company').concat(state.recentCos || []));
+    if (!f) return;
+    f.cat = matchCase(f.cat, categoryNames());
+    if (f.company) f.company = matchCase(f.company, uniq('company').concat(state.recentCos));
+    rememberCategory(f.cat);
     f.id = uid(); f.done = false;
     state.items.push(f);
-    save(); haptic();
+    haptic();
     $('aname').value = ''; $('awt').value = ''; $('aqty').value = '1';
-    render();
+    render(); save();
     $('aname').focus();
   }
 
   function openEdit(it) { editing = it; setFields('e', it); openD($('editDlg')); }
 
   function buildText() {
-    var lines = [state.shop || 'Order'];
-    lines.push(dateStr(), '');
-    // Customer-facing: no company, category or filter names
-    [{ items: exportItems() }].forEach(function (g) {
-      g.items.forEach(function (i, k) {
-        var s = (k + 1) + '. ' + i.name;
-        var w = fmtWeight(i);
-        if (w) s += ' - ' + w;
-        s += ' - Qty: ' + fmtQty(i);
-        lines.push(s);
-      });
-      lines.push('');
+    var items = exportItems(), lines = [titleText(), dateStr(), ''];
+    // Customer-facing: no company, category or filter names.
+    items.forEach(function (i, k) {
+      var s = (k + 1) + '. ' + i.name;
+      var w = fmtWeight(i);
+      if (w) s += ' - ' + w;
+      s += ' - ' + t('exportQty') + ': ' + fmtQty(i);
+      lines.push(s);
     });
-    lines.push('TOTAL: ' + totalsStr(exportItems()));
-    if (state.notes.trim()) lines.push('', 'Notes: ' + state.notes.trim());
+    lines.push('', t('exportTotal') + ': ' + totalsStr(items));
+    if (state.notes.trim()) lines.push('', t('exportNotes') + ': ' + state.notes.trim());
     return lines.join('\n').trim();
   }
 
   /* ---------- Picture and PDF drawing ---------- */
-  var W = 1080, M = 56, IW = W - 2 * M, TITLE_H = 140, GH = 58, CH = 38, IH = 52, GAP = 26, FOOT = 34, PAGE_H = 1526;
-  var HEAD = '"Fraunces","IBM Plex Sans",system-ui,sans-serif';
-  var BODY = '"IBM Plex Sans",system-ui,sans-serif';
+  var W = 1080, M = 56, IW = W - 2 * M, CH = 38, IH = 52, GAP = 26, FOOT = 34, PAGE_H = 1526;
+  var HEAD = '"Fraunces","IBM Plex Sans","Noto Naskh Arabic",system-ui,sans-serif';
+  var BODY = '"IBM Plex Sans","Noto Naskh Arabic",system-ui,sans-serif';
   var MONO = '"IBM Plex Mono",ui-monospace,monospace';
-  var PAPER = '#FAF4E6', PAPER_BAND = '#F1E9D8', INK = '#241E15', MUTED = '#7A6C52', LINE = '#D9CA9F', HERO = '#16302A', GOLD = '#C89A2C', STAMP = '#A6382C';
+  var PAPER = '#FAF4E6', PAPER_BAND = '#F1E9D8', INK = '#241E15', MUTED = '#7A6C52', LINE = '#D9CA9F', HERO = '#16302A', GOLD = '#C89A2C';
 
+  function exportFont(serif) {
+    var rtl = document.documentElement.dir === 'rtl';
+    return rtl ? '"Noto Naskh Arabic","Geeza Pro",Tahoma,sans-serif' : (serif ? HEAD : BODY);
+  }
   function ensureFonts() {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
-    return Promise.all([
-      document.fonts.load('600 italic 30px "Fraunces"'),
-      document.fonts.load('700 30px "Fraunces"'),
-      document.fonts.load('500 24px "IBM Plex Sans"'),
-      document.fonts.load('600 24px "IBM Plex Sans"'),
-      document.fonts.load('600 22px "IBM Plex Mono"')
-    ]).catch(function () {});
+    // User-entered Urdu/Arabic text also needs the local font when the UI is in English or Spanish.
+    var userText = [titleText(), state.notes].concat(state.items.map(function (it) { return it.name + ' ' + it.company; })).join(' ');
+    if (document.documentElement.dir === 'rtl' || /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/.test(userText)) {
+      return document.fonts.load('400 24px "Noto Naskh Arabic"', 'طلب').catch(function () {});
+    }
+    // Never hold up sharing on a slow font server; the system fonts are usable too.
+    return Promise.race([
+      Promise.all([
+        document.fonts.load('700 30px "Fraunces"'),
+        document.fonts.load('500 24px "IBM Plex Sans"'),
+        document.fonts.load('600 24px "IBM Plex Sans"')
+      ]).catch(function () {}),
+      new Promise(function (resolve) { setTimeout(resolve, 350); })
+    ]);
   }
   function fit(ctx, text, maxW) {
     text = String(text);
@@ -742,46 +1071,48 @@ dialog img, dialog textarea { border-radius: 12px; }
     ctx.closePath();
   }
 
-  var LOGO_DROP = 'M256 122C256 122 168 232 168 306a88 88 0 0 0 176 0C344 232 256 122 256 122Z';
-  var LOGO_S = 'M280 236C222 246 222 292 256 306C290 320 290 366 232 376';
-  function dashCircle(x, cx, cy, r, w, gap) {
-    x.beginPath();
-    x.setLineDash([w, gap]);
-    x.arc(cx, cy, r, 0, Math.PI * 2);
-    x.stroke();
-    x.setLineDash([]);
-  }
+  // Match the app icon without loading an external image into the export canvas.
   function drawLogo(x, px, py, size) {
     x.save();
     x.translate(px, py); x.scale(size / 512, size / 512);
-    x.beginPath(); x.arc(256, 256, 248, 0, Math.PI * 2);
-    x.fillStyle = PAPER; x.fill();
-    x.lineWidth = 10; x.strokeStyle = GOLD; x.stroke();
-    x.lineWidth = 3; dashCircle(x, 256, 256, 222, 4, 7);
-    x.strokeStyle = GOLD;
-    x.fillStyle = HERO; x.fill(new Path2D(LOGO_DROP));
-    x.strokeStyle = PAPER; x.lineWidth = 18; x.lineCap = 'round'; x.lineJoin = 'round';
-    x.stroke(new Path2D(LOGO_S));
+    rr(x, 0, 0, 512, 512, 112); x.fillStyle = HERO; x.fill();
+    rr(x, 110, 101, 292, 323, 40); x.fillStyle = PAPER; x.fill();
+    rr(x, 194, 77, 124, 53, 18); x.fillStyle = GOLD; x.fill();
+    x.strokeStyle = HERO; x.lineCap = 'round'; x.lineJoin = 'round';
+    function line(x1, y1, x2, y2, width) {
+      x.lineWidth = width; x.beginPath(); x.moveTo(x1, y1); x.lineTo(x2, y2); x.stroke();
+    }
+    line(224, 103, 288, 103, 10);
+    [168, 258].forEach(function (y) {
+      rr(x, 145, y, 60, 60, 15); x.fillStyle = GOLD; x.fill();
+      x.lineWidth = 9; x.beginPath(); x.moveTo(160, y + 30); x.lineTo(173, y + 42); x.lineTo(196, y + 15); x.stroke();
+    });
+    line(232, 188, 348, 188, 11); line(232, 210, 309, 210, 11);
+    line(232, 278, 348, 278, 11); line(232, 300, 323, 300, 11);
+    rr(x, 145, 348, 60, 48, 14); x.lineWidth = 9; x.stroke();
+    line(232, 367, 348, 367, 11); line(232, 389, 292, 389, 11);
     x.restore();
   }
 
   function wrapNotes(t) {
-    var c = document.createElement('canvas').getContext('2d'); c.font = '400 24px ' + BODY;
+    var c = document.createElement('canvas').getContext('2d'); c.font = '400 24px ' + exportFont(false);
     var out = [];
-    t.split(/\n/).forEach(function (para) {
+    t.replace(/\r/g, '').split('\n').forEach(function (para) {
       var line = '';
-      para.split(/\s+/).forEach(function (w) {
-        var tryL = line ? line + ' ' + w : w;
-        if (c.measureText(tryL).width > IW - 48 && line) { out.push(line); line = w; } else line = tryL;
+      Array.from(para).forEach(function (ch) {
+        if (line && c.measureText(line + ch).width > IW - 48) {
+          out.push(line.trimEnd()); line = ch.trimStart();
+        } else line += ch;
       });
       out.push(line);
     });
-    return out.slice(0, 12);
+    return out;
   }
   function bandHeight() { return 176; }
   function planPages(pageH) {
     var top1 = bandHeight() + 30, topN = M;
-    var bottom = pageH ? pageH - M - FOOT : Infinity;
+    // Leave room for the page number and the trimmed picture's bottom margin.
+    var bottom = pageH ? pageH - M - FOOT - 10 : Infinity;
     var pages = [{ ops: [], y: top1 }];
     function cur() { return pages[pages.length - 1]; }
     [{ name: 'Items', items: exportItems() }].forEach(function (g) {
@@ -803,14 +1134,21 @@ dialog img, dialog textarea { border-radius: 12px; }
       }
     });
     if (exportItems().length) {
-      if (pageH && cur().y + 56 > bottom + FOOT && cur().y > topN) pages.push({ ops: [], y: topN });
+      if (pageH && cur().y + 56 > bottom) pages.push({ ops: [], y: topN });
       var tp = cur();
       tp.ops.push({ t: 't', y: tp.y }); tp.y += 56 + GAP;
       var nt = (state.notes || '').trim();
       if (nt) {
-        var ln = wrapNotes(nt), nh = 44 + ln.length * 32;
-        if (pageH && cur().y + nh > bottom + FOOT && cur().y > topN) pages.push({ ops: [], y: topN });
-        var np = cur(); np.ops.push({ t: 'n', y: np.y, lines: ln, h: nh }); np.y += nh + GAP;
+        var ln = wrapNotes(nt), ni = 0;
+        while (ni < ln.length) {
+          var room = pageH ? Math.floor((bottom - cur().y - 44) / 32) : ln.length;
+          if (room < 1) { pages.push({ ops: [], y: topN }); continue; }
+          var part = ln.slice(ni, ni + room), np = cur();
+          np.ops.push({ t: 'n', y: np.y, lines: part, h: 44 + part.length * 32, cont: ni > 0 });
+          np.y += 44 + part.length * 32 + GAP;
+          ni += part.length;
+          if (ni < ln.length) pages.push({ ops: [], y: topN });
+        }
       }
     }
     return pages;
@@ -821,8 +1159,11 @@ dialog img, dialog textarea { border-radius: 12px; }
     var c = document.createElement('canvas');
     c.width = W * S; c.height = h * S;
     var x = c.getContext('2d');
+    var rtl = document.documentElement.dir === 'rtl';
+    var labelFont = rtl ? exportFont(false) : MONO;
     x.scale(S, S);
     x.fillStyle = PAPER; x.fillRect(0, 0, W, h);
+    x.direction = rtl ? 'rtl' : 'ltr';
     x.textBaseline = 'alphabetic';
 
     if (pi === 0) {
@@ -834,78 +1175,66 @@ dialog img, dialog textarea { border-radius: 12px; }
         x.beginPath(); x.arc(tx + 17, bandH, 11, 0, Math.PI, false); x.fill();
       }
       x.fillStyle = GOLD; x.fillRect(0, bandH - 4, W, 4);
-      x.save(); x.translate(W - M - 46, 46); x.rotate(-7 * Math.PI / 180); drawLogo(x, 0, 0, 92); x.restore();
-      x.textAlign = 'left';
+      x.save(); x.translate(rtl ? M : W - M - 46, 46); x.rotate(-7 * Math.PI / 180); drawLogo(x, 0, 0, 92); x.restore();
+      x.textAlign = rtl ? 'right' : 'left';
       x.fillStyle = '#F8F2E2';
-      x.font = 'italic 700 54px ' + HEAD;
-      x.fillText(fit(x, state.shop || 'Order', IW - 150), M, 92);
+      x.font = '700 54px ' + exportFont(true);
+      x.fillText(fit(x, titleText(), IW - 150), rtl ? W - M : M, 92);
       var ty = 142;
       var d = dateStr();
-      x.font = '500 22px ' + MONO;
+      x.font = '500 22px ' + labelFont;
       x.fillStyle = '#B7AC8D';
-      x.fillText(fit(x, d, IW - 150), M, ty);
+      x.fillText(fit(x, d, IW - 150), rtl ? W - M : M, ty);
     }
 
-    var second = state.groupBy === 'company' ? 'Category' : 'Company';
     page.ops.forEach(function (op) {
-      if (op.t === 'g') {
-        x.fillStyle = PAL[colorIdx(op.g.name)];
-        x.fillRect(M, op.y + 12, 6, GH - 24);
-        x.fillStyle = INK;
-        x.font = 'italic 600 29px ' + HEAD; x.textAlign = 'left';
-        x.fillText(fit(x, op.g.name + (op.cont ? ' (continued)' : ''), IW - 360), M + 22, op.y + 38);
-        x.fillStyle = MUTED;
-        x.font = '500 20px ' + MONO; x.textAlign = 'right';
-        x.fillText(fit(x, op.g.items.length + (op.g.items.length === 1 ? ' item' : ' items') + ', ' + totalsStr(op.g.items), 340), W - M, op.y + 37);
-        x.strokeStyle = LINE; x.lineWidth = 1; x.setLineDash([5, 4]);
-        x.beginPath(); x.moveTo(M, op.y + GH); x.lineTo(W - M, op.y + GH); x.stroke(); x.setLineDash([]);
-      } else if (op.t === 't') {
+      if (op.t === 't') {
         rr(x, M, op.y, IW, 56, 3); x.fillStyle = HERO; x.fill();
         x.strokeStyle = 'rgba(241,232,214,.35)'; x.lineWidth = 1; x.setLineDash([5, 4]);
         x.beginPath(); x.moveTo(M + 14, op.y + 8); x.lineTo(W - M - 14, op.y + 8); x.stroke(); x.setLineDash([]);
-        x.fillStyle = '#E7DEC6'; x.textAlign = 'left'; x.font = '600 21px ' + MONO;
-        x.fillText('TOTAL', M + 20, op.y + 40);
-        x.textAlign = 'right'; x.font = 'italic 700 27px ' + HEAD; x.fillStyle = GOLD;
-        x.fillText(fit(x, totalsStr(exportItems()), IW - 170), W - M - 20, op.y + 41);
+        x.fillStyle = '#E7DEC6'; x.textAlign = rtl ? 'right' : 'left'; x.font = '600 21px ' + labelFont;
+        x.fillText(t('exportTotal').toUpperCase(), rtl ? W - M - 20 : M + 20, op.y + 40);
+        x.textAlign = rtl ? 'left' : 'right'; x.font = '700 27px ' + exportFont(true); x.fillStyle = GOLD;
+        x.fillText(fit(x, totalsStr(exportItems()), IW - 170), rtl ? M + 20 : W - M - 20, op.y + 41);
       } else if (op.t === 'n') {
         rr(x, M, op.y, IW, op.h, 10); x.fillStyle = PAPER_BAND; x.fill();
-        x.fillStyle = GOLD; x.fillRect(M, op.y + 12, 5, op.h - 24);
-        x.textAlign = 'left'; x.fillStyle = MUTED; x.font = '600 18px ' + MONO;
-        x.fillText('NOTES', M + 24, op.y + 30);
-        x.fillStyle = INK; x.font = '400 24px ' + BODY;
-        op.lines.forEach(function (l, k) { x.fillText(l, M + 24, op.y + 62 + k * 32); });
+        x.fillStyle = GOLD; x.fillRect(rtl ? W - M - 5 : M, op.y + 12, 5, op.h - 24);
+        x.textAlign = rtl ? 'right' : 'left'; x.fillStyle = MUTED; x.font = '600 18px ' + labelFont;
+        x.fillText(t(op.cont ? 'exportNotesContinued' : 'exportNotes').toUpperCase(), rtl ? W - M - 24 : M + 24, op.y + 30);
+        x.fillStyle = INK; x.font = '400 24px ' + exportFont(false);
+        op.lines.forEach(function (l, k) { x.fillText(l, rtl ? W - M - 24 : M + 24, op.y + 62 + k * 32); });
       } else if (op.t === 'c') {
         x.fillStyle = PAPER_BAND; x.fillRect(M, op.y, IW, CH);
-        x.fillStyle = MUTED; x.font = '600 18px ' + MONO;
-        x.textAlign = 'left';
-        x.fillText('#', M + 16, op.y + 25);
-        x.fillText('Item', M + 62, op.y + 25);
-        x.fillText('Weight', M + 600, op.y + 25);
-        x.textAlign = 'right';
-        x.fillText('Qty', W - M - 16, op.y + 25);
+        x.fillStyle = MUTED; x.font = '600 18px ' + labelFont;
+        x.textAlign = rtl ? 'right' : 'left';
+        x.fillText('#', rtl ? W - M - 16 : M + 16, op.y + 25);
+        x.fillText(fit(x, t('item'), 500), rtl ? W - M - 62 : M + 62, op.y + 25);
+        x.fillText(fit(x, t('exportSize'), 200), rtl ? W - M - 600 : M + 600, op.y + 25);
+        x.textAlign = rtl ? 'left' : 'right';
+        x.fillText(fit(x, t('exportQty'), 140), rtl ? M + 16 : W - M - 16, op.y + 25);
       } else {
-        var it = op.it, col = PAL[colorIdx(op.g.name)];
-        x.textAlign = 'left';
+        var it = op.it;
+        x.textAlign = rtl ? 'right' : 'left';
         x.font = '600 20px ' + MONO;
         x.fillStyle = MUTED;
-        x.fillText(String(op.n).padStart(2, '0'), M + 16, op.y + 33);
-        x.font = '500 25px ' + BODY;
+        x.fillText(String(op.n).padStart(2, '0'), rtl ? W - M - 16 : M + 16, op.y + 33);
+        x.font = '500 25px ' + exportFont(false);
         x.fillStyle = INK;
-        x.fillText(fit(x, it.name, 520), M + 62, op.y + 33);
+        x.fillText(fit(x, it.name, 520), rtl ? W - M - 62 : M + 62, op.y + 33);
         x.fillStyle = '#5C4E38';
-        x.font = '400 21px ' + MONO;
-        x.fillText(fit(x, fmtWeight(it), 180), M + 600, op.y + 33);
+        x.font = '400 21px ' + labelFont;
+        x.fillText(fit(x, fmtWeight(it), 180), rtl ? W - M - 600 : M + 600, op.y + 33);
         x.fillStyle = INK;
-        x.font = '600 24px ' + MONO; x.textAlign = 'right';
-        x.fillText(fit(x, fmtQty(it), 140), W - M - 16, op.y + 33);
+        x.font = '600 24px ' + labelFont; x.textAlign = rtl ? 'left' : 'right';
+        x.fillText(fit(x, fmtQty(it), 140), rtl ? M + 16 : W - M - 16, op.y + 33);
         x.strokeStyle = LINE; x.lineWidth = 1; x.setLineDash([4, 4]);
         x.beginPath(); x.moveTo(M, op.y + IH - 1); x.lineTo(W - M, op.y + IH - 1); x.stroke(); x.setLineDash([]);
       }
     });
 
     if (pageH && total > 1) {
-      x.fillStyle = MUTED; x.font = '500 19px ' + MONO; x.textAlign = 'right';
-      x.fillText('page ' + (pi + 1) + ' of ' + total, W - M, h - M + 12);
+      x.fillStyle = MUTED; x.font = '500 19px ' + labelFont; x.textAlign = rtl ? 'left' : 'right';
+      x.fillText(t('exportPage', { page: pi + 1, total: total }), rtl ? M : W - M, h - M + 12);
     }
     return c;
   }
@@ -916,23 +1245,26 @@ dialog img, dialog textarea { border-radius: 12px; }
     });
   }
 
-  function nativeSave(name, blob) {
-    // Runs inside the Android / iOS app (Capacitor): write to cache then open the share sheet
+  function nativeShare(files, title) {
+    // Android / iOS: write every file to cache and open ONE share sheet for the entire order.
     var C = window.Capacitor, FS = C && C.Plugins && C.Plugins.Filesystem, SH = C && C.Plugins && C.Plugins.Share;
     if (!FS || !SH) return null;
-    return new Promise(function (res, rej) {
-      var r = new FileReader();
-      r.onload = function () { res(String(r.result).split(',')[1]); };
-      r.onerror = rej; r.readAsDataURL(blob);
-    }).then(function (b64) {
-      return FS.writeFile({ path: name, data: b64, directory: 'CACHE' });
-    }).then(function (w) {
-      return SH.share({ title: name, files: [w.uri] });
-    }).then(function () { toast('Done'); }).catch(function (e) {
+    return Promise.all(files.map(function (file) {
+      return new Promise(function (res, rej) {
+        var r = new FileReader();
+        r.onload = function () { res(String(r.result).split(',')[1]); };
+        r.onerror = rej; r.readAsDataURL(file.blob || file);
+      }).then(function (b64) {
+        return FS.writeFile({ path: file.name, data: b64, directory: 'CACHE' });
+      });
+    })).then(function (writes) {
+      return SH.share({ title: title, files: writes.map(function (w) { return w.uri; }) });
+    }).then(function () { toast(t('doneShare')); }).catch(function (e) {
       if (e && /cancel/i.test(String(e.message || e))) return;
-      toast('Could not save the file');
+      toast(t('cannotShareFile'));
     });
   }
+  function nativeSave(name, blob) { return nativeShare([{ name: name, blob: blob }], name); }
   function saveFile(name, blob) {
     var n = nativeSave(name, blob);
     if (n) return n;
@@ -942,30 +1274,22 @@ dialog img, dialog textarea { border-radius: 12px; }
       var f = new File([blob], name, { type: blob.type });
       if (navigator.canShare({ files: [f] })) return navigator.share({ files: [f], title: name }).catch(function () {});
     }
-    if (!dl) {
-      try {
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url; a.download = name;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
-        toast('Saved');
-      } catch (e) {
-        toast('Saving is not available here. Use Share, or press and hold the picture.');
-      }
-      return Promise.resolve();
+    try {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      toast(t('savedFile'));
+    } catch (e) {
+      toast(t('cannotSaveFile'));
     }
-    return dl.save({ filename: name, data: blob }).then(function () {
-      toast('Saved');
-    }).catch(function (e) {
-      if (e && e.code === 'declined') return;
-      toast('Could not save the file');
-    });
+    return Promise.resolve();
   }
 
   function requireItems() {
-    if (!state.items.length) { toast('Add some items first'); return false; }
-    if (!exportItems().length) { toast(state.exportFilter ? 'No items with quantity in that group' : 'All items have quantity 0'); return false; }
+    if (!state.items.length) { toast(t('addItemsFirst')); return false; }
+    if (!exportItems().length) { toast(t(state.exportFilter ? 'noItemsInGroup' : 'allZero')); return false; }
     return true;
   }
 
@@ -978,18 +1302,17 @@ dialog img, dialog textarea { border-radius: 12px; }
   }
   function makePicture() {
     if (!requireItems()) return;
-    picBlobs = []; picCanvas = null;
+    picBlobs = [];
     ensureFonts().then(function () {
       var pages = planPages(PIC_MAX_H);
       var canv = pages.map(function (p, i) { return drawPage(p, i, pages.length, PIC_MAX_H, 1, true); });
-      picCanvas = canv[0];
-      $('picImg').src = picCanvas.toDataURL('image/png');
+      $('picImg').src = canv[0].toDataURL('image/png');
       var pp = $('picPages');
       pp.hidden = canv.length < 2;
-      pp.textContent = canv.length + ' pictures (list is long). Save and Share send all of them.';
+      pp.textContent = t('pictureCount', { count: canv.length });
       openD($('picDlg'));
       return Promise.all(canv.map(canvasBlob)).then(function (bl) { picBlobs = bl; });
-    }).catch(function () { toast('Could not make the picture'); });
+    }).catch(function () { toast(t('pictureError')); });
   }
 
   function b64bytes(dataUrl) {
@@ -1036,7 +1359,7 @@ dialog img, dialog textarea { border-radius: 12px; }
 
   function makePDF() {
     if (!requireItems()) return;
-    toast('Making PDF…');
+    toast(t('pdfPreparing'));
     ensureFonts().then(function () {
       var pages = planPages(PAGE_H);
       var imgs = pages.map(function (p, i) {
@@ -1044,7 +1367,7 @@ dialog img, dialog textarea { border-radius: 12px; }
         return { data: b64bytes(c.toDataURL('image/jpeg', 0.85)), w: c.width, h: c.height };
       });
       return saveFile(slug() + '.pdf', buildPdf(imgs, '595.28', '841.89'));
-    }).catch(function () { toast('Could not make the PDF'); });
+    }).catch(function () { toast(t('pdfError')); });
   }
 
   /* ---------- Events ---------- */
@@ -1056,42 +1379,89 @@ dialog img, dialog textarea { border-radius: 12px; }
   ['aname', 'acompany', 'acat', 'awt', 'aqty'].forEach(function (id) {
     $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addItem(); } });
   });
-  $('acat').addEventListener('input', renderChips);
-  $('shop').addEventListener('input', function () { state.shop = $('shop').value; save(); });
-  $('notes').addEventListener('input', function () { state.notes = $('notes').value; save(); });
+  ['a', 'e'].forEach(function (p) {
+    $(p + 'cat').addEventListener('input', function () { renderChips(p); });
+    $(p + 'more').addEventListener('click', function () { expandedCategories[p] = !expandedCategories[p]; renderChips(p); });
+    $(p + 'manage').addEventListener('click', function () { openCategoryManager(p); });
+  });
+  $('createCategory').addEventListener('click', function () {
+    var name = validCategoryName($('newCategory').value);
+    if (!name) { $('newCategory').focus(); return; }
+    state.savedCategories.push(name);
+    $(managerOrigin + 'cat').value = name;
+    $('newCategory').value = '';
+    render(); renderCategoryManager(); save(); toast(t('categoryAdded'));
+    $('newCategory').focus();
+  });
+  $('newCategory').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); $('createCategory').click(); }
+  });
+  $('closeCategories').addEventListener('click', function () { closeD($('categoryDlg')); });
+  $('settingsBtn').addEventListener('click', function () { openD($('settingsDlg')); });
+  $('settingsClose').addEventListener('click', function () { closeD($('settingsDlg')); });
+  document.querySelectorAll('input[name="theme"]').forEach(function (radio) {
+    radio.addEventListener('change', function () { state.theme = radio.value === 'system' ? '' : radio.value; applyTheme(); save(); });
+  });
+  $('langPref').addEventListener('change', function () {
+    var values = ['a', 'e'].map(function (p) { return $(p + 'cat').value.trim(); });
+    var selected = values.map(function (v) { return v ? canonicalCategory(v) : ''; });
+    state.language = $('langPref').value;
+    ['a', 'e'].forEach(function (p, i) { $(p + 'cat').value = selected[i] ? categoryLabel(selected[i]) : ''; });
+    translateStatic(); render(); renderCategoryManager(); save();
+  });
+  $('shop').addEventListener('input', function () { state.shop = $('shop').value; state.titleCustomized = true; scheduleSave(); });
+  $('shop').addEventListener('blur', function () {
+    if (!$('shop').value.trim()) { state.shop = DEFAULT_TITLE; state.titleCustomized = false; $('shop').value = titleText(); save(); }
+  });
+  $('notes').addEventListener('input', function () { state.notes = $('notes').value; scheduleSave(); });
   $('q').addEventListener('input', applySearch);
   $('newBtn').addEventListener('click', function () {
     var b = $('newBtn');
     if (b.dataset.armed !== '1') {
-      b.dataset.armed = '1'; b.textContent = 'Tap to confirm';
-      clearTimeout(b._t); b._t = setTimeout(function () { b.dataset.armed = '0'; b.textContent = 'New order'; }, 2500);
+      b.dataset.armed = '1'; b.textContent = t('tapConfirm');
+      clearTimeout(b._t); b._t = setTimeout(function () { b.dataset.armed = '0'; b.textContent = t('newOrder'); }, 2500);
       return;
     }
-    clearTimeout(b._t); b.dataset.armed = '0'; b.textContent = 'New order';
-    var snap = JSON.stringify(state);
-    state.items = []; state.notes = ''; state.orderSeq += 1; state.orderDate = new Date().toISOString(); state.exportFilter = '';
-    $('notes').value = ''; $('q').value = '';
-    save(); render(); haptic();
-    toast('Started order ' + orderNo(), 'Undo', function () { state = JSON.parse(snap); $('notes').value = state.notes; save(); render(); });
+    clearTimeout(b._t); b.dataset.armed = '0'; b.textContent = t('newOrder');
+    var previous = { items: state.items.slice(), notes: state.notes, orderCo: state.orderCo,
+      orderSeq: state.orderSeq, orderDate: state.orderDate, exportFilter: state.exportFilter, search: $('q').value };
+    state.items = []; state.notes = ''; state.orderCo = ''; state.orderSeq += 1;
+    state.orderDate = new Date().toISOString(); state.exportFilter = '';
+    $('notes').value = ''; $('orderCo').value = ''; $('q').value = '';
+    render(); save(); haptic();
+    toast(t('startedOrder', { number: orderNo() }), t('undo'), function () {
+      state.items = previous.items.concat(state.items); state.notes = previous.notes; state.orderCo = previous.orderCo;
+      state.orderSeq = previous.orderSeq; state.orderDate = previous.orderDate; state.exportFilter = previous.exportFilter;
+      $('notes').value = state.notes; $('orderCo').value = state.orderCo; $('q').value = previous.search;
+      render(); save();
+    });
   });
-  $('orderCo').addEventListener('input', function () { state.orderCo = $('orderCo').value; save(); render(); });
+  // Save as the user types, but regroup the item list only when the field is committed.
+  $('orderCo').addEventListener('input', function () { state.orderCo = $('orderCo').value; scheduleSave(); });
   $('orderCo').addEventListener('change', function () {
-    var v = $('orderCo').value.trim();
-    if (v && state.recentCos.indexOf(v) === -1) { state.recentCos.unshift(v); state.recentCos = state.recentCos.slice(0, 20); save(); renderLists(); }
+    var v = $('orderCo').value.trim(); state.orderCo = v;
+    if (v && state.recentCos.indexOf(v) === -1) { state.recentCos.unshift(v); state.recentCos = state.recentCos.slice(0, 20); }
+    render(); save();
   });
 
-  $('gCat').addEventListener('click', function () { state.groupBy = 'cat'; save(); render(); });
-  $('gCo').addEventListener('click', function () { state.groupBy = 'company'; save(); render(); });
+  function setGrouping(group) {
+    if (state.groupBy === group) return;
+    state.groupBy = group; state.exportFilter = ''; // the old filter belongs to the other grouping
+    render(); save();
+  }
+  $('gCat').addEventListener('click', function () { setGrouping('cat'); });
+  $('gCo').addEventListener('click', function () { setGrouping('company'); });
   $('exportFilter').addEventListener('change', function () { state.exportFilter = $('exportFilter').value; save(); });
 
   $('eSave').addEventListener('click', function () {
     if (!editing) return;
     var f = readFields('e');
-    if (!f.name) { toast('Item name cannot be empty'); return; }
-    f.cat = matchCase(f.cat, uniq('cat'));
-    if (f.company) f.company = matchCase(f.company, uniq('company').concat(state.recentCos || []));
+    if (!f) return;
+    f.cat = matchCase(f.cat, categoryNames());
+    if (f.company) f.company = matchCase(f.company, uniq('company').concat(state.recentCos));
+    rememberCategory(f.cat);
     ['name', 'company', 'cat', 'wt', 'wu', 'qty', 'qu'].forEach(function (k) { editing[k] = f[k]; });
-    save(); render(); closeD($('editDlg')); editing = null;
+    render(); save(); closeD($('editDlg')); editing = null;
   });
   ['ename', 'ecompany', 'ecat', 'ewt', 'eqty'].forEach(function (id) {
     $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('eSave').click(); } });
@@ -1110,52 +1480,65 @@ dialog img, dialog textarea { border-radius: 12px; }
     var txt = $('out').value;
     var fallback = function () {
       $('out').focus(); $('out').select();
-      try { document.execCommand('copy'); toast('Copied'); } catch (e) { toast('Press and hold to copy'); }
+      try { toast(t(document.execCommand('copy') ? 'copied' : 'copyHelp')); }
+      catch (e) { toast(t('copyHelp')); }
     };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { toast('Copied'); }).catch(fallback);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { toast(t('copied')); }).catch(fallback);
     else fallback();
   });
 
   window.addEventListener('beforeprint', function () {
-    if (!state.exportFilter) return;
-    document.querySelectorAll('.cat').forEach(function (c) {
-      if (c.dataset.group !== state.exportFilter) c.classList.add('print-hide');
+    // Print the same nonzero items and group selected for text, picture and PDF,
+    // even if the on-screen search has hidden some rows or whole groups.
+    document.querySelectorAll('#list .cat').forEach(function (c) {
+      var hasItems = !!c.querySelector('.item:not(.zero)');
+      c.classList.toggle('print-hide', !hasItems || !!(state.exportFilter && c.dataset.group !== state.exportFilter));
+      c.classList.toggle('print-show', hasItems && (!state.exportFilter || c.dataset.group === state.exportFilter));
     });
+    var tv = document.querySelector('#list .tv');
+    if (tv) tv.textContent = totalsStr(exportItems());
   });
   window.addEventListener('afterprint', function () {
-    document.querySelectorAll('.cat.print-hide').forEach(function (c) { c.classList.remove('print-hide'); });
+    document.querySelectorAll('#list .cat').forEach(function (c) { c.classList.remove('print-hide', 'print-show'); });
+    var tv = document.querySelector('#list .tv');
+    if (tv) tv.textContent = totalsStr(state.items);
   });
   $('printBtn').addEventListener('click', function () {
     if (!requireItems()) return;
-    try { window.print(); } catch (e) { toast('Printing is not available here. Use PDF instead.'); }
+    try { window.print(); } catch (e) { toast(t('printUnavailable')); }
   });
   $('pdfBtn').addEventListener('click', makePDF);
   $('picBtn').addEventListener('click', makePicture);
   $('picClose').addEventListener('click', function () { closeD($('picDlg')); });
   $('picSave').addEventListener('click', function () {
-    if (!picBlobs.length) { toast('Picture is still being made'); return; }
-    var fs = picFiles(), chain = Promise.resolve();
-    fs.forEach(function (f) { chain = chain.then(function () { return saveFile(f.name, f); }); });
-    chain.catch(function () { toast('Could not save the picture'); });
-  });
-  $('picShare').addEventListener('click', function () {
-    if (!picBlobs.length) { toast('Picture is still being made'); return; }
+    if (!picBlobs.length) { toast(t('picturePreparing')); return; }
     var fs = picFiles();
-    var C = window.Capacitor;
-    if (C && C.Plugins && C.Plugins.Share && C.Plugins.Filesystem) {
-      var chain = Promise.resolve();
-      fs.forEach(function (f) { chain = chain.then(function () { return nativeSave(f.name, f); }); });
-      return;
-    }
-    // FIX: call share() directly in the tap (no await before it) or Safari/Chrome reject it
-    if (navigator.canShare && navigator.share && navigator.canShare({ files: fs })) {
-      navigator.share({ files: fs, title: state.shop || 'Order' }).catch(function (e) {
-        if (e && e.name === 'AbortError') return;
-        toast('Sharing is not available here. Use Save instead.');
+    if (nativeShare(fs, titleText())) return;
+    var standalone = navigator.standalone || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    if (standalone && navigator.canShare && navigator.share && navigator.canShare({ files: fs })) {
+      // A single tap must open one share sheet for all pictures on iOS home-screen apps.
+      navigator.share({ files: fs, title: titleText() }).catch(function (e) {
+        if (!e || e.name !== 'AbortError') toast(t('cannotSavePictures'));
       });
       return;
     }
-    toast('Sharing is not available here. Use Save instead.');
+    var chain = Promise.resolve();
+    fs.forEach(function (f) { chain = chain.then(function () { return saveFile(f.name, f); }); });
+    chain.catch(function () { toast(t('cannotSavePictures')); });
+  });
+  $('picShare').addEventListener('click', function () {
+    if (!picBlobs.length) { toast(t('picturePreparing')); return; }
+    var fs = picFiles();
+    if (nativeShare(fs, titleText())) return;
+    // Call share() directly in the tap (no await before it) or Safari/Chrome reject it.
+    if (navigator.canShare && navigator.share && navigator.canShare({ files: fs })) {
+      navigator.share({ files: fs, title: titleText() }).catch(function (e) {
+        if (e && e.name === 'AbortError') return;
+        toast(t('shareUnavailable'));
+      });
+      return;
+    }
+    toast(t('shareUnavailable'));
   });
 
   $('clearBtn').addEventListener('click', function () {
@@ -1165,11 +1548,11 @@ dialog img, dialog textarea { border-radius: 12px; }
       var backup = state.items.slice(), bo = state.catOrder.slice();
       clearTimeout(b._t);
       state.items = []; state.catOrder = [];
-      save(); render(); b.textContent = 'Clear all'; b.dataset.armed = '0';
-      toast('List cleared', 'Undo', function () { state.items = backup; state.catOrder = bo; save(); render(); });
+      render(); save(); b.textContent = t('clearAll'); b.dataset.armed = '0';
+      toast(t('listCleared'), t('undo'), function () { state.items = backup; state.catOrder = bo; render(); save(); });
     } else {
-      b.dataset.armed = '1'; b.textContent = 'Tap again to clear';
-      b._t = setTimeout(function () { b.dataset.armed = '0'; b.textContent = 'Clear all'; }, 2500);
+      b.dataset.armed = '1'; b.textContent = t('tapClear');
+      b._t = setTimeout(function () { b.dataset.armed = '0'; b.textContent = t('clearAll'); }, 2500);
     }
   });
 
@@ -1177,19 +1560,12 @@ dialog img, dialog textarea { border-radius: 12px; }
     if (state.theme) document.documentElement.setAttribute('data-theme', state.theme);
     else document.documentElement.removeAttribute('data-theme');
   }
-  $('themeBtn').addEventListener('click', function () {
-    var dark = state.theme ? state.theme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    state.theme = dark ? 'light' : 'dark';
-    save(); applyTheme();
-  });
-
-  var APP_VERSION = '1.4.0';
   load();
-  $('shop').value = state.shop || 'Saeedi Essence';
-  $('orderCo').value = state.orderCo || '';
-  $('notes').value = state.notes || '';
-  applyTheme();
-  render();
+  $('shop').value = titleText();
+  $('orderCo').value = state.orderCo;
+  $('notes').value = state.notes;
+  applyTheme(); translateStatic(); render();
+  save(); // persist migrated titles/categories and show when device storage is unavailable
 
   if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0 && !window.Capacitor) {
     navigator.serviceWorker.register('sw.js').catch(function () {});
