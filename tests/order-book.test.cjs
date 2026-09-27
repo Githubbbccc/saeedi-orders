@@ -462,8 +462,10 @@ test('manifest and cache include the current user-facing facts and localized Abo
   const worker = fs.readFileSync(path.join(__dirname, '../www/sw.js'), 'utf8');
   assert.match(manifest.description, /home, shops and teams/);
   assert.match(manifest.description, /offline after your first visit/);
-  assert.match(worker, /VERSION = '1\.9\.0'/);
+  assert.match(worker, /VERSION = '\d+\.\d+\.\d+'/, 'a cache version to invalidate the precache');
   assert.match(worker, /\.\/i18n\.js/);
+  // the dictionary is critical: it must not lag behind a freshly fetched page
+  assert.match(worker, /\/\\\/i18n\\\.js\$\//, 'i18n.js is fetched network-first');
 });
 
 test('every page exposes one top-level heading and a translated order-number label', t => {
@@ -527,6 +529,7 @@ test('static assets revalidate in the background so updates reach returning visi
   assert.match(assetBranch, /fetch\(req\)/, 'assets must still be refreshed from the network');
   assert.match(assetBranch, /c\.put\(req, cp\)/, 'the fresh copy must replace the cached one');
   assert.match(assetBranch, /return r \|\| network;/, 'the cache is served first, the network backs it up');
+  assert.match(worker, /var networkFirst = /, 'the page and dictionary are network-first');
   assert.match(worker, /c\.add\(f\)\.catch/, 'one missing file must not abort the whole precache');
 });
 
@@ -547,3 +550,164 @@ test('a visitor without JavaScript is told why the page is empty', () => {
   assert.ok(notice, 'expected a <noscript> notice');
   assert.match(notice[1], /needs JavaScript/i);
 });
+
+const tick = (ms = 40) => new Promise(resolve => setTimeout(resolve, ms));
+
+test('a backup file carries the whole order and loads back onto a cleared device', async t => {
+  let blob = null;
+  const p = page(t, null, false, win => {
+    win.URL.createObjectURL = value => { blob = value; return 'blob:test'; };
+    win.URL.revokeObjectURL = () => {};
+    // jsdom tries to navigate for <a download>; real browsers simply download.
+    win.HTMLAnchorElement.prototype.click = function () {};
+  });
+  p.enter('shop', 'Karachi Motors');
+  p.enter('orderCo', 'Acme Traders');
+  p.enter('notes', 'Deliver by Friday');
+  p.enter('aname', 'Wheel rim');
+  p.enter('acat', 'RIM');
+  p.enter('aqty', '3');
+  p.click('addBtn');
+  p.enter('aname', 'Spare bolt');
+  p.enter('acat', 'Spares');
+  p.click('addBtn');
+
+  p.click('settingsBtn');
+  p.click('backupBtn');
+  assert.ok(blob, 'saving a backup should produce a file');
+  const text = await new Promise(resolve => {
+    const reader = new p.w.FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.readAsText(blob);
+  });
+  const backup = JSON.parse(text);
+  assert.equal(backup.app, 'order-app');
+  assert.equal(backup.format, 1);
+  assert.match(backup.exportedAt, /^\d{4}-/);
+  assert.equal(backup.state.items.length, 2);
+  assert.equal(backup.state.shop, 'Karachi Motors');
+  assert.equal(backup.state.orderCo, 'Acme Traders');
+  assert.equal(backup.state.notes, 'Deliver by Friday');
+  assert.deepEqual(backup.state.savedCategories, ['Spares'], 'custom categories travel with the backup');
+
+  // clear everything, then load the backup back in
+  p.click('settingsClose');
+  p.click('clearBtn'); p.click('clearBtn');
+  assert.equal(p.saved().items.length, 0);
+  p.click('settingsBtn');
+  const field = p.$('restoreFile');
+  p.w.confirm = () => true;
+  Object.defineProperty(field, 'files', {
+    configurable: true,
+    value: [new p.w.File([text], 'order-app-backup.json', { type: 'application/json' })]
+  });
+  field.dispatchEvent(new p.w.Event('change'));
+  await tick(120);
+
+  assert.equal(p.saved().items.length, 2, 'the backup should come back');
+  assert.deepEqual(p.saved().items.map(i => i.name), ['Wheel rim', 'Spare bolt']);
+  assert.equal(p.saved().items[0].qty, 3);
+  assert.equal(p.saved().items[1].cat, 'Spares');
+  assert.equal(p.$('shop').value, 'Karachi Motors', 'the order title is restored into the form');
+  assert.equal(p.$('orderCo').value, 'Acme Traders');
+  assert.equal(p.$('notes').value, 'Deliver by Friday');
+  assert.equal(p.$('settingsDlg').open, false, 'the settings dialog closes so the result is visible');
+
+  // restoring replaces the list, so it offers the usual undo of what was there before
+  const undo = p.$('toast').querySelector('button');
+  assert.ok(undo, 'restoring should offer an undo');
+  undo.click();
+  assert.equal(p.saved().items.length, 0, 'undo puts the previous, cleared list back');
+});
+
+test('a file that is not a backup is refused without touching the current order', async t => {
+  const p = page(t);
+  p.w.confirm = () => true;
+  p.enter('aname', 'Keep me');
+  p.click('addBtn');
+  p.click('settingsBtn');
+  const field = p.$('restoreFile');
+  Object.defineProperty(field, 'files', {
+    configurable: true,
+    value: [new p.w.File(['{"hello":"world"}'], 'holiday-photo.json', { type: 'application/json' })]
+  });
+  field.dispatchEvent(new p.w.Event('change'));
+  await tick(120);
+  assert.equal(p.saved().items.length, 1);
+  assert.equal(p.saved().items[0].name, 'Keep me');
+  assert.match(p.$('toast').textContent, /not an Order App backup/);
+});
+
+test('back closes the open dialog, and closing by button steps back exactly once', async t => {
+  const p = page(t);
+  const pageEntry = p.w.history.state; // null on a freshly opened page
+  p.click('settingsBtn');
+  assert.equal(p.$('settingsDlg').open, true);
+  assert.equal(p.w.history.state.orderAppDialog, true, 'an open dialog adds one history entry');
+  p.w.history.back();
+  await tick();
+  assert.equal(p.$('settingsDlg').open, false, 'back should close the dialog instead of leaving the page');
+  assert.equal(p.w.history.state, pageEntry, 'back lands on the page entry again');
+
+  // Closing with the dialog's own button releases its entry: exactly one step back.
+  let pops = 0;
+  p.w.addEventListener('popstate', () => { pops++; });
+  p.click('settingsBtn');
+  assert.equal(p.w.history.state.orderAppDialog, true);
+  p.click('settingsClose');
+  await tick();
+  assert.equal(p.$('settingsDlg').open, false);
+  assert.equal(pops, 1, 'closing by button steps back over its own entry exactly once');
+
+  // The delayed popstate that release causes must not reach a dialog opened
+  // straight afterwards, or the next Back press would need pressing twice.
+  p.click('settingsBtn');
+  await tick();
+  assert.equal(p.$('settingsDlg').open, true, 'a late popstate must not close a freshly opened dialog');
+  assert.equal(p.w.history.state.orderAppDialog, true);
+});
+
+test('feedback raised while a dialog is open is placed in the top layer with it', t => {
+  const p = page(t);
+  p.click('amanage');
+  p.enter('newCategory', 'Spares');
+  p.click('createCategory');
+  const toastEl = p.$('toast');
+  assert.equal(toastEl.hidden, false);
+  assert.ok(toastEl.closest('dialog'), 'a toast must sit inside the modal, not behind its backdrop');
+  assert.equal(toastEl.closest('dialog').id, 'categoryDlg');
+  assert.match(toastEl.textContent, /Category added/);
+  p.click('closeCategories');
+  p.click('picSave'); // nothing prepared yet: toasts with no dialog open
+  assert.equal(toastEl.parentNode, p.d.body, 'with no dialog open the toast belongs to the page');
+});
+
+test('printing names the page after the order and restores the app title afterwards', t => {
+  const p = page(t);
+  const appTitle = p.d.title;
+  p.enter('shop', 'Karachi Motors');
+  p.w.dispatchEvent(new p.w.Event('beforeprint'));
+  assert.equal(p.d.title, 'Karachi Motors', 'the printed header should name the order');
+  p.w.dispatchEvent(new p.w.Event('afterprint'));
+  assert.equal(p.d.title, appTitle);
+});
+
+test('the Android hardware back button closes the open dialog before exiting the app', t => {
+  let backHandler = null;
+  let exited = 0;
+  const p = page(t, null, false, win => {
+    win.Capacitor = { Plugins: { App: {
+      addListener: (name, cb) => { if (name === 'backButton') backHandler = cb; },
+      exitApp: () => { exited++; }
+    } } };
+  });
+  assert.ok(backHandler, 'the native back button must be handled at startup');
+  p.click('settingsBtn');
+  assert.equal(p.$('settingsDlg').open, true);
+  backHandler();
+  assert.equal(p.$('settingsDlg').open, false, 'back should close the dialog first');
+  assert.equal(exited, 0, 'the app must not exit while a dialog was open');
+  backHandler();
+  assert.equal(exited, 1, 'with nothing open, back exits as Android users expect');
+});
+

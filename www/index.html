@@ -296,7 +296,7 @@ dialog img, dialog textarea { border-radius: 12px; }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 12px); } }
 .foot { text-align:center; color: var(--muted); font: 500 11.5px/1.6 "IBM Plex Mono", monospace; margin: 22px 0 0; }
 .settings-section { margin:16px 0; }
-.settings-section > label, .settings-section legend { display:block; color:var(--ink); font-size:14px; font-weight:700; margin-bottom:7px; }
+.settings-section > label, .settings-section legend, .settings-section > h3 { display:block; color:var(--ink); font-size:14px; font-weight:700; margin:0 0 7px; letter-spacing:0; font-family:"IBM Plex Sans", "Noto Naskh Arabic", sans-serif; }
 .settings-section select { width:100%; }
 .settings-note { color:var(--muted); font-size:13px; margin:6px 0 0; }
 .about-details { border:1px solid var(--line); border-radius:12px; background:var(--field); overflow:hidden; }
@@ -467,6 +467,15 @@ dialog img, dialog textarea { border-radius: 12px; }
     </select>
     <p class="settings-note" data-i18n="languageHint">Choose the app language. Your item names stay as you typed them.</p>
   </div>
+  <div class="settings-section">
+    <h3 data-i18n="backupTitle">Backup</h3>
+    <p class="settings-note" data-i18n="backupHint">Save your orders, categories and settings to a file, or load one back onto this device.</p>
+    <div class="dlg-actions">
+      <button id="backupBtn" type="button" data-i18n="saveBackup">Save backup</button>
+      <button id="restoreBtn" type="button" data-i18n="restoreBackup">Restore backup</button>
+    </div>
+    <input type="file" id="restoreFile" accept="application/json,.json" hidden>
+  </div>
   <details class="about-details settings-section" id="aboutDetails">
     <summary data-i18n="aboutSummary">About Order App</summary>
     <div class="about-copy" role="region" tabindex="0" aria-label="About Order App" data-i18n-aria="aboutSummary">
@@ -583,6 +592,11 @@ dialog img, dialog textarea { border-radius: 12px; }
         if (s && Array.isArray(s.items)) { state = s; }
       }
     } catch (e) {}
+    normalizeState();
+  }
+  // Fills in whatever a stored order or a restored backup is missing and drops
+  // values we cannot trust, so old data and hand-edited files both load safely.
+  function normalizeState() {
     if (!Array.isArray(state.catOrder)) state.catOrder = [];
     state.catOrder = state.catOrder.filter(function (c) { return typeof c === 'string'; });
     if (!Array.isArray(state.savedCategories)) state.savedCategories = [];
@@ -651,7 +665,14 @@ dialog img, dialog textarea { border-radius: 12px; }
     return e;
   }
   function toast(msg, action, fn) {
-    var t = $('toast'); t.textContent = msg; t.hidden = false;
+    var t = $('toast');
+    // A modal dialog is painted in the browser's top layer, so a toast left in the
+    // page body would sit behind its backdrop and never be seen. Keep the toast
+    // inside whichever dialog is currently open.
+    var open = document.querySelectorAll('dialog[open]');
+    var host = open.length ? open[open.length - 1] : document.body;
+    if (t.parentNode !== host) host.appendChild(t);
+    t.textContent = msg; t.hidden = false;
     if (action && fn) {
       var b = el('button', '', action); b.type = 'button';
       b.addEventListener('click', function () { t.hidden = true; fn(); });
@@ -660,8 +681,60 @@ dialog img, dialog textarea { border-radius: 12px; }
     clearTimeout(toast._t);
     toast._t = setTimeout(function () { t.hidden = true; }, action ? 5000 : 2600);
   }
-  function openD(d) { if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
-  function closeD(d) { if (d.close) d.close(); else d.removeAttribute('open'); }
+  function openD(d) {
+    if (d.open) return;
+    if (d.showModal) d.showModal(); else d.setAttribute('open', '');
+    // Give the dialog a history entry so Back closes it instead of leaving the
+    // page, or exiting the installed Android app.
+    var pushed = false;
+    try { history.pushState({ orderAppDialog: true }, ''); pushed = true; } catch (e) {}
+    dialogStack.push({ d: d, pushed: pushed });
+  }
+  function closeD(d) {
+    // Release first so this works even where <dialog> has no close() (and therefore
+    // never fires a close event); the listener below then just finds nothing left.
+    releaseDialogEntry(d);
+    if (d.close) d.close(); else d.removeAttribute('open');
+  }
+  var dialogStack = [], selfPops = 0;
+  // Whatever closes a dialog (its own button, Escape, the backdrop or the back
+  // button), hand back the history entry it added so a single Back never needs
+  // pressing twice.
+  function releaseDialogEntry(d) {
+    for (var i = dialogStack.length - 1; i >= 0; i--) {
+      if (dialogStack[i].d !== d) continue;
+      var entry = dialogStack.splice(i, 1)[0];
+      if (entry.pushed) { selfPops++; try { history.back(); } catch (e) { selfPops--; } }
+      return;
+    }
+  }
+  document.querySelectorAll('dialog').forEach(function (d) {
+    d.addEventListener('close', function () { releaseDialogEntry(d); });
+  });
+  window.addEventListener('popstate', function () {
+    if (selfPops) { selfPops--; return; } // we asked for this step back ourselves
+    var top = dialogStack[dialogStack.length - 1];
+    if (!top || !top.d.open) return;
+    top.pushed = false; // the device already stepped back for us
+    closeD(top.d);
+  });
+  // Android: the native activity never sends the hardware back button to the page,
+  // so without this listener the app would close with a dialog still on screen.
+  // Registering it also suppresses that default, so we exit the app ourselves.
+  function registerBackButton(attempt) {
+    if (!window.Capacitor) return; // plain browser: the popstate handler above is enough
+    var nativeApp = window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+    if (!nativeApp || !nativeApp.addListener) {
+      if (attempt < 10) setTimeout(function () { registerBackButton(attempt + 1); }, 100);
+      return;
+    }
+    nativeApp.addListener('backButton', function () {
+      var top = dialogStack[dialogStack.length - 1];
+      if (top && top.d.open) { closeD(top.d); return; }
+      nativeApp.exitApp();
+    });
+  }
+  registerBackButton(0);
   function fmt(n) { return (Math.round(Number(n) * 100) / 100).toString(); }
   function fmtWeight(it) { return (it.wt !== '' && it.wt != null) ? fmt(it.wt) + (it.wu ? ' ' + it.wu : '') : ''; }
   function fmtQty(it) { return fmt(it.qty) + (it.qu ? ' ' + unitLabel(it.qu, it.qty) : ''); }
@@ -1382,6 +1455,50 @@ dialog img, dialog textarea { border-radius: 12px; }
     }).catch(function () { toast(t('pdfError')); });
   }
 
+  /* ---------- Backup and restore ---------- */
+  // A backup is the whole saved state in one JSON file. Restoring re-uses the
+  // same normaliser as startup, so a hand-edited or older file cannot corrupt
+  // the list, and the previous data can be restored with the usual Undo.
+  var BACKUP_FORMAT = 1;
+  function backupFileName() {
+    var d = new Date();
+    return 'order-app-backup-' + [d.getFullYear(), String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0')].join('-') + '.json';
+  }
+  function saveBackup() {
+    try {
+      var payload = { app: 'order-app', format: BACKUP_FORMAT, exportedAt: new Date().toISOString(), state: state };
+      return saveFile(backupFileName(), new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+    } catch (e) {
+      toast(t('backupError'));
+      return Promise.resolve();
+    }
+  }
+  function applyBackup(text) {
+    var data;
+    try { data = JSON.parse(text); } catch (e) { toast(t('restoreError')); return; }
+    // Accept a full backup, or a bare saved order for hand-written files.
+    var incoming = data && typeof data === 'object' && data.state && typeof data.state === 'object' ? data.state : data;
+    if (!incoming || typeof incoming !== 'object' || !Array.isArray(incoming.items)) { toast(t('restoreError')); return; }
+    if (!window.confirm(t('restoreConfirm', { count: incoming.items.length }))) return;
+    var previous = JSON.parse(JSON.stringify(state));
+    state = incoming;
+    normalizeState();
+    syncForm(); applyTheme(); translateStatic(); render(); save();
+    closeD($('settingsDlg'));
+    toast(t('restored', { count: state.items.length }), t('undo'), function () {
+      state = previous;
+      normalizeState();
+      syncForm(); applyTheme(); translateStatic(); render(); save();
+    });
+  }
+  function restoreFromFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () { applyBackup(String(reader.result)); };
+    reader.onerror = function () { toast(t('restoreError')); };
+    try { reader.readAsText(file); } catch (e) { toast(t('restoreError')); }
+  }
+
   /* ---------- Events ---------- */
   $('addFields').innerHTML = fieldsHTML('a');
   $('editFields').innerHTML = fieldsHTML('e');
@@ -1411,6 +1528,13 @@ dialog img, dialog textarea { border-radius: 12px; }
   $('closeCategories').addEventListener('click', function () { closeD($('categoryDlg')); });
   $('settingsBtn').addEventListener('click', function () { openD($('settingsDlg')); });
   $('settingsClose').addEventListener('click', function () { closeD($('settingsDlg')); });
+  $('backupBtn').addEventListener('click', saveBackup);
+  $('restoreBtn').addEventListener('click', function () { $('restoreFile').click(); });
+  $('restoreFile').addEventListener('change', function () {
+    var file = $('restoreFile').files && $('restoreFile').files[0];
+    $('restoreFile').value = ''; // let the same file be picked again later
+    restoreFromFile(file);
+  });
   document.querySelectorAll('input[name="theme"]').forEach(function (radio) {
     radio.addEventListener('change', function () { state.theme = radio.value === 'system' ? '' : radio.value; applyTheme(); save(); });
   });
@@ -1499,7 +1623,12 @@ dialog img, dialog textarea { border-radius: 12px; }
     else fallback();
   });
 
+  var printTitleBefore = null;
   window.addEventListener('beforeprint', function () {
+    // Browsers print their own header/footer using the document title, so name the
+    // page after the order rather than after the app.
+    printTitleBefore = document.title;
+    document.title = titleText();
     // Print the same nonzero items and group selected for text, picture and PDF,
     // even if the on-screen search has hidden some rows or whole groups.
     document.querySelectorAll('#list .cat').forEach(function (c) {
@@ -1511,6 +1640,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     if (tv) tv.textContent = totalsStr(exportItems());
   });
   window.addEventListener('afterprint', function () {
+    if (printTitleBefore != null) { document.title = printTitleBefore; printTitleBefore = null; }
     document.querySelectorAll('#list .cat').forEach(function (c) { c.classList.remove('print-hide', 'print-show'); });
     var tv = document.querySelector('#list .tv');
     if (tv) tv.textContent = totalsStr(state.items);
@@ -1591,10 +1721,15 @@ dialog img, dialog textarea { border-radius: 12px; }
       else if (schemeQuery.addListener) schemeQuery.addListener(onSchemeChange);
     }
   }
+  // Point the form at the current state. Also used after restoring a backup.
+  function syncForm() {
+    $('shop').value = titleText();
+    $('orderCo').value = state.orderCo;
+    $('notes').value = state.notes;
+    $('q').value = '';
+  }
   load();
-  $('shop').value = titleText();
-  $('orderCo').value = state.orderCo;
-  $('notes').value = state.notes;
+  syncForm();
   applyTheme(); translateStatic(); render();
   save(); // persist migrated titles/categories and show when device storage is unavailable
 

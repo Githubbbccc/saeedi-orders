@@ -8,8 +8,8 @@ An offline-friendly order list for anyone. Enter what you need, organize it and 
 | --- | --- |
 | Who uses it | Anyone preparing an order for home, a shop or a team; no account is needed. |
 | What you enter | A custom order title, items, categories, quantities, optional company/supplier, size or weight, and delivery notes. |
-| What you get | A searchable, groupable list and an order you can share as text, picture(s) or PDF, or print. Zero-quantity items remain in your list but are excluded from exports. |
-| Where data goes | Orders and preferences are stored on this device, in this browser or installed app. There is no cloud sync; export a copy before clearing site data. |
+| What you get | A searchable, groupable list and an order you can share as text, picture(s) or PDF, or print. Zero-quantity items remain in your list but are excluded from exports. A backup file keeps your orders and settings, and can be loaded back on the same or a new device. |
+| Where data goes | Orders and preferences are stored on this device, in this browser or installed app. There is no cloud sync; save a backup file before clearing site data. |
 | How it runs | A web app for modern desktop and mobile browsers. The website can reload offline after its first successful visit; install and sharing options vary by platform. |
 
 The same facts are available inside the app under **Settings → About Order App**, in all four supported languages.
@@ -22,12 +22,14 @@ The same facts are available inside the app under **Settings → About Order App
 
 **Customize categories:** Tap **More categories** to see all the presets. Tap **Manage categories** beside the category field to add, rename or delete your own categories. Renaming updates existing items and the active export filter. Deleting a category with items asks for confirmation and moves those items to General. Built-in categories (including RIM) always remain available.
 
+**Backup and restore:** In **Settings → Backup**, tap **Save backup** to download a `.json` file holding your orders, categories, appearance and language. Tap **Restore backup** and pick that file to load it back — after clearing site data, or on a new phone. Restoring replaces what is on the device, asks for confirmation first, and offers **Undo**. The file stays on your device; nothing is uploaded.
+
 **Settings:** The slider icon at the top opens appearance and language settings. Choose **Device setting**, **Light** or **Dark**; the theme stays on this device. Choose **Device language** or explicitly select **English, Urdu, Spanish or Arabic**. Device language falls back to English if unsupported. Urdu and Arabic use right-to-left layouts and bundled fonts, including in picture/PDF labels. Existing item names and user-entered text are not translated; saved category/unit codes stay stable when switching languages.
 
 ## Where it runs
 
 - **Website:** [Open Order App](https://Githubbbccc.github.io/saeedi-orders/) in a modern browser on Android, iPhone/iPad, Windows, macOS or Linux. Use your browser's install/add-to-home-screen option where available. Installability and file-sharing behavior vary by browser and OS; a browser is always sufficient to use the web app.
-- **Android APK:** When the updated `main` build succeeds, download `Order-App.apk` from [Releases](https://github.com/Githubbbccc/saeedi-orders/releases). Older releases may be named `Saeedi-Orders.apk`. Pull requests compile an unsigned release APK as a build check; signing and publishing occur only after merging to `main`. There is no native desktop or iOS build provided here; use the website on those platforms.
+- **Android APK:** When the updated `main` build succeeds, download `Order-App.apk` from [Releases](https://github.com/Githubbbccc/saeedi-orders/releases). Older releases may be named `Saeedi-Orders.apk`. The Android build also handles the hardware back button: it closes an open dialog instead of leaving the app. Pull requests compile an unsigned release APK as a build check; signing and publishing occur only after merging to `main`. There is no native desktop or iOS build provided here; use the website on those platforms.
 
 The web app caches its core files after the first successful visit, so previously loaded pages work offline. The page itself is fetched from the network first, and the other cached files are served instantly and refreshed in the background, so translation and icon updates reach returning devices without reinstalling. JavaScript must be enabled; a notice explains this if it is switched off. Edits are handled locally without round trips to a server; the list, categories and settings are stored in this browser's/device's storage, **not synced across devices**. Clearing site data or uninstalling the app can remove orders: save/share an export first if you need a copy. The existing browser storage key (`order-list-maker-v1`), hosted URL and Android app ID (`com.saeedi.essence.orders`) are unchanged to preserve existing installations' data.
 
