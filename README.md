@@ -17,14 +17,18 @@ The same facts are available inside the app under **Settings → About Order App
 ## Use the app
 
 1. Tap **My Orders** to enter a shop or order title. Optionally add a default supplier and delivery notes.
-2. Enter an item name, optional company and size/weight, quantity and unit. Pick a category (including RIM) or type a new one, then tap **Add to order**. Edit an item by tapping it; use +/− to adjust its quantity.
+2. Enter an item name, optional company and size/weight, quantity and unit. Pick a category (including RIM) or type a new one, then tap **Add to order**. Edit an item by tapping it; use +/− to adjust its quantity. In the edit dialog, **Duplicate this item** adds a second copy right behind it — handy for the same part in another size or weight.
 3. Search or group the list by category/company. Choose a group to export, then share text, a picture or a PDF, or print the order. Items with quantity 0 stay in your working list but are excluded from exports. Long picture orders are split into pages for sharing.
 
 **Customize categories:** Tap **More categories** to see all the presets. Tap **Manage categories** beside the category field to add, rename or delete your own categories. Renaming updates existing items and the active export filter. Deleting a category with items asks for confirmation and moves those items to General. Built-in categories (including RIM) always remain available.
 
+**Repeat an order:** Tap **New order** to start the next one; the order you just finished is remembered, and the empty list then offers **Repeat last order** on the list itself. One tap brings back its items, supplier and delivery notes — useful for a weekly repeat — and **Undo** removes them again.
+
+**Change the language quickly:** The globe button beside the title shows the language in use (EN, UR, ES, AR) and opens a row of choices. Pick one and the whole app switches at once, right-to-left layouts included, without opening Settings. Every language is written in its own script so the choices stay readable.
+
 **Backup and restore:** In **Settings → Backup**, tap **Save backup** to download a `.json` file holding your orders, categories, appearance and language. Tap **Restore backup** and pick that file to load it back — after clearing site data, or on a new phone. Restoring replaces what is on the device, asks for confirmation first, and offers **Undo**. The file stays on your device; nothing is uploaded.
 
-**Settings:** The slider icon at the top opens appearance and language settings. Choose **Device setting**, **Light** or **Dark**; the theme stays on this device. Choose **Device language** or explicitly select **English, Urdu, Spanish or Arabic**. Device language falls back to English if unsupported. Urdu and Arabic use right-to-left layouts and bundled fonts, including in picture/PDF labels. Existing item names and user-entered text are not translated; saved category/unit codes stay stable when switching languages.
+**Settings:** The slider icon at the top opens appearance and language settings. Choose **Device setting**, **Light** or **Dark**; the theme stays on this device. Choose **Device language** or explicitly select **English, Urdu, Spanish or Arabic** — the same choice as the globe button in the header. Device language falls back to English if unsupported. Urdu and Arabic use right-to-left layouts and bundled fonts, including in picture/PDF labels. Existing item names and user-entered text are not translated; saved category/unit codes stay stable when switching languages.
 
 ## Where it runs
 

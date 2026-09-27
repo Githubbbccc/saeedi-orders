@@ -297,6 +297,18 @@ dialog img, dialog textarea { border-radius: 12px; }
 .foot { text-align:center; color: var(--muted); font: 500 11.5px/1.6 "IBM Plex Mono", monospace; margin: 22px 0 0; }
 .settings-section { margin:16px 0; }
 .settings-section > label, .settings-section legend, .settings-section > h3 { display:block; color:var(--ink); font-size:14px; font-weight:700; margin:0 0 7px; letter-spacing:0; font-family:"IBM Plex Sans", "Noto Naskh Arabic", sans-serif; }
+/* Quick language switcher in the hero. */
+.hero .lang-btn { width:auto; min-width:56px; padding:0 10px; gap:6px; display:inline-flex; align-items:center; justify-content:center; }
+.lang-btn .lang-code { font:700 11px/1 "IBM Plex Mono", ui-monospace, monospace; letter-spacing:.08em; }
+.hero .lang-btn[aria-expanded="true"] { border-color:#F3D27A; color:#F3D27A; background:rgba(243,210,122,.16); }
+.lang-bar { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
+.lang-bar[hidden] { display:none; }
+.lang-chip { border:1px solid rgba(243,210,122,.32); background:rgba(255,255,255,.08); color:#F8F2E2; border-radius:999px; padding:6px 13px; font-size:13px; font-weight:600; white-space:nowrap; }
+.lang-chip[aria-pressed="true"] { background:var(--gold-grad); color:#1B150B; border-color:transparent; }
+/* Start the next order from the one you just finished. */
+.repeat-btn { display:inline-flex; align-items:center; gap:8px; margin:14px auto 0; border:1px solid var(--line); background:var(--field); color:var(--ink); border-radius:999px; padding:10px 16px; font-size:14px; font-weight:600; }
+.repeat-btn:active { transform:scale(.97); }
+.edit-extra { margin:14px 0 0; }
 .settings-section select { width:100%; }
 .settings-note { color:var(--muted); font-size:13px; margin:6px 0 0; }
 .about-details { border:1px solid var(--line); border-radius:12px; background:var(--field); overflow:hidden; }
@@ -355,8 +367,10 @@ dialog img, dialog textarea { border-radius: 12px; }
   <div class="head">
     <span class="logo" aria-hidden="true"><span class="logo-ring"><img src="icon.svg" width="50" height="50" alt=""></span></span>
     <div class="brand"><input id="shop" class="title-input" type="text" value="My Orders" aria-label="Order title or shop name" data-i18n-aria="titleLabel" title="Tap to change the title on your shared orders" data-i18n-title="titleHint" maxlength="60"><span class="tag" data-i18n="tag">Your orders · Tap name to change</span></div>
+    <button class="icon-btn theme-btn lang-btn" id="langBtn" type="button" aria-expanded="false" aria-controls="langBar" aria-label="Language" data-i18n-aria="language" title="Language" data-i18n-title="language"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18"/></svg><span class="lang-code" id="langCode" dir="ltr">EN</span></button>
     <button class="icon-btn theme-btn settings-btn" id="settingsBtn" aria-label="Settings" data-i18n-aria="settings" type="button"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h6m4 0h8M3 12h3m4 0h11M3 17h10m4 0h4"/><circle cx="11" cy="7" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="15" cy="17" r="2"/></svg></button>
   </div>
+  <div class="lang-bar" id="langBar" role="group" aria-label="Language" data-i18n-aria="language" hidden></div>
   <div class="orderbar">
     <span class="pill gold" id="orderNo" dir="ltr" title="Order number" data-i18n-title="orderNumber">#ORD-0001</span>
     <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="orderDate" dir="auto"></span></span>
@@ -438,6 +452,7 @@ dialog img, dialog textarea { border-radius: 12px; }
 <dialog id="editDlg" aria-labelledby="editTitle">
   <h2 id="editTitle" data-i18n="editTitle">Edit item</h2>
   <div class="stack" id="editFields"></div>
+  <div class="edit-extra"><button id="eCopy" class="linkbtn" type="button" data-i18n="duplicateItem">Duplicate this item</button></div>
   <div class="dlg-actions">
     <button id="eDel" type="button" data-i18n="remove">Remove</button>
     <button id="eCancel" type="button" data-i18n="cancel">Cancel</button>
@@ -517,7 +532,7 @@ dialog img, dialog textarea { border-radius: 12px; }
   var DEFAULT_CATS = ['General', 'RIM', 'Groceries', 'Electronics', 'Clothing', 'Home', 'Beauty', 'Office', 'Hardware', 'Other'];
   var WU = ['', 'g', 'kg', 'lb', 'oz', 'ml', 'L', 'cm', 'in'];
   var QU = ['pcs', 'box', 'pack', 'dozen', 'bag', 'bottle', 'carton', 'set', 'pair', ''];
-  var state = { shop: DEFAULT_TITLE, titleCustomized: false, brandMigrated: true, language: 'auto', orderCo: '', notes: '', orderSeq: 1, orderDate: '', recentCos: [], savedCategories: [], items: [], theme: '', groupBy: 'cat', catOrder: [], exportFilter: '' };
+  var state = { shop: DEFAULT_TITLE, titleCustomized: false, brandMigrated: true, language: 'auto', orderCo: '', notes: '', orderSeq: 1, orderDate: '', recentCos: [], savedCategories: [], items: [], theme: '', groupBy: 'cat', catOrder: [], exportFilter: '', lastOrder: null };
   var editing = null, saveTimer = null;
   var expandedCategories = { a: false, e: false };
   var I18N = window.OrderBookI18n;
@@ -582,6 +597,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     $('saveStatus').textContent = $('savedPill').classList.contains('unsaved') ? t('notSaved') : t('saved');
     if ($('savedPill').classList.contains('unsaved')) $('savedPill').title = t('notSavedHint');
     ['newBtn', 'clearBtn'].forEach(function (id) { var b = $(id); clearTimeout(b._t); b.dataset.armed = '0'; });
+    renderLangBar(); // the switcher labels and the active language code follow the language
   }
 
   function load() {
@@ -616,9 +632,25 @@ dialog img, dialog textarea { border-radius: 12px; }
     state.orderSeq = Number(state.orderSeq);
     if (!Number.isSafeInteger(state.orderSeq) || state.orderSeq < 1) state.orderSeq = 1;
     if (!state.orderDate || !isFinite(new Date(state.orderDate).getTime())) state.orderDate = new Date().toISOString();
+    state.items = fixItems(state.items, true);
+    // The snapshot behind "Repeat last order". Kept only if it still holds items.
+    if (!state.lastOrder || typeof state.lastOrder !== 'object' || !Array.isArray(state.lastOrder.items)) {
+      state.lastOrder = null;
+    } else {
+      state.lastOrder.items = fixItems(state.lastOrder.items, false);
+      if (!state.lastOrder.items.length) {
+        state.lastOrder = null;
+      } else {
+        if (typeof state.lastOrder.notes !== 'string') state.lastOrder.notes = '';
+        if (typeof state.lastOrder.orderCo !== 'string') state.lastOrder.orderCo = '';
+      }
+    }
+  }
+  // Repairs one list of items in place and hands it back. `remember` keeps the
+  // categories of the live list available even before any item uses them again.
+  function fixItems(list, remember) {
     var ids = Object.create(null);
-    state.items = state.items.filter(function (it) { return it && typeof it.name === 'string' && it.name.trim(); });
-    state.items.forEach(function (it) {
+    return list.filter(function (it) { return it && typeof it.name === 'string' && it.name.trim(); }).map(function (it) {
       if (typeof it.company !== 'string') it.company = '';
       if (it.wt !== '' && (!isFinite(Number(it.wt)) || Number(it.wt) < 0)) it.wt = '';
       if (it.wt == null) it.wt = '';
@@ -631,7 +663,8 @@ dialog img, dialog textarea { border-radius: 12px; }
       if (typeof it.id !== 'string' || ids[it.id]) it.id = uid();
       ids[it.id] = true;
       if (typeof it.cat !== 'string' || !it.cat.trim()) it.cat = 'General';
-      rememberCategory(it.cat); // keep existing categories even if all their items are removed later
+      if (remember) rememberCategory(it.cat); // keep categories even if every item leaves later
+      return it;
     });
   }
   function save() {
@@ -658,6 +691,9 @@ dialog img, dialog textarea { border-radius: 12px; }
 
   var $ = function (id) { return document.getElementById(id); };
   var uid = function () { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); };
+  function clone(value) { return JSON.parse(JSON.stringify(value)); }
+  // A copy always gets a fresh id so it can never be confused with the original.
+  function cloneItems(items) { return items.map(function (it) { var c = clone(it); c.id = uid(); return c; }); }
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -995,6 +1031,14 @@ dialog img, dialog textarea { border-radius: 12px; }
       em.innerHTML = EMPTY_SVG;
       em.appendChild(el('b', '', t('emptyTitle')));
       em.appendChild(document.createTextNode(t('emptyHelp')));
+      // An empty list is exactly where you want the order you just sent again.
+      var last = state.lastOrder;
+      if (last && last.items.length) {
+        var repeat = el('button', 'repeat-btn', t('repeatLastOrder') + ' · ' + countLabel(last.items.length));
+        repeat.type = 'button';
+        repeat.addEventListener('click', repeatLastOrder);
+        em.appendChild(repeat);
+      }
       list.appendChild(em);
       return;
     }
@@ -1070,6 +1114,23 @@ dialog img, dialog textarea { border-radius: 12px; }
       c.hidden = !vis; if (vis) any = true;
     });
     var nm = document.querySelector('#list .nomatch'); if (nm) nm.hidden = any || !q;
+  }
+  function countLabel(count) { return t(count === 1 ? 'countOne' : 'countMany', { count: count }); }
+  // Rebuilds the previous order in the current list, so a repeat customer order
+  // does not have to be typed in again.
+  function repeatLastOrder() {
+    var last = state.lastOrder;
+    if (!last || !last.items.length) return;
+    var before = { items: state.items, notes: state.notes, orderCo: state.orderCo };
+    state.items = cloneItems(last.items);
+    state.notes = last.notes || '';
+    state.orderCo = last.orderCo || '';
+    syncForm(); render(); save(); haptic();
+    var count = state.items.length;
+    toast(t('repeatedOrder') + ' · ' + countLabel(count), t('undo'), function () {
+      state.items = before.items; state.notes = before.notes; state.orderCo = before.orderCo;
+      syncForm(); render(); save();
+    });
   }
   function removeItem(it) {
     var pos = state.items.indexOf(it);
@@ -1538,12 +1599,71 @@ dialog img, dialog textarea { border-radius: 12px; }
   document.querySelectorAll('input[name="theme"]').forEach(function (radio) {
     radio.addEventListener('change', function () { state.theme = radio.value === 'system' ? '' : radio.value; applyTheme(); save(); });
   });
-  $('langPref').addEventListener('change', function () {
-    var values = ['a', 'e'].map(function (p) { return $(p + 'cat').value.trim(); });
-    var selected = values.map(function (v) { return v ? canonicalCategory(v) : ''; });
-    state.language = $('langPref').value;
+  // One place changes the language, used by both the quick switcher in the header
+  // and the picker in Settings.
+  function setLanguage(value) {
+    // Category fields hold a translated label, so re-point them at the new
+    // language before translateStatic swaps the labels under them.
+    var selected = ['a', 'e'].map(function (p) {
+      var v = $(p + 'cat').value.trim();
+      return v ? canonicalCategory(v) : '';
+    });
+    state.language = I18N.messages[value] ? value : 'auto';
     ['a', 'e'].forEach(function (p, i) { $(p + 'cat').value = selected[i] ? categoryLabel(selected[i]) : ''; });
     translateStatic(); render(); renderCategoryManager(); save();
+  }
+  $('langPref').addEventListener('change', function () { setLanguage($('langPref').value); });
+
+  var LANG_CHOICES = ['auto', 'en', 'ur', 'es', 'ar'];
+  var langChips = null;
+  function renderLangBar() {
+    // The chips are built once and only re-labelled afterwards. Rebuilding them on
+    // every change would pull the clicked chip out of the document mid-click, so the
+    // page-level "clicked outside" handler would close the switcher under the user.
+    if (!langChips) {
+      langChips = LANG_CHOICES.map(function (code) {
+        var chip = el('button', 'lang-chip');
+        chip.type = 'button';
+        if (code !== 'auto') chip.setAttribute('lang', code); // so it is read in its own language
+        chip.addEventListener('click', function () { setLanguage(code); });
+        $('langBar').appendChild(chip);
+        return chip;
+      });
+    }
+    langChips.forEach(function (chip, i) {
+      var code = LANG_CHOICES[i];
+      // Each language is written in its own script, so the choice stays readable
+      // whichever language is active right now.
+      chip.textContent = code === 'auto' ? t('langAuto') : (I18N.langShort[code] || code);
+      chip.setAttribute('aria-pressed', String(state.language === code));
+    });
+    $('langCode').textContent = activeLanguage().toUpperCase();
+  }
+  function setLangBarOpen(open) {
+    if (open) renderLangBar(); // reflect the active choice before it is shown
+    $('langBar').hidden = !open;
+    $('langBtn').setAttribute('aria-expanded', String(open));
+  }
+  $('langBtn').addEventListener('click', function () { setLangBarOpen($('langBar').hidden); });
+  document.addEventListener('click', function (e) {
+    if ($('langBar').hidden || !e.target || !e.target.closest) return;
+    if (e.target.closest('#langBar') || e.target.closest('#langBtn')) return;
+    setLangBarOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !$('langBar').hidden) {
+      setLangBarOpen(false);
+      $('langBtn').focus();
+      return;
+    }
+    // "/" jumps to search on a physical keyboard, unless you are already typing.
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) return;
+    if (document.querySelector('dialog[open]')) return;
+    e.preventDefault();
+    $('q').focus();
+    $('q').select();
   });
   $('shop').addEventListener('input', function () { state.shop = $('shop').value; state.titleCustomized = true; scheduleSave(); });
   $('shop').addEventListener('blur', function () {
@@ -1560,7 +1680,13 @@ dialog img, dialog textarea { border-radius: 12px; }
     }
     clearTimeout(b._t); b.dataset.armed = '0'; b.textContent = t('newOrder');
     var previous = { items: state.items.slice(), notes: state.notes, orderCo: state.orderCo,
-      orderSeq: state.orderSeq, orderDate: state.orderDate, exportFilter: state.exportFilter, search: $('q').value };
+      orderSeq: state.orderSeq, orderDate: state.orderDate, exportFilter: state.exportFilter, search: $('q').value,
+      lastOrder: state.lastOrder };
+    // Remember the order being finished so it can be repeated from the empty list.
+    if (state.items.length) {
+      state.lastOrder = { items: cloneItems(state.items), notes: state.notes, orderCo: state.orderCo,
+        orderDate: state.orderDate, orderSeq: state.orderSeq };
+    }
     state.items = []; state.notes = ''; state.orderCo = ''; state.orderSeq += 1;
     state.orderDate = new Date().toISOString(); state.exportFilter = '';
     $('notes').value = ''; $('orderCo').value = ''; $('q').value = '';
@@ -1568,6 +1694,7 @@ dialog img, dialog textarea { border-radius: 12px; }
     toast(t('startedOrder', { number: orderNo() }), t('undo'), function () {
       state.items = previous.items.concat(state.items); state.notes = previous.notes; state.orderCo = previous.orderCo;
       state.orderSeq = previous.orderSeq; state.orderDate = previous.orderDate; state.exportFilter = previous.exportFilter;
+      state.lastOrder = previous.lastOrder;
       $('notes').value = state.notes; $('orderCo').value = state.orderCo; $('q').value = previous.search;
       render(); save();
     });
@@ -1601,6 +1728,25 @@ dialog img, dialog textarea { border-radius: 12px; }
   });
   ['ename', 'ecompany', 'ecat', 'ewt', 'eqty'].forEach(function (id) {
     $(id).addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('eSave').click(); } });
+  });
+  $('eCopy').addEventListener('click', function () {
+    if (!editing) return;
+    var f = readFields('e');
+    if (!f) return;
+    f.cat = matchCase(f.cat, categoryNames());
+    if (f.company) f.company = matchCase(f.company, uniq('company').concat(state.recentCos));
+    rememberCategory(f.cat);
+    // Keep any edits made to the original, then drop the copy in behind it.
+    ['name', 'company', 'cat', 'wt', 'wu', 'qty', 'qu'].forEach(function (k) { editing[k] = f[k]; });
+    var copy = clone(editing); copy.id = uid();
+    var at = state.items.indexOf(editing);
+    state.items.splice(at < 0 ? state.items.length : at + 1, 0, copy);
+    render(); save(); closeD($('editDlg')); editing = null;
+    toast(t('duplicatedItem', { name: copy.name }), t('undo'), function () {
+      var pos = state.items.indexOf(copy);
+      if (pos > -1) state.items.splice(pos, 1);
+      render(); save();
+    });
   });
   $('editDlg').addEventListener('close', function () { editing = null; });
   $('eCancel').addEventListener('click', function () { closeD($('editDlg')); editing = null; });

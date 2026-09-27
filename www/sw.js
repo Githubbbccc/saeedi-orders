@@ -1,7 +1,7 @@
 // Order App service worker. Keep the old cache prefix for existing installations.
 // Network-first for the page; cache fallback keeps it working offline.
 // Bump VERSION to force every client to re-download the precache list.
-var VERSION = '1.10.0';
+var VERSION = '1.11.0';
 var C = 'saeedi-orders-' + VERSION;
 var FILES = ['./', './index.html', './i18n.js', './manifest.webmanifest', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './fonts/noto-naskh-arabic.woff2', './fonts/noto-nastaliq-urdu.woff2'];
 self.addEventListener('install', function (e) {

@@ -711,3 +711,126 @@ test('the Android hardware back button closes the open dialog before exiting the
   assert.equal(exited, 1, 'with nothing open, back exits as Android users expect');
 });
 
+
+test('the header language switcher changes language instantly, in any script', t => {
+  const p = page(t);
+  const bar = p.$('langBar');
+  assert.equal(bar.hidden, true, 'the switcher starts closed');
+  assert.equal(p.$('langBtn').getAttribute('aria-expanded'), 'false');
+  assert.equal(p.$('langCode').textContent, 'EN', 'the button shows the active language');
+
+  p.click('langBtn');
+  assert.equal(bar.hidden, false);
+  assert.equal(p.$('langBtn').getAttribute('aria-expanded'), 'true');
+  const chips = () => Array.from(p.$('langBar').querySelectorAll('.lang-chip'));
+  assert.deepEqual(chips().map(c => c.textContent), ['Device language', 'English', 'اردو', 'Español', 'العربية']);
+  assert.equal(chips()[0].getAttribute('aria-pressed'), 'true', 'the device setting is active on a fresh install');
+  assert.equal(chips()[2].getAttribute('lang'), 'ur', 'a chip is tagged with its own language');
+
+  chips()[2].click(); // اردو
+  assert.equal(p.saved().language, 'ur');
+  assert.equal(p.d.documentElement.dir, 'rtl');
+  assert.equal(p.d.documentElement.lang, 'ur-PK');
+  assert.equal(p.$('langCode').textContent, 'UR');
+  assert.equal(p.$('langPref').value, 'ur', 'the picker in Settings stays in sync');
+  assert.equal(chips()[2].getAttribute('aria-pressed'), 'true');
+  assert.equal(chips()[0].textContent, 'ڈیوائس کی زبان', 'the device-setting chip is translated');
+  assert.deepEqual(chips().slice(1).map(c => c.textContent), ['English', 'اردو', 'Español', 'العربية'],
+    'each language keeps its own name whichever language is active');
+  assert.equal(bar.hidden, false, 'choosing a language leaves the switcher open to try another');
+
+  // the Settings picker and the switcher are the same control underneath
+  p.$('langPref').value = 'es';
+  p.$('langPref').dispatchEvent(new p.w.Event('change'));
+  assert.equal(p.$('langCode').textContent, 'ES');
+  assert.equal(chips()[3].getAttribute('aria-pressed'), 'true');
+
+  p.d.dispatchEvent(new p.w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  assert.equal(bar.hidden, true, 'Escape closes the switcher');
+  assert.equal(p.d.activeElement, p.$('langBtn'), 'focus goes back to the switcher button');
+
+  p.click('langBtn');
+  p.d.getElementById('shop').dispatchEvent(new p.w.MouseEvent('click', { bubbles: true }));
+  assert.equal(bar.hidden, true, 'tapping the page closes the switcher');
+});
+
+test('the order you just finished can be repeated from the empty list', t => {
+  const p = page(t);
+  assert.equal(p.d.querySelector('.repeat-btn'), null, 'nothing to repeat on a fresh install');
+
+  p.enter('aname', 'Wheel rim');
+  p.enter('acat', 'RIM');
+  p.enter('aqty', '4');
+  p.click('addBtn');
+  p.enter('orderCo', 'Acme');
+  p.enter('notes', 'Deliver by Friday');
+  p.enter('aname', 'Spare bolt');
+  p.click('addBtn');
+
+  p.click('newBtn'); p.click('newBtn'); // arm, then confirm
+  assert.equal(p.saved().items.length, 0);
+  assert.equal(p.saved().lastOrder.items.length, 2, 'the finished order is remembered');
+
+  const button = p.d.querySelector('.repeat-btn');
+  assert.ok(button, 'an empty list offers the repeat button');
+  assert.match(button.textContent, /Repeat last order/);
+  assert.match(button.textContent, /2 items/);
+
+  const reloaded = page(t, p.saved());
+  assert.ok(reloaded.d.querySelector('.repeat-btn'), 'the repeat offer survives a reload');
+  assert.equal(reloaded.saved().lastOrder.items.length, 2);
+  assert.match(reloaded.d.querySelector('.repeat-btn').textContent, /2 items/);
+
+  button.click();
+  assert.deepEqual(p.saved().items.map(i => i.name), ['Wheel rim', 'Spare bolt']);
+  assert.equal(p.saved().items[0].qty, 4);
+  assert.equal(p.saved().items[0].cat, 'RIM');
+  assert.equal(p.$('orderCo').value, 'Acme', 'the supplier comes back too');
+  assert.equal(p.$('notes').value, 'Deliver by Friday');
+  assert.equal(p.saved().items[0].id !== p.saved().lastOrder.items[0].id, true, 'the repeat is a fresh copy');
+
+  p.$('toast').querySelector('button').click(); // undo the repeat
+  assert.equal(p.saved().items.length, 0, 'undo puts the empty list back');
+  assert.equal(p.saved().lastOrder.items.length, 2, 'the repeat offer is still there to try again');
+});
+
+test('an item can be duplicated with its edits, right behind the original', t => {
+  const p = page(t);
+  p.enter('aname', 'Wheel rim');
+  p.enter('acat', 'RIM');
+  p.enter('aqty', '2');
+  p.click('addBtn');
+  p.d.querySelector('.item .info').click();
+  assert.equal(p.$('editDlg').open, true);
+
+  p.enter('ename', 'Wheel rim 18in');
+  p.click('eCopy');
+  assert.equal(p.$('editDlg').open, false, 'the edit dialog closes after duplicating');
+  assert.deepEqual(p.saved().items.map(i => i.name), ['Wheel rim 18in', 'Wheel rim 18in']);
+  assert.equal(p.saved().items[0].id !== p.saved().items[1].id, true, 'the copy gets its own id');
+  assert.equal(p.saved().items[1].qty, 2, 'quantity and category carry over');
+  assert.equal(p.saved().items[1].cat, 'RIM');
+  assert.equal(p.d.querySelectorAll('.item').length, 2);
+
+  p.$('toast').querySelector('button').click(); // undo
+  assert.equal(p.saved().items.length, 1, 'undo removes only the copy');
+  assert.equal(p.saved().items[0].name, 'Wheel rim 18in', 'and keeps the edit made to the original');
+});
+
+test('typing "/" reaches search, but never steals a slash typed into a field', t => {
+  const p = page(t);
+  const press = target => target.dispatchEvent(new p.w.KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true }));
+  press(p.d.body);
+  assert.equal(p.d.activeElement, p.$('q'), 'search takes focus');
+
+  p.$('q').blur();
+  const inField = new p.w.KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true });
+  p.$('aname').dispatchEvent(inField);
+  assert.equal(inField.defaultPrevented, false, 'a slash typed into a field is kept');
+  assert.notEqual(p.d.activeElement, p.$('q'), 'search is not stolen from the field being typed in');
+
+  p.click('settingsBtn');
+  p.$('q').blur();
+  press(p.d.body);
+  assert.notEqual(p.d.activeElement, p.$('q'), 'the shortcut stays out of the way while a dialog is open');
+});

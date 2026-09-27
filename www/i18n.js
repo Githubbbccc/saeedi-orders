@@ -14,9 +14,11 @@
       aboutPrivacyTitle: 'Where is my data?',
       aboutPrivacy: 'Orders and settings stay in this browser or installed app on your device. No account or cloud sync. Export a copy before clearing site data.',
       aboutPlatformTitle: 'Where does it work?',
-      aboutPlatform: 'Use the web app in a modern browser on desktop or mobile. After its first successful visit it can reload offline. Install and sharing options vary by platform. Choose a system, light or dark theme and English, Urdu, Spanish or Arabic.',
+      aboutPlatform: 'Use the web app in a modern browser on desktop or mobile. After its first successful visit it can reload offline. Install and sharing options vary by platform. Choose a system, light or dark theme and English, Urdu, Spanish or Arabic — the globe button beside the title switches language in one tap.',
       appearance: 'Appearance', themeSystem: 'Device setting', themeLight: 'Light', themeDark: 'Dark',
       language: 'Language', languageHint: 'Choose the app language. Your item names stay as you typed them.',
+      repeatLastOrder: 'Repeat last order', repeatedOrder: 'Last order repeated',
+      duplicateItem: 'Duplicate this item', duplicatedItem: 'Duplicated {name}',
       backupTitle: 'Backup', backupHint: 'Save your orders, categories and settings to a file, or load one back onto this device.',
       saveBackup: 'Save backup', restoreBackup: 'Restore backup',
       restoreConfirm: 'Replace the orders and settings on this device with this backup of {count} item(s)?',
@@ -77,9 +79,11 @@
       aboutPrivacyTitle: 'میرا ڈیٹا کہاں ہے؟',
       aboutPrivacy: 'آرڈر اور ترتیبات اسی ڈیوائس کے براؤزر یا انسٹال شدہ ایپ میں رہتی ہیں۔ اکاؤنٹ یا کلاؤڈ سنک نہیں ہے۔ سائٹ کا ڈیٹا صاف کرنے سے پہلے بیک اپ فائل محفوظ کریں، پھر اسے بحال کر کے اپنے آرڈر واپس لے آئیں۔',
       aboutPlatformTitle: 'یہ کہاں کام کرتی ہے؟',
-      aboutPlatform: 'ڈیسک ٹاپ یا موبائل کے جدید براؤزر میں ویب ایپ استعمال کریں۔ پہلی کامیاب آن لائن وزٹ کے بعد یہ آف لائن دوبارہ کھل سکتی ہے۔ انسٹال اور شیئر کے طریقے پلیٹ فارم کے لحاظ سے بدلتے ہیں۔ سسٹم، روشن یا تاریک تھیم اور انگریزی، اردو، ہسپانوی یا عربی زبان منتخب کریں۔',
+      aboutPlatform: 'ڈیسک ٹاپ یا موبائل کے جدید براؤزر میں ویب ایپ استعمال کریں۔ پہلی کامیاب آن لائن وزٹ کے بعد یہ آف لائن دوبارہ کھل سکتی ہے۔ انسٹال اور شیئر کے طریقے پلیٹ فارم کے لحاظ سے بدلتے ہیں۔ سسٹم، روشن یا تاریک تھیم اور انگریزی، اردو، ہسپانوی یا عربی زبان منتخب کریں — عنوان کے پاس موجود گلوب بٹن سے ایک ہی دباؤ میں زبان بدل جاتی ہے۔',
       appearance: 'ظاہری شکل', themeSystem: 'ڈیوائس کے مطابق', themeLight: 'روشن', themeDark: 'تاریک',
       language: 'زبان', languageHint: 'ایپ کی زبان منتخب کریں۔ اشیا کے نام جیسے آپ نے لکھے ہیں ویسے ہی رہیں گے۔',
+      repeatLastOrder: 'پچھلا آرڈر دہرائیں', repeatedOrder: 'پچھلا آرڈر دہرایا گیا',
+      duplicateItem: 'یہ چیز نقل کریں', duplicatedItem: '{name} کی نقل بن گئی',
       backupTitle: 'بیک اپ', backupHint: 'اپنے آرڈر، زمرے اور ترتیبات ایک فائل میں محفوظ کریں، یا پہلے محفوظ کی گئی فائل اس ڈیوائس پر واپس لائیں۔',
       saveBackup: 'بیک اپ محفوظ کریں', restoreBackup: 'بیک اپ بحال کریں',
       restoreConfirm: 'کیا اس ڈیوائس کے آرڈر اور ترتیبات کو {count} اشیا والے اس بیک اپ سے بدل دیں؟',
@@ -140,9 +144,11 @@
       aboutPrivacyTitle: '¿Dónde están mis datos?',
       aboutPrivacy: 'Los pedidos y ajustes se guardan en este navegador o en la aplicación instalada en tu dispositivo. No hay cuenta ni sincronización en la nube. Guarda una copia de seguridad antes de borrar los datos del sitio y restáurala para recuperar tus pedidos.',
       aboutPlatformTitle: '¿Dónde funciona?',
-      aboutPlatform: 'Usa la aplicación web en un navegador moderno de escritorio o móvil. Después de la primera visita con conexión, puede volver a abrirse sin conexión. Las opciones de instalación y uso compartido dependen de la plataforma. Elige el tema del sistema, claro u oscuro, y entre inglés, urdu, español o árabe.',
+      aboutPlatform: 'Usa la aplicación web en un navegador moderno de escritorio o móvil. Después de la primera visita con conexión, puede volver a abrirse sin conexión. Las opciones de instalación y uso compartido dependen de la plataforma. Elige el tema del sistema, claro u oscuro, y entre inglés, urdu, español o árabe: el botón del globo junto al título cambia el idioma con un toque.',
       appearance: 'Apariencia', themeSystem: 'Según el dispositivo', themeLight: 'Claro', themeDark: 'Oscuro',
       language: 'Idioma', languageHint: 'Elige el idioma de la aplicación. Los nombres de tus artículos no se modifican.',
+      repeatLastOrder: 'Repetir el último pedido', repeatedOrder: 'Último pedido repetido',
+      duplicateItem: 'Duplicar este artículo', duplicatedItem: 'Se duplicó {name}',
       backupTitle: 'Copia de seguridad', backupHint: 'Guarda tus pedidos, categorías y ajustes en un archivo, o vuelve a cargar uno en este dispositivo.',
       saveBackup: 'Guardar copia', restoreBackup: 'Restaurar copia',
       restoreConfirm: '¿Reemplazar los pedidos y ajustes de este dispositivo con esta copia de {count} artículo(s)?',
@@ -203,9 +209,11 @@
       aboutPrivacyTitle: 'أين بياناتي؟',
       aboutPrivacy: 'تبقى الطلبات والإعدادات في هذا المتصفح أو التطبيق المثبت على جهازك. لا يوجد حساب ولا مزامنة سحابية. احفظ نسخة احتياطية قبل مسح بيانات الموقع ثم استعدها لتعود طلباتك.',
       aboutPlatformTitle: 'أين يعمل؟',
-      aboutPlatform: 'استخدم تطبيق الويب في متصفح حديث على الكمبيوتر أو الهاتف. بعد أول زيارة ناجحة عبر الإنترنت يمكن فتحه مجدداً دون اتصال. تختلف خيارات التثبيت والمشاركة حسب المنصة. اختر مظهر الجهاز أو الفاتح أو الداكن، والإنجليزية أو الأردية أو الإسبانية أو العربية.',
+      aboutPlatform: 'استخدم تطبيق الويب في متصفح حديث على الكمبيوتر أو الهاتف. بعد أول زيارة ناجحة عبر الإنترنت يمكن فتحه مجدداً دون اتصال. تختلف خيارات التثبيت والمشاركة حسب المنصة. اختر مظهر الجهاز أو الفاتح أو الداكن، والإنجليزية أو الأردية أو الإسبانية أو العربية — زر الكرة الأرضية بجانب العنوان يغيّر اللغة بلمسة واحدة.',
       appearance: 'المظهر', themeSystem: 'حسب الجهاز', themeLight: 'فاتح', themeDark: 'داكن',
       language: 'اللغة', languageHint: 'اختر لغة التطبيق. ستبقى أسماء العناصر كما كتبتها.',
+      repeatLastOrder: 'إعادة الطلب الأخير', repeatedOrder: 'تمت إعادة الطلب الأخير',
+      duplicateItem: 'تكرار هذا العنصر', duplicatedItem: 'تم تكرار {name}',
       backupTitle: 'نسخة احتياطية', backupHint: 'احفظ طلباتك وفئاتك وإعداداتك في ملف، أو استعد ملفاً محفوظاً إلى هذا الجهاز.',
       saveBackup: 'حفظ نسخة احتياطية', restoreBackup: 'استعادة نسخة احتياطية',
       restoreConfirm: 'هل تريد استبدال الطلبات والإعدادات على هذا الجهاز بهذه النسخة الاحتياطية التي تحتوي {count} عنصر؟',
@@ -269,7 +277,10 @@
     es: { '': ['unidad', 'unidades'], pcs: ['pieza', 'piezas'], box: ['caja', 'cajas'], pack: ['paquete', 'paquetes'], dozen: ['docena', 'docenas'], bag: ['bolsa', 'bolsas'], bottle: ['botella', 'botellas'], carton: ['cartón', 'cartones'], set: ['juego', 'juegos'], pair: ['par', 'pares'] },
     ar: { '': ['وحدة', 'وحدات'], pcs: ['قطعة', 'قطع'], box: ['صندوق', 'صناديق'], pack: ['عبوة', 'عبوات'], dozen: ['دزينة', 'دزينات'], bag: ['كيس', 'أكياس'], bottle: ['زجاجة', 'زجاجات'], carton: ['كرتون', 'كراتين'], set: ['مجموعة', 'مجموعات'], pair: ['زوج', 'أزواج'] }
   };
-  var pack = { messages: messages, categories: categories, units: units,
+  // Endonyms for the quick language switcher: each name is written in its own
+  // language, so it stays readable whichever language is active.
+  var langShort = { en: 'English', ur: 'اردو', es: 'Español', ar: 'العربية' };
+  var pack = { messages: messages, categories: categories, units: units, langShort: langShort,
     locale: { en: 'en-GB', ur: 'ur-PK', es: 'es-ES', ar: 'ar-EG' } };
   root.OrderBookI18n = pack;
   if (typeof module !== 'undefined' && module.exports) module.exports = pack;
