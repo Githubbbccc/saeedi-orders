@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#0F3D2E"/><path d="M256 92C256 92 150 222 150 306a106 106 0 0 0 212 0C362 222 256 92 256 92Z" fill="#F2B01E"/><path d="M284 226C212 238 212 292 256 310C300 328 300 384 228 394" fill="none" stroke="#0F3D2E" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Order App logo: a checked order list">
+  <rect width="512" height="512" rx="112" fill="#16302A"/>
+  <rect x="110" y="101" width="292" height="323" rx="40" fill="#FAF4E6"/>
+  <rect x="194" y="77" width="124" height="53" rx="18" fill="#C89A2C"/>
+  <path d="M224 103h64" fill="none" stroke="#16302A" stroke-width="10" stroke-linecap="round"/>
+  <rect x="145" y="168" width="60" height="60" rx="15" fill="#C89A2C"/>
+  <path d="m160 198 13 12 23-27" fill="none" stroke="#16302A" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M232 188h116M232 210h77" fill="none" stroke="#16302A" stroke-width="11" stroke-linecap="round"/>
+  <rect x="145" y="258" width="60" height="60" rx="15" fill="#C89A2C"/>
+  <path d="m160 288 13 12 23-27" fill="none" stroke="#16302A" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M232 278h116M232 300h91" fill="none" stroke="#16302A" stroke-width="11" stroke-linecap="round"/>
+  <rect x="145" y="348" width="60" height="48" rx="14" fill="none" stroke="#16302A" stroke-width="9"/>
+  <path d="M232 367h116M232 389h60" fill="none" stroke="#16302A" stroke-width="11" stroke-linecap="round"/>
+</svg>
