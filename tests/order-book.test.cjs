@@ -462,6 +462,375 @@ test('manifest and cache include the current user-facing facts and localized Abo
   const worker = fs.readFileSync(path.join(__dirname, '../www/sw.js'), 'utf8');
   assert.match(manifest.description, /home, shops and teams/);
   assert.match(manifest.description, /offline after your first visit/);
-  assert.match(worker, /VERSION = '1\.8\.0'/);
+  assert.match(worker, /VERSION = '\d+\.\d+\.\d+'/, 'a cache version to invalidate the precache');
   assert.match(worker, /\.\/i18n\.js/);
+  // the dictionary is critical: it must not lag behind a freshly fetched page
+  assert.match(worker, /\/\\\/i18n\\\.js\$\//, 'i18n.js is fetched network-first');
+});
+
+test('every page exposes one top-level heading and a translated order-number label', t => {
+  const p = page(t);
+  const headings = p.d.querySelectorAll('h1');
+  assert.equal(headings.length, 1, 'expected exactly one h1');
+  assert.match(headings[0].className, /sr-only/, 'the h1 must not print on the hero');
+  for (const lang of ['en', 'ur', 'es', 'ar']) {
+    p.$('langPref').value = lang;
+    p.$('langPref').dispatchEvent(new p.w.Event('change'));
+    assert.equal(headings[0].textContent, i18n.messages[lang].appTitle, `${lang} heading`);
+    assert.equal(p.$('orderNo').getAttribute('title'), i18n.messages[lang].orderNumber, `${lang} order number label`);
+    assert.match(i18n.messages[lang].orderNumber, /\S/);
+  }
+});
+
+test('native controls and browser chrome follow the chosen theme', t => {
+  const css = fs.readFileSync(path.join(__dirname, '../www/index.html'), 'utf8');
+  assert.match(css, /:root \{\s*color-scheme: light;/, 'light color-scheme');
+  assert.match(css, /:root\[data-theme="dark"\] \{\s*color-scheme: dark;/, 'explicit dark color-scheme');
+  assert.match(css, /:root:not\(\[data-theme="light"\]\) \{\s*color-scheme: dark;/, 'device dark color-scheme');
+  const p = page(t);
+  const meta = () => p.d.querySelector('meta[name="theme-color"]').getAttribute('content');
+  const pick = value => {
+    const radio = p.d.querySelector(`input[name="theme"][value="${value}"]`);
+    radio.checked = true;
+    radio.dispatchEvent(new p.w.Event('change', { bubbles: true }));
+  };
+  assert.equal(meta(), '#16302A', 'light hero colour by default');
+  pick('dark');
+  assert.equal(meta(), '#14231D', 'dark hero colour');
+  pick('light');
+  assert.equal(meta(), '#16302A');
+  pick('system');
+  assert.equal(meta(), '#16302A', 'device setting hands the colour back to the device');
+});
+
+test('deleting a custom category also frees its colour slot', t => {
+  const p = page(t);
+  p.w.confirm = () => true;
+  p.enter('aname', 'Rim tape');
+  p.enter('acat', 'Spares');
+  p.click('addBtn');
+  assert.equal(p.saved().items[0].cat, 'Spares');
+  assert.ok(p.saved().catOrder.indexOf('Spares') !== -1, 'rendering the group records its colour slot');
+  p.click('amanage');
+  const row = Array.from(p.d.querySelectorAll('#categoryManageList .manage-row'))
+    .find(r => r.querySelector('input').value === 'Spares');
+  assert.ok(row, 'the custom category should be listed');
+  row.querySelectorAll('button')[1].click(); // Delete
+  assert.equal(p.saved().items[0].cat, 'General');
+  assert.ok(p.saved().catOrder.indexOf('Spares') === -1, 'the colour map should not keep deleted categories');
+  assert.ok(p.saved().savedCategories.indexOf('Spares') === -1);
+});
+
+test('static assets revalidate in the background so updates reach returning visitors', () => {
+  const worker = fs.readFileSync(path.join(__dirname, '../www/sw.js'), 'utf8');
+  assert.match(worker, /stale-while-revalidate/i);
+  const assetBranch = worker.slice(worker.indexOf('e.respondWith(caches.match(req)'));
+  assert.ok(assetBranch.length, 'expected a cache lookup branch for assets');
+  assert.match(assetBranch, /fetch\(req\)/, 'assets must still be refreshed from the network');
+  assert.match(assetBranch, /c\.put\(req, cp\)/, 'the fresh copy must replace the cached one');
+  assert.match(assetBranch, /return r \|\| network;/, 'the cache is served first, the network backs it up');
+  assert.match(worker, /var networkFirst = /, 'the page and dictionary are network-first');
+  assert.match(worker, /c\.add\(f\)\.catch/, 'one missing file must not abort the whole precache');
+});
+
+test('manifest keeps a stable install identity and declares language and categories', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../www/manifest.webmanifest'), 'utf8'));
+  assert.equal(manifest.id, manifest.start_url, 'the id must match start_url so existing installs are not duplicated');
+  assert.equal(manifest.start_url, './index.html');
+  assert.equal(manifest.scope, './');
+  assert.equal(manifest.lang, 'en');
+  assert.equal(manifest.dir, 'ltr');
+  assert.deepEqual(manifest.categories, ['productivity', 'utilities']);
+  assert.match(manifest.name, /Order App/);
+});
+
+test('a visitor without JavaScript is told why the page is empty', () => {
+  const html = fs.readFileSync(path.join(__dirname, '../www/index.html'), 'utf8');
+  const notice = html.match(/<noscript>([\s\S]*?)<\/noscript>/);
+  assert.ok(notice, 'expected a <noscript> notice');
+  assert.match(notice[1], /needs JavaScript/i);
+});
+
+const tick = (ms = 40) => new Promise(resolve => setTimeout(resolve, ms));
+
+test('a backup file carries the whole order and loads back onto a cleared device', async t => {
+  let blob = null;
+  const p = page(t, null, false, win => {
+    win.URL.createObjectURL = value => { blob = value; return 'blob:test'; };
+    win.URL.revokeObjectURL = () => {};
+    // jsdom tries to navigate for <a download>; real browsers simply download.
+    win.HTMLAnchorElement.prototype.click = function () {};
+  });
+  p.enter('shop', 'Karachi Motors');
+  p.enter('orderCo', 'Acme Traders');
+  p.enter('notes', 'Deliver by Friday');
+  p.enter('aname', 'Wheel rim');
+  p.enter('acat', 'RIM');
+  p.enter('aqty', '3');
+  p.click('addBtn');
+  p.enter('aname', 'Spare bolt');
+  p.enter('acat', 'Spares');
+  p.click('addBtn');
+
+  p.click('settingsBtn');
+  p.click('backupBtn');
+  assert.ok(blob, 'saving a backup should produce a file');
+  const text = await new Promise(resolve => {
+    const reader = new p.w.FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.readAsText(blob);
+  });
+  const backup = JSON.parse(text);
+  assert.equal(backup.app, 'order-app');
+  assert.equal(backup.format, 1);
+  assert.match(backup.exportedAt, /^\d{4}-/);
+  assert.equal(backup.state.items.length, 2);
+  assert.equal(backup.state.shop, 'Karachi Motors');
+  assert.equal(backup.state.orderCo, 'Acme Traders');
+  assert.equal(backup.state.notes, 'Deliver by Friday');
+  assert.deepEqual(backup.state.savedCategories, ['Spares'], 'custom categories travel with the backup');
+
+  // clear everything, then load the backup back in
+  p.click('settingsClose');
+  p.click('clearBtn'); p.click('clearBtn');
+  assert.equal(p.saved().items.length, 0);
+  p.click('settingsBtn');
+  const field = p.$('restoreFile');
+  p.w.confirm = () => true;
+  Object.defineProperty(field, 'files', {
+    configurable: true,
+    value: [new p.w.File([text], 'order-app-backup.json', { type: 'application/json' })]
+  });
+  field.dispatchEvent(new p.w.Event('change'));
+  await tick(120);
+
+  assert.equal(p.saved().items.length, 2, 'the backup should come back');
+  assert.deepEqual(p.saved().items.map(i => i.name), ['Wheel rim', 'Spare bolt']);
+  assert.equal(p.saved().items[0].qty, 3);
+  assert.equal(p.saved().items[1].cat, 'Spares');
+  assert.equal(p.$('shop').value, 'Karachi Motors', 'the order title is restored into the form');
+  assert.equal(p.$('orderCo').value, 'Acme Traders');
+  assert.equal(p.$('notes').value, 'Deliver by Friday');
+  assert.equal(p.$('settingsDlg').open, false, 'the settings dialog closes so the result is visible');
+
+  // restoring replaces the list, so it offers the usual undo of what was there before
+  const undo = p.$('toast').querySelector('button');
+  assert.ok(undo, 'restoring should offer an undo');
+  undo.click();
+  assert.equal(p.saved().items.length, 0, 'undo puts the previous, cleared list back');
+});
+
+test('a file that is not a backup is refused without touching the current order', async t => {
+  const p = page(t);
+  p.w.confirm = () => true;
+  p.enter('aname', 'Keep me');
+  p.click('addBtn');
+  p.click('settingsBtn');
+  const field = p.$('restoreFile');
+  Object.defineProperty(field, 'files', {
+    configurable: true,
+    value: [new p.w.File(['{"hello":"world"}'], 'holiday-photo.json', { type: 'application/json' })]
+  });
+  field.dispatchEvent(new p.w.Event('change'));
+  await tick(120);
+  assert.equal(p.saved().items.length, 1);
+  assert.equal(p.saved().items[0].name, 'Keep me');
+  assert.match(p.$('toast').textContent, /not an Order App backup/);
+});
+
+test('back closes the open dialog, and closing by button steps back exactly once', async t => {
+  const p = page(t);
+  const pageEntry = p.w.history.state; // null on a freshly opened page
+  p.click('settingsBtn');
+  assert.equal(p.$('settingsDlg').open, true);
+  assert.equal(p.w.history.state.orderAppDialog, true, 'an open dialog adds one history entry');
+  p.w.history.back();
+  await tick();
+  assert.equal(p.$('settingsDlg').open, false, 'back should close the dialog instead of leaving the page');
+  assert.equal(p.w.history.state, pageEntry, 'back lands on the page entry again');
+
+  // Closing with the dialog's own button releases its entry: exactly one step back.
+  let pops = 0;
+  p.w.addEventListener('popstate', () => { pops++; });
+  p.click('settingsBtn');
+  assert.equal(p.w.history.state.orderAppDialog, true);
+  p.click('settingsClose');
+  await tick();
+  assert.equal(p.$('settingsDlg').open, false);
+  assert.equal(pops, 1, 'closing by button steps back over its own entry exactly once');
+
+  // The delayed popstate that release causes must not reach a dialog opened
+  // straight afterwards, or the next Back press would need pressing twice.
+  p.click('settingsBtn');
+  await tick();
+  assert.equal(p.$('settingsDlg').open, true, 'a late popstate must not close a freshly opened dialog');
+  assert.equal(p.w.history.state.orderAppDialog, true);
+});
+
+test('feedback raised while a dialog is open is placed in the top layer with it', t => {
+  const p = page(t);
+  p.click('amanage');
+  p.enter('newCategory', 'Spares');
+  p.click('createCategory');
+  const toastEl = p.$('toast');
+  assert.equal(toastEl.hidden, false);
+  assert.ok(toastEl.closest('dialog'), 'a toast must sit inside the modal, not behind its backdrop');
+  assert.equal(toastEl.closest('dialog').id, 'categoryDlg');
+  assert.match(toastEl.textContent, /Category added/);
+  p.click('closeCategories');
+  p.click('picSave'); // nothing prepared yet: toasts with no dialog open
+  assert.equal(toastEl.parentNode, p.d.body, 'with no dialog open the toast belongs to the page');
+});
+
+test('printing names the page after the order and restores the app title afterwards', t => {
+  const p = page(t);
+  const appTitle = p.d.title;
+  p.enter('shop', 'Karachi Motors');
+  p.w.dispatchEvent(new p.w.Event('beforeprint'));
+  assert.equal(p.d.title, 'Karachi Motors', 'the printed header should name the order');
+  p.w.dispatchEvent(new p.w.Event('afterprint'));
+  assert.equal(p.d.title, appTitle);
+});
+
+test('the Android hardware back button closes the open dialog before exiting the app', t => {
+  let backHandler = null;
+  let exited = 0;
+  const p = page(t, null, false, win => {
+    win.Capacitor = { Plugins: { App: {
+      addListener: (name, cb) => { if (name === 'backButton') backHandler = cb; },
+      exitApp: () => { exited++; }
+    } } };
+  });
+  assert.ok(backHandler, 'the native back button must be handled at startup');
+  p.click('settingsBtn');
+  assert.equal(p.$('settingsDlg').open, true);
+  backHandler();
+  assert.equal(p.$('settingsDlg').open, false, 'back should close the dialog first');
+  assert.equal(exited, 0, 'the app must not exit while a dialog was open');
+  backHandler();
+  assert.equal(exited, 1, 'with nothing open, back exits as Android users expect');
+});
+
+
+test('the header language switcher changes language instantly, in any script', t => {
+  const p = page(t);
+  const bar = p.$('langBar');
+  assert.equal(bar.hidden, true, 'the switcher starts closed');
+  assert.equal(p.$('langBtn').getAttribute('aria-expanded'), 'false');
+  assert.equal(p.$('langCode').textContent, 'EN', 'the button shows the active language');
+
+  p.click('langBtn');
+  assert.equal(bar.hidden, false);
+  assert.equal(p.$('langBtn').getAttribute('aria-expanded'), 'true');
+  const chips = () => Array.from(p.$('langBar').querySelectorAll('.lang-chip'));
+  assert.deepEqual(chips().map(c => c.textContent), ['Device language', 'English', 'اردو', 'Español', 'العربية']);
+  assert.equal(chips()[0].getAttribute('aria-pressed'), 'true', 'the device setting is active on a fresh install');
+  assert.equal(chips()[2].getAttribute('lang'), 'ur', 'a chip is tagged with its own language');
+
+  chips()[2].click(); // اردو
+  assert.equal(p.saved().language, 'ur');
+  assert.equal(p.d.documentElement.dir, 'rtl');
+  assert.equal(p.d.documentElement.lang, 'ur-PK');
+  assert.equal(p.$('langCode').textContent, 'UR');
+  assert.equal(p.$('langPref').value, 'ur', 'the picker in Settings stays in sync');
+  assert.equal(chips()[2].getAttribute('aria-pressed'), 'true');
+  assert.equal(chips()[0].textContent, 'ڈیوائس کی زبان', 'the device-setting chip is translated');
+  assert.deepEqual(chips().slice(1).map(c => c.textContent), ['English', 'اردو', 'Español', 'العربية'],
+    'each language keeps its own name whichever language is active');
+  assert.equal(bar.hidden, false, 'choosing a language leaves the switcher open to try another');
+
+  // the Settings picker and the switcher are the same control underneath
+  p.$('langPref').value = 'es';
+  p.$('langPref').dispatchEvent(new p.w.Event('change'));
+  assert.equal(p.$('langCode').textContent, 'ES');
+  assert.equal(chips()[3].getAttribute('aria-pressed'), 'true');
+
+  p.d.dispatchEvent(new p.w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+  assert.equal(bar.hidden, true, 'Escape closes the switcher');
+  assert.equal(p.d.activeElement, p.$('langBtn'), 'focus goes back to the switcher button');
+
+  p.click('langBtn');
+  p.d.getElementById('shop').dispatchEvent(new p.w.MouseEvent('click', { bubbles: true }));
+  assert.equal(bar.hidden, true, 'tapping the page closes the switcher');
+});
+
+test('the order you just finished can be repeated from the empty list', t => {
+  const p = page(t);
+  assert.equal(p.d.querySelector('.repeat-btn'), null, 'nothing to repeat on a fresh install');
+
+  p.enter('aname', 'Wheel rim');
+  p.enter('acat', 'RIM');
+  p.enter('aqty', '4');
+  p.click('addBtn');
+  p.enter('orderCo', 'Acme');
+  p.enter('notes', 'Deliver by Friday');
+  p.enter('aname', 'Spare bolt');
+  p.click('addBtn');
+
+  p.click('newBtn'); p.click('newBtn'); // arm, then confirm
+  assert.equal(p.saved().items.length, 0);
+  assert.equal(p.saved().lastOrder.items.length, 2, 'the finished order is remembered');
+
+  const button = p.d.querySelector('.repeat-btn');
+  assert.ok(button, 'an empty list offers the repeat button');
+  assert.match(button.textContent, /Repeat last order/);
+  assert.match(button.textContent, /2 items/);
+
+  const reloaded = page(t, p.saved());
+  assert.ok(reloaded.d.querySelector('.repeat-btn'), 'the repeat offer survives a reload');
+  assert.equal(reloaded.saved().lastOrder.items.length, 2);
+  assert.match(reloaded.d.querySelector('.repeat-btn').textContent, /2 items/);
+
+  button.click();
+  assert.deepEqual(p.saved().items.map(i => i.name), ['Wheel rim', 'Spare bolt']);
+  assert.equal(p.saved().items[0].qty, 4);
+  assert.equal(p.saved().items[0].cat, 'RIM');
+  assert.equal(p.$('orderCo').value, 'Acme', 'the supplier comes back too');
+  assert.equal(p.$('notes').value, 'Deliver by Friday');
+  assert.equal(p.saved().items[0].id !== p.saved().lastOrder.items[0].id, true, 'the repeat is a fresh copy');
+
+  p.$('toast').querySelector('button').click(); // undo the repeat
+  assert.equal(p.saved().items.length, 0, 'undo puts the empty list back');
+  assert.equal(p.saved().lastOrder.items.length, 2, 'the repeat offer is still there to try again');
+});
+
+test('an item can be duplicated with its edits, right behind the original', t => {
+  const p = page(t);
+  p.enter('aname', 'Wheel rim');
+  p.enter('acat', 'RIM');
+  p.enter('aqty', '2');
+  p.click('addBtn');
+  p.d.querySelector('.item .info').click();
+  assert.equal(p.$('editDlg').open, true);
+
+  p.enter('ename', 'Wheel rim 18in');
+  p.click('eCopy');
+  assert.equal(p.$('editDlg').open, false, 'the edit dialog closes after duplicating');
+  assert.deepEqual(p.saved().items.map(i => i.name), ['Wheel rim 18in', 'Wheel rim 18in']);
+  assert.equal(p.saved().items[0].id !== p.saved().items[1].id, true, 'the copy gets its own id');
+  assert.equal(p.saved().items[1].qty, 2, 'quantity and category carry over');
+  assert.equal(p.saved().items[1].cat, 'RIM');
+  assert.equal(p.d.querySelectorAll('.item').length, 2);
+
+  p.$('toast').querySelector('button').click(); // undo
+  assert.equal(p.saved().items.length, 1, 'undo removes only the copy');
+  assert.equal(p.saved().items[0].name, 'Wheel rim 18in', 'and keeps the edit made to the original');
+});
+
+test('typing "/" reaches search, but never steals a slash typed into a field', t => {
+  const p = page(t);
+  const press = target => target.dispatchEvent(new p.w.KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true }));
+  press(p.d.body);
+  assert.equal(p.d.activeElement, p.$('q'), 'search takes focus');
+
+  p.$('q').blur();
+  const inField = new p.w.KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true });
+  p.$('aname').dispatchEvent(inField);
+  assert.equal(inField.defaultPrevented, false, 'a slash typed into a field is kept');
+  assert.notEqual(p.d.activeElement, p.$('q'), 'search is not stolen from the field being typed in');
+
+  p.click('settingsBtn');
+  p.$('q').blur();
+  press(p.d.body);
+  assert.notEqual(p.d.activeElement, p.$('q'), 'the shortcut stays out of the way while a dialog is open');
 });
