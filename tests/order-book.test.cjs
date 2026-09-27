@@ -435,3 +435,33 @@ test('Order App branding is consistent without changing existing app identity or
   const legacyTitle = page(t, { shop: 'Order Book', titleCustomized: true, items: [] });
   assert.equal(legacyTitle.$('shop').value, 'Order Book'); // a custom title is never overwritten by rebranding
 });
+
+test('About Order App explains its audience, capabilities, storage and platforms in every language', t => {
+  const p = page(t);
+  p.click('settingsBtn');
+  const details = p.$('aboutDetails');
+  details.open = true;
+  assert.equal(details.open, true);
+  for (const lang of ['en', 'ur', 'es', 'ar']) {
+    p.$('langPref').value = lang;
+    p.$('langPref').dispatchEvent(new p.w.Event('change'));
+    assert.equal(details.querySelector('summary').textContent, i18n.messages[lang].aboutSummary);
+    assert.equal(details.querySelector('.about-copy').getAttribute('aria-label'), i18n.messages[lang].aboutSummary);
+    for (const key of ['aboutAudienceTitle', 'aboutAudience', 'aboutFeaturesTitle', 'aboutFeatures', 'aboutPrivacyTitle', 'aboutPrivacy', 'aboutPlatformTitle', 'aboutPlatform']) {
+      assert.equal(details.querySelector(`[data-i18n="${key}"]`).textContent, i18n.messages[lang][key], `${lang}: ${key}`);
+    }
+    assert.match(i18n.messages[lang].aboutFeatures, /RIM/);
+    assert.equal(details.open, true, 'changing language should not collapse the information panel');
+  }
+  assert.equal(p.saved().language, 'ar');
+  p.click('settingsClose');
+});
+
+test('manifest and cache include the current user-facing facts and localized About copy', () => {
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../www/manifest.webmanifest'), 'utf8'));
+  const worker = fs.readFileSync(path.join(__dirname, '../www/sw.js'), 'utf8');
+  assert.match(manifest.description, /home, shops and teams/);
+  assert.match(manifest.description, /offline after your first visit/);
+  assert.match(worker, /VERSION = '1\.8\.0'/);
+  assert.match(worker, /\.\/i18n\.js/);
+});

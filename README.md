@@ -2,6 +2,18 @@
 
 An offline-friendly order list for anyone. Enter what you need, organize it and share an order without creating an account. The app uses the order-list logo and keeps **RIM** among its built-in categories; the title is yours to change.
 
+## Who it serves and what it does
+
+| Key fact | Details |
+| --- | --- |
+| Who uses it | Anyone preparing an order for home, a shop or a team; no account is needed. |
+| What you enter | A custom order title, items, categories, quantities, optional company/supplier, size or weight, and delivery notes. |
+| What you get | A searchable, groupable list and an order you can share as text, picture(s) or PDF, or print. Zero-quantity items remain in your list but are excluded from exports. |
+| Where data goes | Orders and preferences are stored on this device, in this browser or installed app. There is no cloud sync; export a copy before clearing site data. |
+| How it runs | A web app for modern desktop and mobile browsers. The website can reload offline after its first successful visit; install and sharing options vary by platform. |
+
+The same facts are available inside the app under **Settings → About Order App**, in all four supported languages.
+
 ## Use the app
 
 1. Tap **My Orders** to enter a shop or order title. Optionally add a default supplier and delivery notes.

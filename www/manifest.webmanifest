@@ -1,7 +1,7 @@
 {
   "name": "Order App — Make & Share Orders",
   "short_name": "Order App",
-  "description": "A flexible order list for anyone. Organize items and share as text, picture or PDF.",
+  "description": "An on-device order list for home, shops and teams. Organize items and share as text, picture or PDF; works offline after your first visit.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

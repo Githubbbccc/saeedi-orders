@@ -10,7 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Order App">
 <title>Order App — Make &amp; Share Orders</title>
-<meta name="description" content="Create an order list for anything. Organize items by category, then share as text, picture or PDF. Works offline.">
+<meta name="description" content="An on-device order list for home, shops and teams. Organize items and share as text, picture or PDF. Works offline after your first visit.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'none'">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -293,6 +293,14 @@ dialog img, dialog textarea { border-radius: 12px; }
 .settings-section > label, .settings-section legend { display:block; color:var(--ink); font-size:14px; font-weight:700; margin-bottom:7px; }
 .settings-section select { width:100%; }
 .settings-note { color:var(--muted); font-size:13px; margin:6px 0 0; }
+.about-details { border:1px solid var(--line); border-radius:12px; background:var(--field); overflow:hidden; }
+.about-details summary { cursor:pointer; padding:12px 14px; font-weight:700; }
+.about-details summary:focus-visible { outline:3px solid var(--ring); outline-offset:-3px; }
+.about-details[open] summary { border-bottom:1px solid var(--line); }
+.about-copy { padding:4px 14px 16px; font-size:14px; line-height:1.55; max-height:min(22vh,240px); overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+.about-copy:focus-visible { outline:3px solid var(--ring); outline-offset:-3px; }
+.about-copy h3 { font:inherit; font-weight:700; color:var(--ink); margin:12px 0 4px; }
+.about-copy p { color:var(--muted); margin:0; }
 .theme-choices { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px; border:0; padding:0; min-width:0; }
 .theme-option { position:relative; cursor:pointer; text-align:center; min-width:0; }
 .theme-option input { position:absolute; opacity:0; width:1px; height:1px; }
@@ -450,6 +458,19 @@ dialog img, dialog textarea { border-radius: 12px; }
     </select>
     <p class="settings-note" data-i18n="languageHint">Choose the app language. Your item names stay as you typed them.</p>
   </div>
+  <details class="about-details settings-section" id="aboutDetails">
+    <summary data-i18n="aboutSummary">About Order App</summary>
+    <div class="about-copy" role="region" tabindex="0" aria-label="About Order App" data-i18n-aria="aboutSummary">
+      <h3 data-i18n="aboutAudienceTitle">Who is it for?</h3>
+      <p data-i18n="aboutAudience">Anyone preparing an order for home, a shop or a team. You can name each order yourself.</p>
+      <h3 data-i18n="aboutFeaturesTitle">What can it do?</h3>
+      <p data-i18n="aboutFeatures">Add items with a category (including RIM), optional company, size or weight, quantity and notes. Search or group them, then share text, pictures or a PDF, or print. Items with zero quantity are left out of exports.</p>
+      <h3 data-i18n="aboutPrivacyTitle">Where is my data?</h3>
+      <p data-i18n="aboutPrivacy">Orders and settings stay in this browser or installed app on your device. No account or cloud sync. Export a copy before clearing site data.</p>
+      <h3 data-i18n="aboutPlatformTitle">Where does it work?</h3>
+      <p data-i18n="aboutPlatform">Use the web app in a modern browser on desktop or mobile. After its first successful visit it can reload offline. Install and sharing options vary by platform. Choose a system, light or dark theme and English, Urdu, Spanish or Arabic.</p>
+    </div>
+  </details>
   <div class="dlg-actions"><button id="settingsClose" class="main" type="button" data-i18n="done">Done</button></div>
 </dialog>
 
